@@ -26,10 +26,6 @@ exports.updateTutorial = function (req, res, next) {
 
 }
 
-exports.showTutorial = function (req, res, next) {
-
-}
-
 exports.getTutorial = function (req, res, next) {
 
 }
