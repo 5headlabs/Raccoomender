@@ -1,1 +1,0 @@
-// Handle Ratings and Comments
