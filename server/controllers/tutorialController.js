@@ -43,7 +43,13 @@ exports.addComment = function (req, res, next) {
 }
 
 exports.getTutorial = function (req, res, next) {
-    
+    Tutorial.findById(req.params.id, (err, tut) => {
+        if (err) {
+            res.status(500).send({error: `Failed retrieving tutorial (Tutorial ID: ${req.params.id}`});
+        } else {
+            res.status(200).send({tutorial: tut});
+        }
+    });
 }
 
 exports.listTutorial = async function (req, res, next) {
