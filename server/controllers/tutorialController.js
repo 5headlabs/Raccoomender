@@ -3,6 +3,8 @@ const config = require('../config/main');
 
 const Tutorial = require('../models/tutorial');
 
+const desiredTutorialListCount = 5;
+
 // Handle Tutorial Creation and Display
 
 exports.createTutorial = function (req, res, next) {
@@ -22,7 +24,11 @@ exports.createTutorial = function (req, res, next) {
     });
 }
 
-exports.updateTutorial = function (req, res, next) {
+exports.addRating = function (req, res, next) {
+
+}
+
+exports.addComment = function (req, res, next) {
 
 }
 
@@ -30,33 +36,8 @@ exports.getTutorial = function (req, res, next) {
 
 }
 
-exports.listTutorial = function (req, res, next) {
-    /*Tutorial.count().exec(function (err, count) {
-
-        const desiredCount = 5;
-        const tutsToDisplay = (count < 5) ? count : desiredCount;
-        const tutorials = [];
-
-        for (let i = 0; i < tutsToDisplay; i++) {
-            // Get a random entry
-            var random = Math.floor(Math.random() * count);
-            // Again query all users but only fetch one offset by our random #
-            const tutorial = await Tutorial.findOne().skip(random);
-
-            console.log(tutorial);
-            if (tutorials.includes(tutorial)) {
-                console.log("already in it");
-                i--;
-            } else {
-                console.log("new entry");
-                tutorials.push(tutorial);
-            }
-        }
-        console.log("hm");
-        res.status(200).send({ tutorialList: tutorials });
-    })*/
-
-    const tutorials = findRandom(2);
+exports.listTutorial = async function (req, res, next) {
+    const tutorials = findRandom(desiredTutorialListCount);
 
     tutorials.then((result)=>{
         res.status(200).send({ tutorialList: result });
@@ -64,10 +45,10 @@ exports.listTutorial = function (req, res, next) {
 }
 
 function findRandom(limit) {
-    return new Promise(function (resolve, reject) {
-        Tutorial.count({}, function (err, count) {
+    return new Promise((resolve, reject) => {
+        Tutorial.count({}, (err, count) => {
             let size = (count < limit) ? count : limit;
-            let skip = Math.floor(Math.random() * count);
+            let skip = getRand(0, count - size);
             Tutorial.find().skip(skip).limit(size).exec(function (err, docs) {
                 if (err)
                     return reject(err);
@@ -75,4 +56,8 @@ function findRandom(limit) {
             });
         });
     });
+}
+
+function getRand(min, max) {
+    return Math.ceil(Math.random() * (max - min) + min);
 }
