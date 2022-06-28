@@ -11,6 +11,10 @@ const CommentSchema = new Schema({
     unique: true,
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
   content: {
     type: String,
     required: true
