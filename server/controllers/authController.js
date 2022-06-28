@@ -5,6 +5,16 @@ const setUserInfo = require('../helpers').setUserInfo;
 const getRole = require('../helpers').getRole;
 const config = require('../config/main');
 
+function checkLoginStatus(req, res, next) {
+  const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
+  if (!user) {
+    next();
+  } else {
+    res.status(401).send({error: "Login required to perform this action!"});
+  }
+}
+
+
 // Generate JWT
 // TO-DO Add issuer and audience
 function generateToken(user) {
