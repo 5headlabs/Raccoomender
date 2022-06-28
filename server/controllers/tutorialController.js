@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/main');
 
 const Tutorial = require('../models/tutorial');
+const ratingController = require('./ratingController');
+const commentController = require('./commentController');
 
 const desiredTutorialListCount = 5;
 
@@ -25,15 +27,23 @@ exports.createTutorial = function (req, res, next) {
 }
 
 exports.addRating = function (req, res, next) {
+    const rating = ratingController.createRating(req);
 
+    // Check if rating already exists
+    // if exist > update rating entry
+    // if not   > add rating entry
 }
 
 exports.addComment = function (req, res, next) {
+    const comment = commentController.createComment(req);
 
+    // Check if comment already exists
+    // if exist > update comment entry
+    // if not   > add comment entry
 }
 
 exports.getTutorial = function (req, res, next) {
-
+    
 }
 
 exports.listTutorial = async function (req, res, next) {

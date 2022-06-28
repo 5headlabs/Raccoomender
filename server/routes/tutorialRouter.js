@@ -9,7 +9,8 @@ router.get("/list", tutorialController.listTutorial);
 
 router.get("/view/:id", tutorialController.getTutorial);
 
-router.post("/add/comment", authController.checkLoginStatus, commentController.addComment, tutorialController.addComment);
+router.post("/add/comment", authController.checkLoginStatus, tutorialController.addComment);
+router.post("/add/rating", authController.checkLoginStatus, tutorialController.addRating);
 
 
 module.exports = router;
