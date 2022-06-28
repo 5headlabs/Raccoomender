@@ -21,7 +21,10 @@ exports.createTutorial = function (req, res, next) {
     });
 
     tutorial.save((err) => {
-        if (err) { return next(err); }
+        if (err) {
+            res.status(500).send({error: "Could not save tutorial!"});
+        }
+
         res.status(200).send({ success: true });
     });
 }
@@ -45,7 +48,7 @@ exports.addComment = function (req, res, next) {
 exports.getTutorial = function (req, res, next) {
     Tutorial.findById(req.params.id, (err, tut) => {
         if (err) {
-            res.status(500).send({error: `Failed retrieving tutorial (Tutorial ID: ${req.params.id}`});
+            res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
         } else {
             res.status(200).send({tutorial: tut});
         }

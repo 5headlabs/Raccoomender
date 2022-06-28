@@ -5,8 +5,9 @@ const setUserInfo = require('../helpers').setUserInfo;
 const getRole = require('../helpers').getRole;
 const config = require('../config/main');
 
-function checkLoginStatus(req, res, next) {
+exports.checkLoginStatus = (req, res, next) => {
   const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
+  
   if (!user) {
     next();
   } else {
@@ -49,7 +50,9 @@ exports.register = function (req, res, next) {
   console.log(`Registering: ${username}, ${password}, ${email}`);
 
   User.findOne({ username }, (err, existingUser) => {
-    if (err) { return next(err); }
+    if (err) {
+      return res.status(500).send({ error: "Could not find user!"});
+    }
 
     // If user is not unique, return error
     if (existingUser) {
@@ -64,7 +67,9 @@ exports.register = function (req, res, next) {
     });
 
     user.save((err, user) => {
-      if (err) { return next(err); }
+      if (err) {
+        res.status(500).send({ error: "Could not save user after registration!"});
+      }
 
       // Respond with JWT if user was created
       const userInfo = setUserInfo(user);
