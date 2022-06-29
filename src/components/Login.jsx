@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Button,
@@ -12,12 +12,11 @@ import {
   FilledInput,
   IconButton,
   Grid,
+  Alert,
 } from "@mui/material";
-import {
-  useNavigate
-} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { API_URL } from '../index';
+import { API_URL } from "../index";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -30,6 +29,8 @@ export default function Login() {
     password: "",
     showPassword: false,
     pressedLogin: false,
+    errorLogin: false,
+    errorMessageLogin: "Internal Server Error. Please try again later.",
   });
 
   const handleChange = (prop) => (event) => {
@@ -53,30 +54,55 @@ export default function Login() {
       pressedLogin: true,
     };
     setValues(newValues);
-    axios.post(`${API_URL}/auth/login`, {
-      username: newValues.username,
-      password: newValues.password
-    })
-    .then((response) => {
+    axios
+      .post(`${API_URL}/auth/login`, {
+        username: newValues.username,
+        password: newValues.password,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          const token = response.data.token;
 
-      if(response.status===200)
-      {
-        const token  =  response.data.token;
- 
-        //set JWT token to local
-        localStorage.setItem("token", token);
-  
-       //redirect user to home page
-       navigate('/');
+          //set JWT token to local
+          localStorage.setItem("token", token);
 
-      }
-    }).catch(function(error) {
-      console.log(error.response,"dasddsa");
-   });
-
+          //redirect user to home page
+          navigate("/");
+        }
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          console.log(error, "Username or password wrong");
+          setValues({
+            ...values,
+            pressedLogin: false,
+            errorLogin: true,
+            errorMessageLogin: "Username or password wrong. Please try again.",
+          });
+        } else if (error.response.status === 500) {
+          console.log(error, "Internal Server Error");
+          setValues({
+            ...values,
+            pressedLogin: false,
+            errorLogin: true,
+            errorMessageLogin:
+              "500 - Internal Server Error. Please try again later.",
+          });
+        } else {
+          console.log(error);
+        }
+      });
 
     //navigate("/");
   };
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+    if(localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null) {
+      navigate("/");
+    }
+    // eslint-disable-next-line
+  },[]);
 
   return (
     <>
@@ -97,10 +123,15 @@ export default function Login() {
                 justifyContent="center"
                 spacing={3}
               >
-                <Grid item>
+                <Grid item >
                   <a href="/">
-                    <img src={logo} alt="logo" width={350} />
+                    <img src={logo} alt="logo" width={250}/>
                   </a>
+                </Grid>
+                <Grid item>
+                  {values.errorLogin ? (
+                    <Alert severity="error">{values.errorMessageLogin}</Alert>
+                  ) : null}
                 </Grid>
                 <Grid item>
                   <TextField
@@ -109,6 +140,9 @@ export default function Login() {
                     label="Username"
                     variant="filled"
                     onChange={handleChange("username")}
+                    onKeyDown={(event) =>
+                      event.key === "Enter" ? handleLogIn() : null
+                    }
                   />
                 </Grid>
                 <Grid item>
@@ -119,6 +153,9 @@ export default function Login() {
                       type={values.showPassword ? "text" : "password"}
                       value={values.password}
                       onChange={handleChange("password")}
+                      onKeyDown={(event) =>
+                        event.key === "Enter" ? handleLogIn() : null
+                      }
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
@@ -137,8 +174,12 @@ export default function Login() {
                       }
                       label="Password"
                     />
-                    <Typography color="text.secondary" fontSize={14} sx={{textAlign: 'right' }}>
-                      Forgot your password? Click <a href="/">here</a>.
+                    <Typography
+                      color="text.secondary"
+                      fontSize={14}
+                      sx={{ textAlign: "right" }}
+                    >
+                      Forgot your password? Click <a href="/register">here</a>.
                     </Typography>
                   </FormControl>
                 </Grid>
@@ -192,7 +233,7 @@ export default function Login() {
                     marginBottom: 2,
                   }}
                   variant="contained"
-                  href="/register"
+                  onClick={(event)=> navigate("/register")}
                 >
                   Sign Up
                 </Button>
