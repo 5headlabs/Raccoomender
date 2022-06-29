@@ -114,12 +114,21 @@ export default function Header() {
                             sx={{
                                 float: "right"
                             }}>
-                            <AddCircleIcon
+                            { loggedIn ? (
+                                <AddCircleIcon
                                 sx={{
                                     cursor: "pointer"
                                 }}
                                 onClick={handleClickCreate}>
-                            </AddCircleIcon>
+                                </AddCircleIcon>
+                            ) : (
+                                <AddCircleIcon
+                                color="disabled"
+                                sx={{
+                                    cursor: "not-allowed"
+                                }}>
+                                </AddCircleIcon>
+                            )}
                         </Grid>
                     </Grid>
                     <Grid
