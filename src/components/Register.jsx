@@ -109,6 +109,14 @@ export default function Register() {
       });
   };
 
+  const handleClickLogo = () => {
+    navigate("/");
+  }
+
+  const handleClickLogin = () => {
+    navigate("/login");
+  }
+
   return (
     <>
       <Grid
@@ -129,9 +137,7 @@ export default function Register() {
                 spacing={3}
               >
                 <Grid item>
-                  <a href="/">
-                    <img src={logo} alt="logo" width={250} />
-                  </a>
+                  <img src={logo} alt="logo" width={250} onClick={handleClickLogo}/>
                 </Grid>
                 <Grid item>
                   <TextField
@@ -238,8 +244,20 @@ export default function Register() {
                         </div>
                       </Tooltip>
                     )}
-                  <Typography color="text.secondary" fontSize={14}>
-                    Already have an Account? Log in <a href="/login">here</a>.
+                  <Typography 
+                    color="text.secondary" 
+                    fontSize={14}>
+                    Already have an Account? Log in&nbsp;
+                    <Typography
+                      display="inline"
+                      fontSize={14}
+                      onClick={handleClickLogin}
+                      sx={{
+                        cursor: "pointer"
+                      }}>
+                      here
+                    </Typography>
+                    .
                 </Typography>
                 </Grid>
               </Grid>

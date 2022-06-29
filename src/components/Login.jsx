@@ -96,6 +96,14 @@ export default function Login() {
     //navigate("/");
   };
 
+  const handleClickLogo = () => {
+    navigate("/");
+  }
+
+  const handleClickForgotPassword = () => {
+    navigate("/register");
+  }
+
   useEffect(() => {
     console.log(localStorage.getItem("token"));
     if(localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null) {
@@ -124,9 +132,7 @@ export default function Login() {
                 spacing={3}
               >
                 <Grid item >
-                  <a href="/">
-                    <img src={logo} alt="logo" width={250}/>
-                  </a>
+                  <img src={logo} alt="logo" width={250} onClick={handleClickLogo}/>
                 </Grid>
                 <Grid item>
                   {values.errorLogin ? (
@@ -179,7 +185,17 @@ export default function Login() {
                       fontSize={14}
                       sx={{ textAlign: "right" }}
                     >
-                      Forgot your password? Click <a href="/register">here</a>.
+                      Forgot your password? Click&nbsp;
+                      <Typography
+                        display="inline"
+                        fontSize={14}
+                        onClick={handleClickForgotPassword}
+                        sx={{
+                          cursor: "pointer"
+                        }}>
+                        here
+                      </Typography>
+                      .
                     </Typography>
                   </FormControl>
                 </Grid>
