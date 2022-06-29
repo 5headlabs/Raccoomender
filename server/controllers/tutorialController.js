@@ -1,10 +1,7 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/main');
-
-const Tutorial = require('../models/tutorial');
-const ratingController = require('./ratingController');
+const Tutorial          = require('../models/tutorial');
+const ratingController  = require('./ratingController');
 const commentController = require('./commentController');
-const authController = require('./authController');
+const authController    = require('./authController');
 
 const desiredTutorialListCount = 10;
 
@@ -12,13 +9,13 @@ const desiredTutorialListCount = 10;
 
 exports.createTutorial = function (req, res, next) {
 
-    const user = authController.verifiedUser;
+    const user = authController.verifyUser(req);
 
     const tutorial = new Tutorial({
-        title: req.body.title,
-        owner: user._id,
+        title  : req.body.title,
+        owner  : user._id,
         content: req.body.content,
-        tags: req.body.tags
+        tags   : req.body.tags
     });
 
     tutorial.save((err) => {
@@ -47,11 +44,17 @@ exports.addComment = function (req, res, next) {
 }
 
 exports.getTutorial = function (req, res, next) {
-    Tutorial.findById(req.params.id, (err, tut) => {
-        if (err) {
+    Tutorial.findById(req.params.id, (err1, tut) => {
+        if (err1) {
             res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
         } else {
-            res.status(200).send({tutorial: tut});
+            User.findById(tut.owner, (err2, resOwner) => {
+                if (err2) {
+                    res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
+                } else {
+                    res.status(200).send({tutorial: tut, ownerName: resOwner.userame});
+                }
+            });
         }
     });
 }

@@ -2,8 +2,8 @@ const Comment = require('../models/comment');
 
 exports.createComment = function (req, res) {
     const comment = new Comment({
-        owner: user._id,
-        title: req.body.title,
+        owner  : user._id,
+        title  : req.body.title,
         content: req.body.content
     });
 

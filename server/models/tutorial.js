@@ -7,16 +7,16 @@ const Schema = mongoose.Schema;
 //= ===============================
 const TutorialSchema = new Schema({
   title: {
-    type: String,
-    unique: true,
+    type    : String,
+    unique  : true,
     required: true
   },
   owner: {
-    type: mongoose.ObjectId,
+    type    : mongoose.ObjectId,
     required: true
   },
   content: {
-    type: String,
+    type    : String,
     required: true
   },
   tags: [{

@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
+const mongoose    = require('mongoose');
+const bcrypt      = require('bcrypt-nodejs');
 const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
 const Schema = mongoose.Schema;
 
@@ -9,26 +9,26 @@ const Schema = mongoose.Schema;
 //= ===============================
 const UserSchema = new Schema({
   email: {
-    type: String,
+    type     : String,
     lowercase: true,
-    unique: true,
-    required: true
+    unique   : true,
+    required : true
   },
   password: {
-    type: String,
+    type    : String,
     required: true
   },
   username: {
-    type: String, 
-    unique: true,
+    type    : String, 
+    unique  : true,
     required: true
   },
   role: {
-    type: String,
-    enum: [ROLE_MEMBER],
+    type   : String,
+    enum   : [ROLE_MEMBER],
     default: ROLE_MEMBER
   },
-  resetPasswordToken: { type: String },
+  resetPasswordToken  : { type: String },
   resetPasswordExpires: { type: Date }
 },
   {

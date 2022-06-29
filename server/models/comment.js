@@ -7,16 +7,16 @@ const Schema = mongoose.Schema;
 //= ===============================
 const CommentSchema = new Schema({
   owner: {
-    type: mongoose.ObjectId,
-    unique: true,
+    type    : mongoose.ObjectId,
+    unique  : true,
     required: true
   },
   title: {
-    type: String,
+    type    : String,
     required: true
   },
   content: {
-    type: String,
+    type    : String,
     required: true
   }
 },

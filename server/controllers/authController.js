@@ -5,7 +5,9 @@ const setUserInfo = require('../helpers').setUserInfo;
 const getRole     = require('../helpers').getRole;
 const config      = require('../config/main');
 
-const verifiedUser = jwt.verify(req.get("token").split(' ')[1], config.secret);
+function verifiedUser(req) {
+  return jwt.verify(req.get("token").split(' ')[1], config.secret);
+}
 
 function checkLoginStatus (req, res, next) {
   const user = jwt.verify(req.get("token").split(' ')[1], config.secret);

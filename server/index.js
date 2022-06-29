@@ -1,11 +1,12 @@
 // Importing Node modules and initializing Express
 const express = require('express');
 const app = express();
+
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const config = require('./config/main');
-const logger = require('morgan');
-const cors = require('cors');
+const mongoose   = require('mongoose');
+const config     = require('./config/main');
+const logger     = require('morgan');
+const cors       = require('cors');
 
 const authRouter     = require('./routes/authRouter');
 const tutorialRouter = require('./routes/tutorialRouter');

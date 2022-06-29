@@ -7,12 +7,12 @@ const Schema = mongoose.Schema;
 //= ===============================
 const RatingSchema = new Schema({
   owner: {
-    type: mongoose.ObjectId,
-    unique: true,
+    type    : mongoose.ObjectId,
+    unique  : true,
     required: true
   },
   score: {
-    type: Number,
+    type    : Number,
     required: true
   }
 },
