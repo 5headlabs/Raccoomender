@@ -130,7 +130,7 @@ export default function Register() {
               >
                 <Grid item>
                   <a href="/">
-                    <img src={logo} alt="logo" width={350} />
+                    <img src={logo} alt="logo" width={250} />
                   </a>
                 </Grid>
                 <Grid item>
