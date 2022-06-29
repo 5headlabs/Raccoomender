@@ -3,6 +3,7 @@ const router = express.Router();
 
 const passport = require('passport');
 const authController = require('../controllers/authController');
+const passportService = require('../config/passport');
 
 const requireLogin = passport.authenticate('local', { session: false });
 
