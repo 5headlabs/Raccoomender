@@ -1,11 +1,13 @@
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const User = require('../models/user');
+const jwt         = require('jsonwebtoken');
+const crypto      = require('crypto');
+const User        = require('../models/user');
 const setUserInfo = require('../helpers').setUserInfo;
-const getRole = require('../helpers').getRole;
-const config = require('../config/main');
+const getRole     = require('../helpers').getRole;
+const config      = require('../config/main');
 
-exports.checkLoginStatus = (req, res, next) => {
+const verifiedUser = jwt.verify(req.get("token").split(' ')[1], config.secret);
+
+function checkLoginStatus (req, res, next) {
   const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
   
   if (!user) {
@@ -15,19 +17,13 @@ exports.checkLoginStatus = (req, res, next) => {
   }
 }
 
-
-// Generate JWT
-// TO-DO Add issuer and audience
 function generateToken(user) {
   return jwt.sign(user, config.secret, {
     expiresIn: '24h'
   });
 }
 
-//========================================
-// Login Route
-//========================================
-exports.login = function (req, res, next) {
+function login(req, res, next) {
   const userInfo = setUserInfo(req.user);
   console.log(userInfo);
 
@@ -37,17 +33,10 @@ exports.login = function (req, res, next) {
   });
 };
 
-
-//= =======================================
-// Registration Route
-//= =======================================
-exports.register = function (req, res, next) {
-  // Check for registration errors
-  const email = req.body.email;
+function register(req, res, next) {
+  const email    = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
-
-  console.log(`Registering: ${username}, ${password}, ${email}`);
 
   User.findOne({ username }, (err, existingUser) => {
     if (err) {
@@ -71,7 +60,7 @@ exports.register = function (req, res, next) {
         res.status(500).send({ error: "Could not save user after registration!"});
       }
 
-      // Respond with JWT if user was created
+      // Respond with JWT and user info if user was created
       const userInfo = setUserInfo(user);
 
       res.status(201).json({
@@ -81,3 +70,5 @@ exports.register = function (req, res, next) {
     });
   });
 };
+
+module.exports = { checkLoginStatus, login, register, verifiedUser };

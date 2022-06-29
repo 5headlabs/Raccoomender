@@ -4,14 +4,15 @@ const config = require('../config/main');
 const Tutorial = require('../models/tutorial');
 const ratingController = require('./ratingController');
 const commentController = require('./commentController');
+const authController = require('./authController');
 
-const desiredTutorialListCount = 5;
+const desiredTutorialListCount = 10;
 
 // Handle Tutorial Creation and Display
 
 exports.createTutorial = function (req, res, next) {
 
-    const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
+    const user = authController.verifiedUser;
 
     const tutorial = new Tutorial({
         title: req.body.title,
@@ -25,7 +26,7 @@ exports.createTutorial = function (req, res, next) {
             res.status(500).send({error: "Could not save tutorial!"});
         }
 
-        res.status(200).send({ success: true });
+        res.status(201).send({ success: true });
     });
 }
 
