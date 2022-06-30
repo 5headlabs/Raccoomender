@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
   Button,
@@ -21,7 +21,9 @@ import { API_URL } from "../index";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import logo from "../raccoomender.png";
-export default function Login() {
+export default function Login(props) {
+  const {setLoggedIn} = props;
+
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
@@ -62,11 +64,8 @@ export default function Login() {
       .then((response) => {
         if (response.status === 200) {
           const token = response.data.token;
-
-          //set JWT token to local
           localStorage.setItem("token", token);
-
-          //redirect user to home page
+          setLoggedIn(true);
           navigate("/");
         }
       })
@@ -91,9 +90,8 @@ export default function Login() {
         } else {
           console.log(error);
         }
+        setLoggedIn(false);
       });
-
-    //navigate("/");
   };
 
   const handleClickLogo = () => {
@@ -103,14 +101,6 @@ export default function Login() {
   const handleClickForgotPassword = () => {
     navigate("/register");
   }
-
-  useEffect(() => {
-    console.log(localStorage.getItem("token"));
-    if(localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null) {
-      navigate("/");
-    }
-    // eslint-disable-next-line
-  },[]);
 
   return (
     <>
@@ -131,7 +121,7 @@ export default function Login() {
                 justifyContent="center"
                 spacing={3}
               >
-                <Grid item >
+                <Grid item sx={{cursor: "pointer"}}>
                   <img src={logo} alt="logo" width={250} onClick={handleClickLogo}/>
                 </Grid>
                 <Grid item>
@@ -191,6 +181,8 @@ export default function Login() {
                         fontSize={14}
                         onClick={handleClickForgotPassword}
                         sx={{
+                          color: "blue",
+                          textDecoration: "underline",
                           cursor: "pointer"
                         }}>
                         here

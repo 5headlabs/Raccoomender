@@ -11,6 +11,7 @@ import {
   FilledInput,
   IconButton,
   Grid,
+  Alert,
   Tooltip,
 } from "@mui/material";
 
@@ -27,7 +28,9 @@ import {
 } from 'react-router-dom';
 import { API_URL } from '../index';
 
-export default function Register() {
+export default function Register(props) {
+  const {setLoggedIn} = props;
+
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -35,11 +38,13 @@ export default function Register() {
     confirmPassword: "",
     showPassword: false,
     pressedSignUp: false,
+    errorSignUp: false,
+    errorMessageSignUp: "Internal Server Error. Please try again later.",
   });
   const navigate = useNavigate();
 
   const [enableSignUpButton, setEnableSignUpButton] = useState(false);
-  const [errerMessage, setMsg] = useState("");
+  const [errorMessage, setMsg] = useState("");
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -98,13 +103,24 @@ export default function Register() {
       .then((response) => {
         if (response.status === 201) {
           const token = response.data.token;
-
-          //set JWT token to local
           localStorage.setItem("token", token);
-
-          //redirect user to home page
+          setLoggedIn(true);
           navigate('/');
-
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 422) {
+          setValues({
+            ...values,
+            errorSignUp: true,
+            errorMessageSignUp: "Username is already in use. Please choose another one.",
+          });
+        } else if (error.response.status === 500) {
+          setValues({
+            ...values,
+            errorSignUp: true,
+            errorMessageSignUp: "500 - Internal Server Error. Please try again later.",
+          });
         }
       });
   };
@@ -136,8 +152,13 @@ export default function Register() {
                 justifyContent="center"
                 spacing={3}
               >
-                <Grid item>
+                <Grid item sx={{cursor: "pointer"}}>
                   <img src={logo} alt="logo" width={250} onClick={handleClickLogo}/>
+                </Grid>
+                <Grid item>
+                  {values.errorSignUp ? (
+                    <Alert severity="error">{values.errorMessageSignUp}</Alert>
+                  ) : null}
                 </Grid>
                 <Grid item>
                   <TextField
@@ -225,10 +246,10 @@ export default function Register() {
                       }}
                       variant="contained"
                     >
-                      Enter the Cave!
+                      Enter the cave!
                     </LoadingButton>
                   ) : (
-                      <Tooltip title={errerMessage} placement="top">
+                      <Tooltip title={errorMessage} placement="top">
                         <div>
                           <Button disabled={!enableSignUpButton}
                             sx={{
@@ -239,7 +260,7 @@ export default function Register() {
                             variant="contained"
                             onClick={handleSignUp}
                           >
-                            Enter the Cave!
+                            Enter the cave!
                         </Button>
                         </div>
                       </Tooltip>
@@ -247,12 +268,14 @@ export default function Register() {
                   <Typography 
                     color="text.secondary" 
                     fontSize={14}>
-                    Already have an Account? Log in&nbsp;
+                    Already have an account? Log in&nbsp;
                     <Typography
                       display="inline"
                       fontSize={14}
                       onClick={handleClickLogin}
                       sx={{
+                        color: "blue",
+                        textDecoration: "underline",
                         cursor: "pointer"
                       }}>
                       here
