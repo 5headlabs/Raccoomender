@@ -1,5 +1,5 @@
 import "./App.css";
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 import React, { useEffect, useState } from "react";
 
 import Frontpage from "./components/Frontpage";
@@ -24,10 +24,11 @@ function App() {
         <header className="App-header">
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Frontpage/>}/>
+              <Route path="/" element={<Frontpage loggedIn={loggedIn}/>}/>
               {!loggedIn ? (<Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>) : null} 
               {!loggedIn ? (<Route path="/register" element={<Register setLoggedIn={setLoggedIn}/>}/>) : null }
-              <Route path="/create" element={<TutorialCreation/>}/>  
+              {!loggedIn ? (<Route path="/create" element={<TutorialCreation/>}/>) : null }
+              <Route path="/*" element={<Navigate to="/" replace={true} />}/>
             </Routes> 
           </BrowserRouter>
         </header>

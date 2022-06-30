@@ -1,14 +1,12 @@
 import { AppBar, Avatar, Button, Grid, IconButton, InputBase, Toolbar, Typography } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../raccoomender.png";
 
 
-export default function Header() {
-
-    const [loggedIn] = useState(false);
+export default function Header(props) {
+    const {loggedIn} = props;
 
     const navigate = useNavigate();
 
@@ -121,14 +119,7 @@ export default function Header() {
                                 }}
                                 onClick={handleClickCreate}>
                                 </AddCircleIcon>
-                            ) : (
-                                <AddCircleIcon
-                                color="disabled"
-                                sx={{
-                                    cursor: "not-allowed"
-                                }}>
-                                </AddCircleIcon>
-                            )}
+                            ) : null}
                         </Grid>
                     </Grid>
                     <Grid

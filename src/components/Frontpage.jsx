@@ -5,7 +5,8 @@ import { API_URL } from "../index";
 import { Grid, Typography } from "@mui/material";
 import TutorialOverview from "./TutorialOverview";
 
-export default function Frontpage() {
+export default function Frontpage(props) {
+    const {loggedIn} = props;
 
     const [tutorials, setTutorials] = useState([]);
 
@@ -70,7 +71,7 @@ export default function Frontpage() {
 
     return(
         <>
-        <Header></Header>
+        <Header loggedIn={loggedIn}/>
         <Grid
             container
             direction="column"
