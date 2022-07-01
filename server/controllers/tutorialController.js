@@ -38,27 +38,21 @@ exports.addRating = function (req, res, next) {
 }
 
 exports.addComment = function (req, res, next) {
-    const comment = commentController.createComment(req);
-
-    // Check if comment already exists
-    // if exist > update comment entry
-    // if not   > add comment entry
+    const user       = authController.verifyUser(req);
+    const comment    = commentController.createComment(req, user);
+    const tutorialId = req.params.id;
+    
 }
 
 exports.getTutorial = function (req, res, next) {
-    Tutorial.findById(req.params.id, (err1, tut) => {
-        if (err1) {
-            res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
-        } else {
-            User.findById(tut.owner, (err2, resOwner) => {
-                if (err2) {
-                    res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
-                } else {
-                    // Also return different star ratings (avg-rating is contained in tutorial)
-                    res.status(200).send({tutorial: tut, ownerName: resOwner.userame});
-                }
-            });
-        }
+    Tutorial.findById({_id: req.params.id}).
+        populate('owner').
+        exec((err, tut) => {
+            if (err) {
+                res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
+            } else {
+                res.status(200).send({tutorial: tut});
+            }
     });
 }
 
@@ -75,19 +69,21 @@ function findRandom(limit) {
         Tutorial.count({}, (err, count) => {
             let size = (count < limit) ? count : limit;
             let skip = getRand(0, count - size);
-            Tutorial.find().skip(skip).limit(size).exec(function (err, docs) {
-                if (err)
-                    return reject(err);
-                resolve(docs).then((tut) => {
-                    User.findById(tut.owner, (err2, resOwner) => {
-                        if (err2) {
-                            res.status(500).send({error: `An error occurred during retrieval of tutorial (Tutorial-ID: ${tut._id})!`});
-                        } else {
-                            return {tutorial: tut, ownerName: resOwner.userame};
-                        }
-                    });
-                });                    
-            });
+            Tutorial.find()
+                .populate({
+                    path: 'owner',
+                    options: {
+                        skip: skip,
+                        limit: size
+                }})
+                .exec((err, docs) => {
+                    if (err) {
+                        res.status(500).send({error: `An error occurred during retrieval of tutorial (Tutorial-ID: ${tut._id})!`});
+                        return reject(err);
+                    } else {
+                        resolve(docs);
+                    }
+                });
         });
     });
 }

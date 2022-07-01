@@ -13,7 +13,8 @@ const TutorialSchema = new Schema({
   },
   owner: {
     type    : mongoose.ObjectId,
-    required: true
+    required: true,
+    ref     : 'User'
   },
   content: {
     type    : String,
@@ -24,13 +25,21 @@ const TutorialSchema = new Schema({
   }],
   comments: [{
     author: {
-      type: mongoose.ObjectId
+      type: mongoose.ObjectId,
+      required: true,
+      ref : 'User'
     },
     title: {
-      type: String
+      type: String,
+      required: true
     },
     content: {
-      type: String
+      type: String,
+      required: true
+    },
+    published: {
+      type: Date,
+      required: true
     }
   }],
   ratingStats: {
@@ -42,7 +51,8 @@ const TutorialSchema = new Schema({
     star5    : Number
   },
   ratings: [{
-    type: mongoose.ObjectId
+    type: mongoose.ObjectId,
+    ref : 'Rating'
   }]
 },
   {

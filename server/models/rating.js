@@ -9,7 +9,8 @@ const RatingSchema = new Schema({
   owner: {
     type    : mongoose.ObjectId,
     unique  : true,
-    required: true
+    required: true,
+    ref     : 'User'
   },
   score: {
     type    : Number,
@@ -17,7 +18,8 @@ const RatingSchema = new Schema({
   },
   tutorial: {
     type    : mongoose.ObjectId,
-    required: true
+    required: true,
+    ref     : 'Tutorial'
   }
 },
   {
