@@ -1,5 +1,4 @@
 const Tutorial          = require('../models/tutorial');
-const User              = require('../models/user');
 const ratingController  = require('./ratingController');
 const commentController = require('./commentController');
 const authController    = require('./authController');
@@ -7,9 +6,7 @@ const authController    = require('./authController');
 const desiredTutorialListCount = 10;
 
 // Handle Tutorial Creation and Display
-
-exports.createTutorial = function (req, res, next) {
-
+function createTutorial(req, res, next) {
     const user = authController.verifyUser(req);
 
     const tutorial = new Tutorial({
@@ -28,7 +25,7 @@ exports.createTutorial = function (req, res, next) {
     });
 }
 
-exports.addRating = function (req, res, next) {
+function addRating(req, res) {
     const rating = ratingController.createRating(req);
 
     // Check if rating already exists
@@ -37,14 +34,28 @@ exports.addRating = function (req, res, next) {
     // avg rating: (avgRating + newRating) / (#ratings + 1)
 }
 
-exports.addComment = function (req, res, next) {
+function addComment(req, res) {
     const user       = authController.verifyUser(req);
     const comment    = commentController.createComment(req, user);
     const tutorialId = req.params.id;
-    
+
+    Tutorial.findByIdAndUpdate({_id: tutorialId}, {
+        $push: {
+            comments: {
+                $each    : [comment],
+                $position: 0
+            }
+        }
+    }, (err, tut) => {
+            if (err) {
+                res.status(500).send({error: "An error occurred during saving of comment!"});
+            } else {
+                res.status(201).send({success: true, tutorial: tut });
+            }
+    });
 }
 
-exports.getTutorial = function (req, res, next) {
+function getTutorial(req, res, next) {
     Tutorial.findById({_id: req.params.id}).
         populate('owner').
         exec((err, tut) => {
@@ -56,7 +67,7 @@ exports.getTutorial = function (req, res, next) {
     });
 }
 
-exports.listTutorial = async function (req, res, next) {
+async function listTutorials(req, res, next) {
     const tutorials = findRandom(desiredTutorialListCount);
 
     tutorials.then((result)=>{
@@ -91,3 +102,5 @@ function findRandom(limit) {
 function getRand(min, max) {
     return Math.ceil(Math.random() * (max - min) + min);
 }
+
+module.exports = { createTutorial, addRating, addComment, getTutorial, listTutorials };
