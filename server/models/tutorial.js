@@ -23,8 +23,24 @@ const TutorialSchema = new Schema({
     type: String
   }],
   comments: [{
-    type: mongoose.ObjectId
+    author: {
+      type: mongoose.ObjectId
+    },
+    title: {
+      type: String
+    },
+    content: {
+      type: String
+    }
   }],
+  ratingStats: {
+    avgRating: Number,
+    star1    : Number,
+    star2    : Number,
+    star3    : Number,
+    star4    : Number,
+    star5    : Number
+  },
   ratings: [{
     type: mongoose.ObjectId
   }]
