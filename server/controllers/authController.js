@@ -5,14 +5,14 @@ const setUserInfo = require('../helpers').setUserInfo;
 const getRole     = require('../helpers').getRole;
 const config      = require('../config/main');
 
-function verifiedUser(req) {
+function verifyUser(req) {
   return jwt.verify(req.get("token").split(' ')[1], config.secret);
 }
 
 function checkLoginStatus (req, res, next) {
   const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
   
-  if (!user) {
+  if (user) {
     next();
   } else {
     res.status(401).send({error: "Login required to perform this action!"});
@@ -27,7 +27,6 @@ function generateToken(user) {
 
 function login(req, res, next) {
   const userInfo = setUserInfo(req.user);
-  console.log(userInfo);
 
   res.status(200).json({
     token: `JWT ${generateToken(userInfo)}`,
@@ -59,18 +58,18 @@ function register(req, res, next) {
 
     user.save((err, user) => {
       if (err) {
-        res.status(500).send({ error: "Could not save user after registration!"});
+        res.status(500).send({ error: "Could not save user after registration!", message: err});
+      } else {
+        // Respond with JWT and user info if user was created
+        const userInfo = setUserInfo(user);
+  
+        res.status(201).json({
+          token: `JWT ${generateToken(userInfo)}`,
+          user: userInfo
+        });
       }
-
-      // Respond with JWT and user info if user was created
-      const userInfo = setUserInfo(user);
-
-      res.status(201).json({
-        token: `JWT ${generateToken(userInfo)}`,
-        user: userInfo
-      });
     });
   });
 };
 
-module.exports = { checkLoginStatus, login, register, verifiedUser };
+module.exports = { checkLoginStatus, login, register, verifyUser };
