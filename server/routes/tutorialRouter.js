@@ -6,7 +6,7 @@ const authController     = require("../controllers/authController");
 
 router.post("/create", authController.checkLoginStatus, tutorialController.createTutorial);
 
-router.get("/list", tutorialController.listTutorial);
+router.get("/list", tutorialController.listTutorials);
 
 router.get("/view/:id", tutorialController.getTutorial);
 
