@@ -14,6 +14,10 @@ const RatingSchema = new Schema({
   score: {
     type    : Number,
     required: true
+  },
+  tutorial: {
+    type    : mongoose.ObjectId,
+    required: true
   }
 },
   {

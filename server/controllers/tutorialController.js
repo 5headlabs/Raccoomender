@@ -1,4 +1,5 @@
 const Tutorial          = require('../models/tutorial');
+const User              = require('../models/user');
 const ratingController  = require('./ratingController');
 const commentController = require('./commentController');
 const authController    = require('./authController');
@@ -33,6 +34,7 @@ exports.addRating = function (req, res, next) {
     // Check if rating already exists
     // if exist > update rating entry
     // if not   > add rating entry
+    // avg rating: (avgRating + newRating) / (#ratings + 1)
 }
 
 exports.addComment = function (req, res, next) {
@@ -52,6 +54,7 @@ exports.getTutorial = function (req, res, next) {
                 if (err2) {
                     res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
                 } else {
+                    // Also return different star ratings (avg-rating is contained in tutorial)
                     res.status(200).send({tutorial: tut, ownerName: resOwner.userame});
                 }
             });
@@ -75,7 +78,15 @@ function findRandom(limit) {
             Tutorial.find().skip(skip).limit(size).exec(function (err, docs) {
                 if (err)
                     return reject(err);
-                resolve(docs);
+                resolve(docs).then((tut) => {
+                    User.findById(tut.owner, (err2, resOwner) => {
+                        if (err2) {
+                            res.status(500).send({error: `An error occurred during retrieval of tutorial (Tutorial-ID: ${tut._id})!`});
+                        } else {
+                            return {tutorial: tut, ownerName: resOwner.userame};
+                        }
+                    });
+                });                    
             });
         });
     });
