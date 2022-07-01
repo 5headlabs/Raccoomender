@@ -145,7 +145,7 @@ export default function TutorialOverview(props) {
                         <Grid 
                             item>
                             <Typography>
-                                { author }
+                                { author.username }
                             </Typography>
                         </Grid>
                     </Grid>
