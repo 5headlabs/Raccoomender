@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose    = require('mongoose');
-const bcrypt      = require('bcrypt-nodejs');
+const bcrypt      = require('bcrypt');
 const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
 const Schema = mongoose.Schema;
 
@@ -41,19 +41,18 @@ const UserSchema = new Schema({
 
 // Pre-save of user to database, hash password if password is modified or new
 UserSchema.pre('save', function (next) {
-  const user = this,
-    SALT_FACTOR = 5;
+  const user = this;
+  const SALT_ROUNDS = 5;
 
   if (!user.isModified('password')) return next();
 
-  bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
-    if (err) return next(err);
-
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) return next(err);
+  bcrypt.hash(user.password, SALT_ROUNDS, (err, hash) => {
+    if (err) {
+      return next(err);
+    } else {
       user.password = hash;
       next();
-    });
+    }
   });
 });
 
