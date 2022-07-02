@@ -21,8 +21,9 @@ import { API_URL } from "../index";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import logo from "../raccoomender.png";
+
 export default function Login(props) {
-  const {setLoggedIn} = props;
+  const { setLoggedIn } = props;
 
   const navigate = useNavigate();
 
@@ -96,11 +97,11 @@ export default function Login(props) {
 
   const handleClickLogo = () => {
     navigate("/");
-  }
+  };
 
   const handleClickForgotPassword = () => {
     navigate("/register");
-  }
+  };
 
   return (
     <>
@@ -110,7 +111,7 @@ export default function Login(props) {
         alignItems="center"
         justifyContent="center"
         spacing={2}
-        sx={{marginTop: 5}}
+        sx={{ marginTop: 5 }}
       >
         <Grid item>
           <Card sx={{ minWidth: 400 }}>
@@ -122,8 +123,13 @@ export default function Login(props) {
                 justifyContent="center"
                 spacing={3}
               >
-                <Grid item sx={{cursor: "pointer"}}>
-                  <img src={logo} alt="logo" width={250} onClick={handleClickLogo}/>
+                <Grid item sx={{ cursor: "pointer" }}>
+                  <img
+                    src={logo}
+                    alt="logo"
+                    width={250}
+                    onClick={handleClickLogo}
+                  />
                 </Grid>
                 <Grid item>
                   {values.errorLogin ? (
@@ -184,8 +190,9 @@ export default function Login(props) {
                         sx={{
                           color: "blue",
                           textDecoration: "underline",
-                          cursor: "pointer"
-                        }}>
+                          cursor: "pointer",
+                        }}
+                      >
                         here
                       </Typography>
                       .
@@ -242,7 +249,7 @@ export default function Login(props) {
                     marginBottom: 2,
                   }}
                   variant="contained"
-                  onClick={(event)=> navigate("/register")}
+                  onClick={(event) => navigate("/register")}
                 >
                   Sign Up
                 </Button>

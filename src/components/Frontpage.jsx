@@ -27,7 +27,7 @@ export default function Frontpage(props) {
                 title={response.data.tutorialList[i].title}
                 date={formatDate(response.data.tutorialList[i].createdAt)}
                 tags={response.data.tutorialList[i].tags}
-                author={response.data.tutorialList[i].owner||''}
+                author={response.data.tutorialList[i].owner || ""}
               ></TutorialOverview>
             </Grid>
           );
