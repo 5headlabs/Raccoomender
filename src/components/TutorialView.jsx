@@ -1,10 +1,8 @@
 import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import LoadingButton from "@mui/lab/LoadingButton";
 import Header from "./Header";
 import axios from "axios";
 import { API_URL } from "../index";
-import { blue, red } from "@mui/material/colors";
 import { useParams } from "react-router-dom";
 import TutorialContent from "./TutorialView/TutorialContent";
 import TutorialRatings from "./TutorialView/TutorialRatings";
@@ -13,7 +11,7 @@ import TutorialCommentList from "./TutorialView/TutorialCommentList";
 
 export default function TutorialView(props) {
   const { loggedIn } = props;
-  let { id } = useParams();
+  const { id } = useParams();
 
   const [values, setValues] = useState({
     comments: [],
@@ -50,6 +48,7 @@ export default function TutorialView(props) {
         if (error.response.data === 500) {
         }
       });
+    // eslint-disable-next-line
   }, []);
 
   return (
