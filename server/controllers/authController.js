@@ -9,6 +9,19 @@ function verifyUser(req) {
   return jwt.verify(req.get("token").split(' ')[1], config.secret);
 }
 
+function isLoggedIn(req, res) {
+  try {
+    const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
+    if(user) {
+      res.status(200).send({isLoggedIn: true});
+    } else {
+      res.status(200).send({isLoggedIn: false});
+    }
+  } catch {
+    res.status(200).send({isLoggedIn: false});
+  }
+}
+
 function checkLoginStatus (req, res, next) {
   const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
   
@@ -72,4 +85,4 @@ function register(req, res, next) {
   });
 };
 
-module.exports = { checkLoginStatus, login, register, verifyUser };
+module.exports = { checkLoginStatus, login, register, verifyUser, isLoggedIn };

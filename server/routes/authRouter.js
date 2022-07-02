@@ -11,5 +11,6 @@ router.post("/login", passportService.authLogin, authController.login);
 
 router.post("/register", authController.register);
 
+router.get("/checkLogin", authController.isLoggedIn);
 
 module.exports = router;
