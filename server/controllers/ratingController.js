@@ -1,28 +1,21 @@
 const Rating = require('../models/rating');
 
-exports.createRating = function (req, res) {
-    const rating = new Rating({
-        owner: user._id,
-        score: req.body.score
+function createRating (user, req, res) {
+    return new Promise((resolve, reject) => {
+        Rating
+        .findOneAndUpdate(
+            {owner: user._id, tutorial: req.params.id}, 
+            {score: req.body.score}, 
+            {new: true, upsert: true})
+        .exec((err, rating) => {
+            if (err) {
+                res.status(500).send({error: "An error occurred during update of rating!"});
+                return reject(err);
+            } else {
+                resolve(rating);
+            }
+        });
     });
-
-    rating.save((err) => {
-        if (err) { 
-            res.status(500).send({error: "An error occurred whilst saving rating!"});
-        }
-
-        return rating;
-    });
 }
 
-exports.updateRating = function (req, res, next) {
-
-}
-
-exports.getRating = function (req, res, next) {
-
-}
-
-exports.listRatings = function (req, res, next) {
-
-}
+module.exports = { createRating };
