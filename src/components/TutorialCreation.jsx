@@ -1,18 +1,24 @@
-import { Button, Card, Divider, Grid, TextField, Typography } from "@mui/material";
+import { Button, Card, Divider, Grid, TextField, Typography ,Alert} from "@mui/material";
 import React, { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Header from "./Header";
 import axios from "axios";
 import { API_URL } from "../index";
+import { useNavigate } from "react-router-dom";
 
 export default function TutorialCreation() {
+    const navigate = useNavigate();
 
     const [values, setValues] = useState({
         pressedCreate: false,
         title: "",
         content: "",
         tags: "",
-    });
+        errorCreateTutorial: false,
+        successCreateTutorial: false,
+        errorCreateTutorialMessage: null,
+        successCreateTutorialMessage: null
+     });
 
     const handleCreate = () => {
         setValues({
@@ -30,7 +36,26 @@ export default function TutorialCreation() {
                 headers: {
                     token: window.localStorage.getItem("token")
                 }
-            });
+            }).then((response) => {
+                if (response.status === 201) {
+                    setValues({
+                        ...values,
+                        successCreateTutorial:true,
+                        successCreateTutorialMessage: "Tutorial Sucessfully added",
+                      });
+                 navigate("/");
+                }
+              }) 
+            .catch(function (error) {
+                if (error.response.status === 500) {
+                  console.log(error, "Something went wong");
+                  setValues({
+                    ...values,
+                    errorCreateTutorial:true,
+                    errorCreateTutorialMessage: "Cannot save tutorial please try again",
+                  });
+                } 
+              });
 
         
     }
@@ -116,6 +141,7 @@ export default function TutorialCreation() {
                                 onChange={handleChange("tags")}>
                             </TextField>
                         </Grid>
+                        
                         <Grid>
                             {values.pressedCreate ? (
                                 <LoadingButton
@@ -141,10 +167,22 @@ export default function TutorialCreation() {
                                 </Button>
                             )}
                         </Grid>
+                        <Grid item>
+                  {values.successCreateTutorial ? (
+                    <Alert severity="success">{values.successCreateTutorialMessage}</Alert>
+                  ) : null}
+                </Grid>
+                <Grid item>
+                  {values.errorCreateTutorial ? (
+                    <Alert severity="error">{values.errorCreateTutorialMessage}</Alert>
+                  ) : null}
+                </Grid>
                     </Card>
+                 
                 </Grid>
             </Grid>
         </>
     )
 
 }
+

@@ -24,7 +24,7 @@ export default function TutorialOverview(props) {
     return (
         <>
         <Grid 
-            item>
+        item>
             <Card
                 onClick={handleClickTutorialOverview}
                 sx={{
