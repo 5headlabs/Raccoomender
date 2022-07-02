@@ -10,28 +10,71 @@ function createTutorial(req, res, next) {
     const user = authController.verifyUser(req);
 
     const tutorial = new Tutorial({
-        title  : req.body.title,
-        owner  : user._id,
-        content: req.body.content,
-        tags   : req.body.tags
+        title      : req.body.title,
+        owner      : user._id,
+        content    : req.body.content,
+        tags       : req.body.tags,
+        ratingStats: {
+            avgRating : 0,
+            starRating: [0,0,0,0,0]
+        }
     });
 
     tutorial.save((err) => {
         if (err) {
             res.status(500).send({error: "Could not save tutorial!"});
+        } else {
+            res.status(201).send({success: true});
         }
-
-        res.status(201).send({ success: true });
     });
 }
 
 function addRating(req, res) {
-    const rating = ratingController.createRating(req);
+    const user   = authController.verifyUser(req);
+    const rating = ratingController.createRating(user, req, res);
 
-    // Check if rating already exists
-    // if exist > update rating entry
-    // if not   > add rating entry
-    // avg rating: (avgRating + newRating) / (#ratings + 1)
+    rating.then((r) => {
+        // Add rating to tutorial
+        Tutorial.findByIdAndUpdate(
+            {_id: req.params.id},
+            {$addToSet: { ratings: r._id }},
+            {new: true},
+            (err, tut) => {
+                if (err) {
+                    res.status(500).send({error: "An error occurred during saving of Rating!", msg: err.message});
+                } else {
+                    // Calculate avgRating and starRatings to tutorial.
+                    Tutorial.findById(req.params.id)
+                    .populate('ratings')
+                    .exec((err, tutorial) => {
+                        const ratings     = tutorial.ratings;
+                        const starRatings = [0,0,0,0,0];
+                        let avgRating     = 0;
+                        let sumRating     = 0;
+
+                        for (let index in ratings) {
+                            sumRating += ratings[index].score;
+                            starRatings[ratings[index].score-1] += 1;
+                        }
+                        avgRating = sumRating / ratings.length;
+
+                        // Add avgRating and starRatings to tutorial.
+                        Tutorial.findByIdAndUpdate(
+                            req.params.id, 
+                            {ratingStats: {avgRating: avgRating, starRating: starRatings}}, 
+                            {new: true},
+                            (err, tut) => {
+                                if (err) {
+                                    res.status(500).send({error: "An error occurred whilst saving new rating!"});
+                                } else {
+                                    res.status(201).send({success: true, tutorial: tut});
+                                }
+                        });
+                    });
+                }
+            }
+        );
+    });
 }
 
 function addComment(req, res) {
@@ -39,14 +82,16 @@ function addComment(req, res) {
     const comment    = commentController.createComment(req, user);
     const tutorialId = req.params.id;
 
-    Tutorial.findByIdAndUpdate({_id: tutorialId}, {
-        $push: {
+    Tutorial.findByIdAndUpdate(
+        {_id: tutorialId},
+        {$push: {
             comments: {
                 $each    : [comment],
                 $position: 0
             }
-        }
-    }, (err, tut) => {
+        }}, 
+        {new: true},
+        (err, tut) => {
             if (err) {
                 res.status(500).send({error: "An error occurred during saving of comment!"});
             } else {
