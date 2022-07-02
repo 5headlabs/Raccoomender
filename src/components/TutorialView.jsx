@@ -37,6 +37,7 @@ export default function TutorialView(props) {
             createdAt: response.data.tutorial.createdAt,
             owner: response.data.tutorial.owner,
             ratings: response.data.tutorial.ratings,
+            rating: response.data.tutorial.ratingStats.avgRating,
             tags: response.data.tutorial.tags,
             title: response.data.tutorial.title,
             id: response.data.tutorial._id,

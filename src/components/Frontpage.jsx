@@ -4,6 +4,7 @@ import Header from "./Header";
 import { API_URL } from "../index";
 import { Grid, Typography } from "@mui/material";
 import TutorialOverview from "./TutorialOverview";
+import formatDate from "../functions";
 
 export default function Frontpage(props) {
   const { loggedIn } = props;
@@ -21,13 +22,12 @@ export default function Frontpage(props) {
             <Grid item>
               <TutorialOverview
                 id={response.data.tutorialList[i]._id}
-                stars={calculateStars(response.data.tutorialList[i].ratings)}
+                rating={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"
                 numberOfRatings={response.data.tutorialList[i].ratings.length}
                 title={response.data.tutorialList[i].title}
                 date={formatDate(response.data.tutorialList[i].createdAt)}
                 tags={response.data.tutorialList[i].tags}
-                // TODO convert id to name
-                author={getUsername(response.data.tutorialList[i].owner)}
+                author={response.data.tutorialList[i].owner}
               ></TutorialOverview>
             </Grid>
           );
@@ -43,36 +43,6 @@ export default function Frontpage(props) {
 
     handleGetTutorials();
   }, []);
-
-  const calculateStars = (ratings) => {
-    let i = 0;
-    let sum = 0;
-    while (i < ratings.length) {
-      sum += ratings[i].score;
-      i += 1;
-    }
-    if (ratings.length === 0) {
-      return 0;
-    }
-    return sum / i;
-  };
-
-  const formatDate = (date) => {
-    date = date.slice(0, 10);
-    date = new Date(date);
-    date =
-      date.getUTCDate() +
-      "." +
-      (date.getUTCMonth() + 1) +
-      "." +
-      date.getUTCFullYear();
-    return date;
-  };
-
-  const getUsername = (id) => {
-    // TODO get username by id
-    return id;
-  };
 
   return (
     <>
