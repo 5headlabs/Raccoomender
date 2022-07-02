@@ -1,16 +1,14 @@
 import { Avatar, Card, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import StarIcon from '@mui/icons-material/Star';
-import StarHalfIcon from '@mui/icons-material/StarHalf';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { createStars } from "../functions";
 
 export default function TutorialOverview(props) {
 
-    const { id, stars, numberOfRatings, title, date, tags, author } = props;
+    const { id, rating, numberOfRatings, title, date, tags, author } = props;
 
     // id = atring
-    // stars = int
+    // rating = int
     // numberOfRatings = int
     // title = string
     // date = string
@@ -21,37 +19,6 @@ export default function TutorialOverview(props) {
 
     const handleClickTutorialOverview = () => {
         navigate("/tutorial/" + id)
-    };
-
-    const convertRatingToStars = stars => {
-        let content = [];
-        let myStars = stars;
-        while (myStars >= 1) {
-            content.push(
-                <StarIcon
-                    color="black">
-                </StarIcon>
-            )
-            myStars = myStars-1;
-        }
-        if (myStars >= 0.5) {
-            content.push(
-                <StarHalfIcon
-                    color="black">
-                </StarHalfIcon>
-            )
-            myStars = myStars-0.5;
-        }
-        let difference = 5-stars;
-        while (difference >= 1) {
-            content.push(
-                <StarBorderIcon
-                    color="black">
-                </StarBorderIcon>
-            )
-            difference = difference-1;
-        }
-        return content;
     };
 
     return (
@@ -75,7 +42,7 @@ export default function TutorialOverview(props) {
                             alignItems="center">
                             <Grid
                                 item>
-                                { convertRatingToStars(stars) }
+                                { createStars(rating) }
                             </Grid>
                             <Grid
                                 item>
