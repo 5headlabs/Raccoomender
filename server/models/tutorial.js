@@ -43,12 +43,10 @@ const TutorialSchema = new Schema({
     }
   }],
   ratingStats: {
-    avgRating: Number,
-    star1    : Number,
-    star2    : Number,
-    star3    : Number,
-    star4    : Number,
-    star5    : Number
+    avgRating : Number,
+    starRating: [{
+      type: Number
+    }]
   },
   ratings: [{
     type: mongoose.ObjectId,
