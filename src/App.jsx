@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react";
 import Frontpage from "./components/Frontpage";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import TutorialCreation from "./components/Tutorial_Creation";
+import TutorialCreation from "./components/TutorialCreation";
+import TutorialView from "./components/TutorialView";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,6 +26,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Frontpage loggedIn={loggedIn}/>}/>
+              <Route path="/tutorial/:id" element={<TutorialView loggedIn={loggedIn}/>}/>
               {!loggedIn ? (<Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>) : null} 
               {!loggedIn ? (<Route path="/register" element={<Register setLoggedIn={setLoggedIn}/>}/>) : null }
               {!loggedIn ? (<Route path="/create" element={<TutorialCreation/>}/>) : null }

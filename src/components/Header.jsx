@@ -30,7 +30,7 @@ export default function Header(props) {
         <>
         <AppBar 
             sx={{
-                backgroundColor: "#4B6584"
+                backgroundColor: "#4B6584",
             }}>
             <Toolbar>
                 <Grid 
@@ -142,8 +142,10 @@ export default function Header(props) {
                         )}
                     </Grid>
                 </Grid>
-            </Toolbar>
+            </Toolbar >
         </AppBar>
+        <Toolbar/>
+        <Toolbar/>
         </>
     );
 

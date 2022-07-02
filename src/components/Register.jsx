@@ -141,6 +141,7 @@ export default function Register(props) {
         alignItems="center"
         justifyContent="center"
         spacing={2}
+        sx= {{marginTop: 5}}
       >
         <Grid item>
           <Card sx={{ minWidth: 400 }}>
