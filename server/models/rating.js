@@ -8,7 +8,6 @@ const Schema = mongoose.Schema;
 const RatingSchema = new Schema({
   owner: {
     type    : mongoose.ObjectId,
-    unique  : true,
     required: true,
     ref     : 'User'
   },
