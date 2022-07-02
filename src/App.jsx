@@ -22,7 +22,6 @@ function App() {
   return (
     <>
       <div className="App">
-        <header className="App-header">
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Frontpage loggedIn={loggedIn}/>}/>
@@ -33,7 +32,6 @@ function App() {
               <Route path="/*" element={<Navigate to="/" replace={true} />}/>
             </Routes> 
           </BrowserRouter>
-        </header>
       </div>
     </>
   );
