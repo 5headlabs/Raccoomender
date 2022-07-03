@@ -49,7 +49,7 @@ export default function TutorialOverview(props) {
               </Grid>
               <Grid container direction="row" alignItems="center" spacing={1}>
                 {tags.map((tag) => (
-                  <Grid item>
+                  <Grid item key={tag}>
                     <Typography
                       sx={{
                         backgroundColor: "#95bdc8",
