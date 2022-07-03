@@ -54,7 +54,7 @@ export default function TutorialView(props) {
 
   return (
     <>
-      <Header></Header>
+      <Header loggedIn={loggedIn}/>
       <Grid
         container
         direction="row"

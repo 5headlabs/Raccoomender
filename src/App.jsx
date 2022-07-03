@@ -28,7 +28,7 @@ function App() {
               <Route path="/tutorial/:id" element={<TutorialView loggedIn={loggedIn}/>}/>
               {!loggedIn ? (<Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>) : null} 
               {!loggedIn ? (<Route path="/register" element={<Register setLoggedIn={setLoggedIn}/>}/>) : null }
-              {loggedIn ? (<Route path="/create" element={<TutorialCreation/>}/>) : null }
+              {loggedIn ? (<Route path="/create" element={<TutorialCreation loggedIn={loggedIn}/>}/>) : null }
               <Route path="/*" element={<Navigate to="/" replace={true} />}/>
             </Routes> 
           </BrowserRouter>

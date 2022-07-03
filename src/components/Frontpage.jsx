@@ -19,7 +19,7 @@ export default function Frontpage(props) {
         let i = 0;
         while (i < response.data.tutorialList.length) {
           content.push(
-            <Grid item>
+            <Grid item key={response.data.tutorialList[i]._id}>
               <TutorialOverview
                 id={response.data.tutorialList[i]._id}
                 rating={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"

@@ -60,10 +60,10 @@ export default function TutorialContent(props) {
             </Grid>
           </Grid>
           <Grid item xs={12} sx={{width: '100%'}}>
-            <Divider variant="middle" sx={{}}/>
+            <Divider variant="middle"/>
           </Grid>
           <Grid item xs={12}>
-            Tutorial content
+            {values.content}
           </Grid>
           <Grid item xs={12} sx={{width: '100%'}}>
             <Divider variant="middle" />
