@@ -26,7 +26,7 @@ export default function TutorialContent(props) {
               alignItems="flex-start"
               xs={9}
             >
-              <Grid item alignItems="center">
+              <Grid item container alignItems="center">
                 <Typography variant="h4" fontWeight="bold" color="#4B6584">{values.title}</Typography>
               </Grid>
               <Grid item container alignItems="center" spacing={1}>
@@ -70,6 +70,7 @@ export default function TutorialContent(props) {
           </Grid>
           <Grid
             item
+            container
             direction="row"
             justifyContent="center"
             alignItems="center"
@@ -77,7 +78,7 @@ export default function TutorialContent(props) {
             xs={12}
           >
             {values.tags.map((tag) => (
-              <Grid item>
+              <Grid item key={tag}>
                 <Typography
                   sx={{
                     backgroundColor: "#95bdc8",
