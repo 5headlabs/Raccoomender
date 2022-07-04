@@ -13,7 +13,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { API_URL } from "../../index";
 
 export default function TutorialCommentCreation(props) {
-  const { values, loggedIn } = props;
+  const { values, setUpdatedComments, loggedIn } = props;
   const navigate = useNavigate();
 
   const [commentValues, setCommentValues] = useState({
@@ -52,7 +52,8 @@ export default function TutorialCommentCreation(props) {
             successCreateComment: true,
             successCreateCommentMessage: "Comment successfully added.",
           });
-          navigate(`/tutorial/${values.id}`);
+          setUpdatedComments(true);
+          //navigate(`/tutorial/${values.id}`);
         }
       })
       .catch(function (error) {
@@ -83,7 +84,7 @@ export default function TutorialCommentCreation(props) {
             justifyContent="center"
             xs={12}
           >
-            <Typography variant="h6">Write a comment</Typography>
+            <Typography variant="h5" color="#4B6584" fontWeight="bold">Write a comment</Typography>
           </Grid>
           <Typography marginLeft="2%" variant="h7">
             Headline
@@ -145,16 +146,20 @@ export default function TutorialCommentCreation(props) {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            {commentValues.successCreateComment ? (
+          {commentValues.successCreateComment ? (
+            <Grid item xs={12}>
               <Alert severity="success">
                 {commentValues.successCreateCommentMessage}
               </Alert>
-            ) : null}
-            {commentValues.errorCreateComment ? (
-              <Alert severity="error">{commentValues.errorCreateCommentMessage}</Alert>
-            ) : null}
-          </Grid>
+            </Grid>
+          ) : null}
+          {commentValues.errorCreateComment ? (
+            <Grid item xs={12}>
+              <Alert severity="error">
+                {commentValues.errorCreateCommentMessage}
+              </Alert>
+            </Grid>
+          ) : null}
         </Grid>
       </Card>
     </>

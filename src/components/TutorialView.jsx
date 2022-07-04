@@ -25,7 +25,10 @@ export default function TutorialView(props) {
     id: "",
   });
 
-  useEffect(() => {
+  const [updatedComments, setUpdatedComments] = useState(false);
+  const [updatedRatings, setUpdatedRatings] = useState(false);
+
+  const getTutorial = () => {
     axios
       .get(`${API_URL}/tutorial/view/` + id)
       .then((response) => {
@@ -50,12 +53,20 @@ export default function TutorialView(props) {
         if (error.response.data === 500) {
         }
       });
-    // eslint-disable-next-line
-  }, []);
+  };
+
+  // eslint-disable-next-line
+  useEffect(getTutorial, []);
+  // eslint-disable-next-line
+  useEffect(() => {
+    getTutorial();
+    setUpdatedComments(false);
+    setUpdatedRatings(false);
+  }, [updatedComments, updatedRatings]);
 
   return (
     <>
-      <Header loggedIn={loggedIn}/>
+      <Header loggedIn={loggedIn} />
       <Grid
         container
         direction="row"
@@ -70,10 +81,20 @@ export default function TutorialView(props) {
         <Grid item xs={2} />
         <Grid item xs={2} />
         <Grid item xs={4}>
-          <TutorialRatings values={values} loggedIn={loggedIn} />
+          <TutorialRatings
+            values={values}
+            updatedRatings={updatedRatings}
+            setUpdatedRatings={setUpdatedRatings}
+            loggedIn={loggedIn}
+          />
         </Grid>
         <Grid item xs={4}>
-          <TutorialCommentCreation values={values} loggedIn={loggedIn} />
+          <TutorialCommentCreation
+            values={values}
+            updatedComments={updatedComments}
+            setUpdatedComments={setUpdatedComments}
+            loggedIn={loggedIn}
+          />
         </Grid>
         <Grid item xs={2} />
         <Grid item xs={2} />
