@@ -38,10 +38,10 @@ export default function Frontpage(props) {
 
         while (i < response.data.tutorialList.length) {
           content.push(
-            <Grid item key={response.data.tutorialList[i]._id}>
+            <Grid item key={response.data.tutorialList[i]._id} xs={12}>
               <TutorialOverview
                 id={response.data.tutorialList[i]._id}
-                rating={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"
+                rating={response.data.tutorialList[i].ratingStats.avgRating}
                 numberOfRatings={response.data.tutorialList[i].ratings.length}
                 title={response.data.tutorialList[i].title}
                 date={formatDate(response.data.tutorialList[i].createdAt)}
@@ -77,9 +77,7 @@ export default function Frontpage(props) {
           <Header handleChange={handleClick} loggedIn={loggedIn} />
         </Grid>
         <Grid
-          item
           container
-          direction="column"
           spacing={1}
           sx={{
             width: "80%",

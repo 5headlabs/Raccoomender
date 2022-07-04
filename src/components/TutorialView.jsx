@@ -19,6 +19,7 @@ export default function TutorialView(props) {
     createdAt: "",
     owner: {},
     ratings: [],
+    rating: 0,
     tags: [],
     title: "",
     id: "",

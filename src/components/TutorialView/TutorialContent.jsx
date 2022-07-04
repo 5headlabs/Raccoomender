@@ -33,7 +33,7 @@ export default function TutorialContent(props) {
                 <Grid item>
                   <Typography>{formatDate(values.createdAt)}</Typography>
                 </Grid>
-                <Grid item>{createStars(0)}</Grid>
+                <Grid item>{createStars(values.rating)}</Grid>
                 <Grid item>
                   <Typography>{values.ratings.length} Ratings</Typography>
                 </Grid>
