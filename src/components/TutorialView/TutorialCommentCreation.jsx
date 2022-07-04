@@ -7,6 +7,7 @@ import {
   Typography,
   Grid,
   Alert,
+  Tooltip
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -84,7 +85,9 @@ export default function TutorialCommentCreation(props) {
             justifyContent="center"
             xs={12}
           >
-            <Typography variant="h5" color="#4B6584" fontWeight="bold">Write a comment</Typography>
+            <Typography variant="h5" color="#4B6584" fontWeight="bold">
+              Write a comment
+            </Typography>
           </Grid>
           <Typography marginLeft="2%" variant="h7">
             Headline
@@ -93,6 +96,7 @@ export default function TutorialCommentCreation(props) {
             <TextField
               placeholder="My Example Headline"
               required
+              disabled={!loggedIn}
               sx={{
                 width: "100%",
               }}
@@ -109,6 +113,7 @@ export default function TutorialCommentCreation(props) {
               multiline
               placeholder="Example Comment"
               required
+              disabled={!loggedIn}
               sx={{
                 width: "100%",
               }}
@@ -132,17 +137,34 @@ export default function TutorialCommentCreation(props) {
                   variant="contained"
                 ></LoadingButton>
               ) : (
-                <Button
-                  onClick={handlePost}
-                  variant="filled"
-                  disabled={!loggedIn}
-                  sx={{
-                    backgroundColor: "#4b6584",
-                    color: "#ffffff",
-                  }}
-                >
-                  Post
-                </Button>
+                loggedIn ? (
+                  <Button
+                    onClick={handlePost}
+                    variant="filled"
+                    sx={{
+                      backgroundColor: "#4b6584",
+                      color: "#ffffff",
+                    }}
+                  >
+                    Post
+                  </Button>
+                ) : (
+                  <Tooltip title="Log in to comment!" placement="left" arrow>
+                    <Grid>
+                  <Button
+                    onClick={handlePost}
+                    variant="filled"
+                    disabled
+                    sx={{
+                      backgroundColor: "#4b6584",
+                      color: "#ffffff",
+                    }}
+                  >
+                    Post
+                  </Button>
+                  </Grid>
+                </Tooltip>
+                )
               )}
             </Grid>
           </Grid>
