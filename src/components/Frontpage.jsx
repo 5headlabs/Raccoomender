@@ -69,19 +69,19 @@ export default function Frontpage(props) {
     <>
       <Grid
         container
-        direction="column"
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item>
+        <Grid item xs={12}>
           <Header handleChange={handleClick} loggedIn={loggedIn} />
         </Grid>
         <Grid
+          item
           container
+          justifyContent="center"
+          alignItems="center"
           spacing={1}
-          sx={{
-            width: "80%",
-          }}
+          xs={10}
         >
           {tutorials}
         </Grid>
