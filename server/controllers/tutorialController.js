@@ -102,7 +102,7 @@ function addComment(req, res) {
 
 function getTutorial(req, res, next) {
     Tutorial.findById({_id: req.params.id}).
-        populate('owner').
+        populate({path: 'owner', select: '_id username'}).
         exec((err, tut) => {
             if (err) {
                 res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
@@ -127,7 +127,8 @@ function findRandom(limit) {
             let skip = getRand(0, count - size);
             Tutorial.find()
                 .populate({
-                    path: 'owner',
+                    path   : 'owner',
+                    select : '_id username' ,
                     options: {
                         skip: skip,
                         limit: size
