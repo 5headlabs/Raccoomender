@@ -34,10 +34,10 @@ export default function TutorialCommentCreation(props) {
 
     axios
       .post(
-        `${API_URL}/api/tutorial/${values.id}/add/comment`,
+        `${API_URL}/tutorial/${values.id}/add/comment`,
         {
-          headline: commentValues.headline,
-          comment: commentValues.comment,
+          title: commentValues.headline,
+          content: commentValues.comment,
         },
         {
           headers: {
@@ -52,7 +52,7 @@ export default function TutorialCommentCreation(props) {
             successCreateComment: true,
             successCreateCommentMessage: "Comment successfully added.",
           });
-          navigate("/");
+          navigate(`/tutorial/${values.id}`);
         }
       })
       .catch(function (error) {
@@ -95,7 +95,7 @@ export default function TutorialCommentCreation(props) {
               sx={{
                 width: "100%",
               }}
-              onChange={handleChange("title")}
+              onChange={handleChange("headline")}
             ></TextField>
           </Grid>
           <Grid item xs={12} />
@@ -111,7 +111,7 @@ export default function TutorialCommentCreation(props) {
               sx={{
                 width: "100%",
               }}
-              onChange={handleChange("content")}
+              onChange={handleChange("comment")}
             ></TextField>
           </Grid>
           <Grid
@@ -122,7 +122,7 @@ export default function TutorialCommentCreation(props) {
             xs={12}
           >
             <Grid item>
-              {values.pressedCreate ? (
+              {values.pressedPost ? (
                 <LoadingButton
                   loading
                   sx={{
@@ -145,14 +145,16 @@ export default function TutorialCommentCreation(props) {
               )}
             </Grid>
           </Grid>
-          {values.successCreateTutorial ? (
-            <Alert severity="success">
-              {values.successCreateTutorialMessage}
-            </Alert>
-          ) : null}
-          {values.errorCreateTutorial ? (
-            <Alert severity="error">{values.errorCreateTutorialMessage}</Alert>
-          ) : null}
+          <Grid item xs={12}>
+            {commentValues.successCreateComment ? (
+              <Alert severity="success">
+                {commentValues.successCreateCommentMessage}
+              </Alert>
+            ) : null}
+            {commentValues.errorCreateComment ? (
+              <Alert severity="error">{commentValues.errorCreateCommentMessage}</Alert>
+            ) : null}
+          </Grid>
         </Grid>
       </Card>
     </>
