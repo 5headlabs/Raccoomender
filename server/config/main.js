@@ -1,8 +1,8 @@
 module.exports = {
   // Secret key for JWT signing and encryption
-  secret: 'asdsads@#$#@$#@CCC',
+  secret: process.env.JWT_SECRET,
   // Database connection information
-  database: 'mongodb+srv://racoomenderUser:w1q8Y0nfCoNpM4AW@cluster0.sextv.mongodb.net/Raccoomender?retryWrites=true&w=majority',
+  database: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.sextv.mongodb.net/${process.env.MONGO_DBNAME}?retryWrites=true&w=majority`,
   // Setting port for server
   port: 3001,
   test_port: 3001,
