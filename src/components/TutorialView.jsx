@@ -57,11 +57,11 @@ export default function TutorialView(props) {
 
   // eslint-disable-next-line
   useEffect(getTutorial, []);
-  // eslint-disable-next-line
   useEffect(() => {
     getTutorial();
     setUpdatedComments(false);
     setUpdatedRatings(false);
+    // eslint-disable-next-line
   }, [updatedComments, updatedRatings]);
 
   return (

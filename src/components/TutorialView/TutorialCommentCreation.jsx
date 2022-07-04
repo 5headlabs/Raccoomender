@@ -9,13 +9,11 @@ import {
   Alert,
   Tooltip
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { API_URL } from "../../index";
 
 export default function TutorialCommentCreation(props) {
   const { values, setUpdatedComments, loggedIn } = props;
-  const navigate = useNavigate();
 
   const [commentValues, setCommentValues] = useState({
     pressedPost: false,
@@ -54,7 +52,6 @@ export default function TutorialCommentCreation(props) {
             successCreateCommentMessage: "Comment successfully added.",
           });
           setUpdatedComments(true);
-          //navigate(`/tutorial/${values.id}`);
         }
       })
       .catch(function (error) {
