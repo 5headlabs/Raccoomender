@@ -9,22 +9,54 @@ import formatDate from "../functions";
 export default function Frontpage(props) {
   const { loggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
-  // const [tutorialsInitial, setTutorialsInitial] = useState([]);
+  const [tutorialsInitial, setTutorialsInitial] = useState({init_array: []});
 
   const handleClick = (e) => {
 
-    let filteredSearch = tutorials.filter(
+    console.log("com",tutorialsInitial.init_array)
+    console.log("original",tutorials)
+
+    let filteredSearch = tutorialsInitial.init_array.filter(
       (item) => {
         return (
-          item.props.children.props
+          item
           .title
           .toLowerCase()
-          .includes(e.toLowerCase()) 
+          .includes(e.toLowerCase()) || 
+          item
+          .content
+          .toLowerCase()
+          .includes(e.toLowerCase())
+          || 
+          item
+          .owner.username
+          .toLowerCase()
+          .includes(e.toLowerCase())
+        
         );
       }
     );
+    let i = 0;
 
-    setTutorials(filteredSearch);
+    let con=[];
+    while (i < filteredSearch.length) {
+      con.push(
+        <Grid item key={filteredSearch[i]._id}>
+          <TutorialOverview
+            id={filteredSearch._id}
+            rating={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"
+            numberOfRatings={filteredSearch.length}
+            title={filteredSearch.title}
+            date={formatDate(filteredSearch[i].createdAt)}
+            tags={filteredSearch[i].tags}
+            author={filteredSearch[i].owner || ""}
+          ></TutorialOverview>
+        </Grid>
+      );
+      i += 1;
+    }
+ 
+    setTutorials(con);
   };
 
  
@@ -58,7 +90,7 @@ export default function Frontpage(props) {
         );
       }
       setTutorials(content);
-      // setTutorialsInitial(response.data.tutorialList);
+      setTutorialsInitial({...tutorialsInitial,init_array:response.data.tutorialList})
       
     };
 
