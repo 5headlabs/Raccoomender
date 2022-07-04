@@ -10,24 +10,24 @@ export default function TutorialContent(props) {
       <Card>
         <Grid
           container
-          direction="column"
           alignItems="center"
           justifyContent="center"
           spacing={2}
+          sx={{ p: 2 }}
         >
-          <Grid item xs={12}/>
-          <Grid item container direction="row" xs={12}>
-            <Grid item xs={1}/>
+          <Grid item container xs={12}>
             <Grid
               item
               container
               direction="column"
               justifyContent="flex-start"
               alignItems="flex-start"
-              xs={9}
+              xs={10}
             >
               <Grid item container alignItems="center">
-                <Typography variant="h4" fontWeight="bold" color="#4B6584">{values.title}</Typography>
+                <Typography variant="h4" fontWeight="bold" color="#4B6584">
+                  {values.title}
+                </Typography>
               </Grid>
               <Grid item container alignItems="center" spacing={1}>
                 <Grid item>
@@ -59,14 +59,14 @@ export default function TutorialContent(props) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sx={{width: '100%'}}>
-            <Divider variant="middle"/>
+          <Grid item xs={12} sx={{ width: "100%" }}>
+            <Divider />
           </Grid>
           <Grid item xs={12}>
             {values.content}
           </Grid>
-          <Grid item xs={12} sx={{width: '100%'}}>
-            <Divider variant="middle" />
+          <Grid item xs={12} sx={{ width: "100%" }}>
+            <Divider />
           </Grid>
           <Grid
             item
@@ -91,7 +91,6 @@ export default function TutorialContent(props) {
               </Grid>
             ))}
           </Grid>
-          <Grid item xs={12}/>
         </Grid>
       </Card>
     </>

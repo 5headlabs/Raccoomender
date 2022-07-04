@@ -50,7 +50,7 @@ export default function TutorialCommentCreation(props) {
           setCommentValues({
             ...commentValues,
             successCreateComment: true,
-            successCreateCommentMessage: "Tutorial Successfully added",
+            successCreateCommentMessage: "Comment successfully added.",
           });
           navigate("/");
         }
@@ -61,7 +61,8 @@ export default function TutorialCommentCreation(props) {
           setCommentValues({
             ...commentValues,
             errorCreateComment: true,
-            errorCreateCommentMessage: "Cannot save tutorial please try again",
+            errorCreateCommentMessage:
+              "Cannot save comment. Please try again later.",
           });
         }
       });
@@ -74,94 +75,84 @@ export default function TutorialCommentCreation(props) {
   return (
     <>
       <Card>
-        <Grid
-          container
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          spacing={1}
-        >
-          <Grid item />
-          <Grid item>
+        <Grid container spacing={1} sx={{ p: 2 }}>
+          <Grid
+            item
+            container
+            alignItems="center"
+            justifyContent="center"
+            xs={12}
+          >
             <Typography variant="h6">Write a comment</Typography>
           </Grid>
-          <Grid item>
-            <Typography
-              marginLeft="2.5%"
-              sx={{
-                float: "left",
-              }}
-              variant="h7"
-            >
-              Headline
-            </Typography>
+          <Typography marginLeft="2%" variant="h7">
+            Headline
+          </Typography>
+          <Grid item xs={12}>
             <TextField
               placeholder="My Example Headline"
               required
               sx={{
-                width: "95%",
+                width: "100%",
               }}
               onChange={handleChange("title")}
             ></TextField>
-            <Typography
-              marginLeft="2.5%"
-              sx={{
-                float: "left",
-              }}
-              variant="h7"
-            >
-              Comment
-            </Typography>
+          </Grid>
+          <Grid item xs={12} />
+          <Typography marginLeft="2%" variant="h7">
+            Comment
+          </Typography>
+          <Grid item xs={12}>
             <TextField
-              minRows="4"
+              minRows="2"
               multiline
               placeholder="Example Comment"
               required
               sx={{
-                width: "95%",
+                width: "100%",
               }}
               onChange={handleChange("content")}
             ></TextField>
           </Grid>
-          <Grid item>
-            {values.pressedCreate ? (
-              <LoadingButton
-                loading
-                sx={{
-                  backgroundColor: "#4b6584",
-                  height: "36px",
-                  width: 300,
-                }}
-                variant="contained"
-              ></LoadingButton>
-            ) : (
-              <Button
-                onClick={handlePost}
-                variant="filled"
-                disabled={!loggedIn}
-                sx={{
-                  backgroundColor: "#4b6584",
-                  color: "#ffffff",
-                  height: "36px",
-                  width: 300,
-                }}
-              >
-                Post
-              </Button>
-            )}
+          <Grid
+            item
+            container
+            alignItems="flex-end"
+            justifyContent="flex-end"
+            xs={12}
+          >
+            <Grid item>
+              {values.pressedCreate ? (
+                <LoadingButton
+                  loading
+                  sx={{
+                    backgroundColor: "#4b6584",
+                  }}
+                  variant="contained"
+                ></LoadingButton>
+              ) : (
+                <Button
+                  onClick={handlePost}
+                  variant="filled"
+                  disabled={!loggedIn}
+                  sx={{
+                    backgroundColor: "#4b6584",
+                    color: "#ffffff",
+                  }}
+                >
+                  Post
+                </Button>
+              )}
+            </Grid>
           </Grid>
-          <Grid item>
-            {values.successCreateTutorial ? (
-              <Alert severity="success">
-                {values.successCreateTutorialMessage}
-              </Alert>
-            ) : null}
-            {values.errorCreateTutorial ? (
-              <Alert severity="error">
-                {values.errorCreateTutorialMessage}
-              </Alert>
-            ) : null}
-          </Grid>
+          {values.successCreateTutorial ? (
+            <Alert severity="success">
+              {values.successCreateTutorialMessage}
+            </Alert>
+          ) : null}
+          {values.errorCreateTutorial ? (
+            <Alert severity="error">{values.errorCreateTutorialMessage}</Alert>
+          ) : null}
         </Grid>
       </Card>
     </>
