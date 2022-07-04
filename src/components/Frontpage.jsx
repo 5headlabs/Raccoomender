@@ -8,15 +8,34 @@ import formatDate from "../functions";
 
 export default function Frontpage(props) {
   const { loggedIn } = props;
-
   const [tutorials, setTutorials] = useState([]);
+  // const [tutorialsInitial, setTutorialsInitial] = useState([]);
 
-  useEffect(() => {
+  const handleClick = (e) => {
+
+    let filteredSearch = tutorials.filter(
+      (item) => {
+        return (
+          item.props.children.props
+          .title
+          .toLowerCase()
+          .includes(e.toLowerCase()) 
+        );
+      }
+    );
+
+    setTutorials(filteredSearch);
+  };
+
+ 
+ useEffect(() => {
+
     const handleGetTutorials = async () => {
-      let content = [];
       let response = await axios.get(`${API_URL}/tutorial/list`);
+      let content = [];
       if (response.status === 200) {
         let i = 0;
+
         while (i < response.data.tutorialList.length) {
           content.push(
             <Grid item key={response.data.tutorialList[i]._id}>
@@ -39,6 +58,8 @@ export default function Frontpage(props) {
         );
       }
       setTutorials(content);
+      // setTutorialsInitial(response.data.tutorialList);
+      
     };
 
     handleGetTutorials();
@@ -53,7 +74,7 @@ export default function Frontpage(props) {
         alignItems="center"
       >
         <Grid item>
-          <Header loggedIn={loggedIn} />
+          <Header handleChange={handleClick} loggedIn={loggedIn} />
         </Grid>
         <Grid
           item

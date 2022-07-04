@@ -6,8 +6,7 @@ import logo from "../raccoomender.png";
 
 
 export default function Header(props) {
-    const {loggedIn} = props;
-
+    const {loggedIn,handleChange} = props;
     const navigate = useNavigate();
 
     const handleClickLogo = () => {
@@ -25,7 +24,7 @@ export default function Header(props) {
     const handleClickCreate = () => {
         navigate("/create");
     }
-
+ 
     return (
         <>
         <AppBar 
@@ -105,6 +104,7 @@ export default function Header(props) {
                                     paddingLeft: "6ch",
                                     width: "40ch"
                                 }}
+                                onChange={(e) => {handleChange(e.target.value)}}
                                 placeholder="Search Raccoomender..."/>
                             
                         </Grid>
