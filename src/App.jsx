@@ -24,7 +24,7 @@ function App() {
       <div className="App">
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Frontpage loggedIn={loggedIn}/>}/>
+              <Route path="/" element={<Frontpage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
               <Route path="/tutorial/:id" element={<TutorialView loggedIn={loggedIn}/>}/>
               {!loggedIn ? (<Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>) : null} 
               {!loggedIn ? (<Route path="/register" element={<Register setLoggedIn={setLoggedIn}/>}/>) : null }

@@ -1,13 +1,16 @@
-import { AppBar, Avatar, Button, Grid, IconButton, InputBase, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Button, Grid, IconButton, InputBase, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 import logo from "../raccoomender.png";
+import { AccountBox, Settings } from "@mui/icons-material";
 
 
 export default function Header(props) {
-    const {loggedIn,handleChange} = props;
+    const {loggedIn, setLoggedIn, handleChange} = props;
     const navigate = useNavigate();
+    const [anchorMenu, setAnchorMenu] = useState(null);
 
     const handleClickLogo = () => {
         navigate("/");
@@ -17,8 +20,16 @@ export default function Header(props) {
         navigate("/login");
     };
 
-    const handleClickProfile = () => {
-        // TODO
+    const handleClickProfile = (event) => {
+        setAnchorMenu(event.currentTarget);
+    }
+
+    const handleCloseProfileMenu = () => {
+        setAnchorMenu(null);
+    }
+
+    const handleLogout = () => {
+        setLoggedIn(false);
     }
 
     const handleClickCreate = () => {
@@ -125,10 +136,46 @@ export default function Header(props) {
                     <Grid
                         item>
                         {loggedIn ? (
-                            <IconButton
-                                onClick={handleClickProfile}>
-                                <Avatar></Avatar>
-                            </IconButton>
+                            <div>
+                                
+                                <IconButton
+                                    onClick={handleClickProfile}>
+                                    <Avatar></Avatar>
+                                </IconButton>
+                                
+                                <Menu
+                                    open={Boolean(anchorMenu)}
+                                    anchorEl={anchorMenu}
+                                    onClose={handleCloseProfileMenu}
+                                    anchorOrigin={{
+                                        vertical  : 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical  : 'top',
+                                        horizontal: 'center',
+                                    }}
+                                    >
+                                        <MenuItem>
+                                            <ListItemIcon>
+                                                <AccountBox fontSize="small" />
+                                            </ListItemIcon>
+                                            <ListItemText>Profile</ListItemText>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <ListItemIcon>
+                                                <Settings fontSize="small" />
+                                            </ListItemIcon>
+                                            <ListItemText>Settings</ListItemText>
+                                        </MenuItem>
+                                        <MenuItem onClick={handleLogout}>
+                                            <ListItemIcon>
+                                                <AccountBox fontSize="small"/>
+                                            </ListItemIcon>
+                                            <ListItemText>Logout</ListItemText>
+                                        </MenuItem>
+                                    </Menu>
+                            </div>
                         ) : (
                             <Button 
                                 sx={{

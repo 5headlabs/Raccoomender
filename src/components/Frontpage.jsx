@@ -7,7 +7,7 @@ import TutorialOverview from "./TutorialOverview";
 import formatDate from "../functions";
 
 export default function Frontpage(props) {
-  const { loggedIn } = props;
+  const { loggedIn, setLoggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
   const [tutorialsInitial, setTutorialsInitial] = useState({init_array: []});
 
@@ -105,7 +105,7 @@ export default function Frontpage(props) {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <Header handleChange={handleClick} loggedIn={loggedIn} />
+          <Header handleChange={handleClick} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         </Grid>
         <Grid
           item
