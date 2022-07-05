@@ -1,6 +1,6 @@
-import { Card, Divider, Grid, Typography, Avatar } from "@mui/material";
+import { Card, Divider, Grid, Typography, Avatar, Rating } from "@mui/material";
 import React from "react";
-import { createStars, formatDate } from "../../functions";
+import { formatDate } from "../../functions";
 
 export default function TutorialContent(props) {
   const { values } = props;
@@ -33,7 +33,7 @@ export default function TutorialContent(props) {
                 <Grid item>
                   <Typography>{formatDate(values.createdAt)}</Typography>
                 </Grid>
-                <Grid item>{createStars(values.rating)}</Grid>
+                <Rating name="read-only" value={values.rating} precision={0.5} readOnly />
                 <Grid item>
                   <Typography>{values.ratings.length} Ratings</Typography>
                 </Grid>

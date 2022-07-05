@@ -1,7 +1,6 @@
-import { Avatar, Card, Grid, Typography } from "@mui/material";
+import { Avatar, Card, Grid, Typography, Rating } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { createStars } from "../functions";
 
 export default function TutorialOverview(props) {
   const { id, rating, numberOfRatings, title, date, tags, author } = props;
@@ -32,7 +31,7 @@ export default function TutorialOverview(props) {
           <Grid container direction="row">
             <Grid container width="50%">
               <Grid container direction="row" alignItems="center">
-                <Grid item>{createStars(rating)}</Grid>
+                <Rating name="read-only" value={rating} precision={0.5} readOnly />
                 <Grid item>
                   <Typography>{numberOfRatings} Ratings</Typography>
                 </Grid>
