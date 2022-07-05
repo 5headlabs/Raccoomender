@@ -29,6 +29,7 @@ export default function Header(props) {
     }
 
     const handleLogout = () => {
+        localStorage.removeItem("token");
         setLoggedIn(false);
     }
 
