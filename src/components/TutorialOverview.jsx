@@ -3,10 +3,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function TutorialOverview(props) {
-  const { id, rating, numberOfRatings, title, date, tags, author } = props;
+  const { id, ratingStats, numberOfRatings, title, date, tags, author } = props;
 
   // id = atring
-  // rating = int
+  // ratingStats = int
   // numberOfRatings = int
   // title = string
   // date = string
@@ -31,7 +31,7 @@ export default function TutorialOverview(props) {
           <Grid container direction="row">
             <Grid container width="50%">
               <Grid container direction="row" alignItems="center">
-                <Rating name="read-only" value={rating} precision={0.5} readOnly />
+                <Rating name="read-only" value={ratingStats.avgRating} precision={0.5} readOnly />
                 <Grid item>
                   <Typography>{numberOfRatings} Ratings</Typography>
                 </Grid>

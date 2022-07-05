@@ -44,7 +44,7 @@ export default function Frontpage(props) {
         <Grid item key={filteredSearch[i]._id}>
           <TutorialOverview
             id={filteredSearch._id}
-            rating={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"
+            ratingStats={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"
             numberOfRatings={filteredSearch.length}
             title={filteredSearch.title}
             date={formatDate(filteredSearch[i].createdAt)}
@@ -73,7 +73,7 @@ export default function Frontpage(props) {
             <Grid item key={response.data.tutorialList[i]._id} xs={12}>
               <TutorialOverview
                 id={response.data.tutorialList[i]._id}
-                rating={response.data.tutorialList[i].ratingStats.avgRating}
+                ratingStats={response.data.tutorialList[i].ratingStats}
                 numberOfRatings={response.data.tutorialList[i].ratings.length}
                 title={response.data.tutorialList[i].title}
                 date={formatDate(response.data.tutorialList[i].createdAt)}
