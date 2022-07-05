@@ -55,8 +55,6 @@ export default function TutorialView(props) {
       });
   };
 
-  // eslint-disable-next-line
-  useEffect(getTutorial, []);
   useEffect(() => {
     getTutorial();
     setUpdatedComments(false);
