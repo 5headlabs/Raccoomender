@@ -4,7 +4,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import logo from "../raccoomender.png";
-import { AccountBox, Settings } from "@mui/icons-material";
+import { AccountBox, Logout, Settings } from "@mui/icons-material";
 
 
 export default function Header(props) {
@@ -171,7 +171,7 @@ export default function Header(props) {
                                         </MenuItem>
                                         <MenuItem onClick={handleLogout}>
                                             <ListItemIcon>
-                                                <AccountBox fontSize="small"/>
+                                                <Logout fontSize="small"/>
                                             </ListItemIcon>
                                             <ListItemText>Logout</ListItemText>
                                         </MenuItem>
