@@ -1,4 +1,3 @@
-
 export const formatDate = (date) => {
   date = date.slice(0, 10);
   date = new Date(date);
@@ -10,3 +9,5 @@ export const formatDate = (date) => {
     date.getUTCFullYear();
   return date;
 };
+
+export default formatDate;
