@@ -101,7 +101,7 @@ function addComment(req, res) {
 }
 
 function getTutorial(req, res, next) {
-    Tutorial.findById({_id: req.params.id}, '-ratings').
+    Tutorial.findById({_id: req.params.id}).
         populate({path: 'owner', select: '_id username'}).
         populate({path: 'comments', populate: {path: 'author', select: '_id username'}}).
         exec((err, tut) => {
@@ -126,7 +126,7 @@ function findRandom(res, limit) {
         Tutorial.count({}, (err, count) => {
             let size = (count < limit) ? count : limit;
             let skip = getRand(0, count - size);
-            Tutorial.find({}, '-comments -ratings')
+            Tutorial.find({}, '-comments')
                 .populate({
                     path   : 'owner',
                     select : '_id username' ,
