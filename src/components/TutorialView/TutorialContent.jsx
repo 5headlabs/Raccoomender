@@ -1,6 +1,8 @@
 import { Card, Divider, Grid, Typography, Avatar, Rating } from "@mui/material";
 import React from "react";
 import { formatDate } from "../../functions";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function TutorialContent(props) {
   const { values } = props;
@@ -10,8 +12,6 @@ export default function TutorialContent(props) {
       <Card>
         <Grid
           container
-          alignItems="center"
-          justifyContent="center"
           spacing={2}
           sx={{ p: 2 }}
         >
@@ -65,7 +65,7 @@ export default function TutorialContent(props) {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            {values.content}
+            <CKEditor editor={ClassicEditor} disabled="true" data={values.content} config={{ toolbar: ''}}/>
           </Grid>
           <Grid item xs={12} sx={{ width: "100%" }}>
             <Divider />
