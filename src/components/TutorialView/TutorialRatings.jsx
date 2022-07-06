@@ -109,7 +109,7 @@ export default function TutorialRatings(props) {
 
         <Grid item xs={12}>
           <Typography variant="h7" color="#555555">
-          A lot of ratings
+          {values.ratings.length} Rating(s)
           </Typography>
         </Grid>
       </Grid>

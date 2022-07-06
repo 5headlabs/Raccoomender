@@ -37,7 +37,7 @@ export default function TutorialContent(props) {
                 <Rating name="read-only" value={values.ratingStats.avgRating} precision={0.5} readOnly />
                 </Grid>
                 <Grid item>
-                  <Typography>{values.ratings.length} Ratings</Typography>
+                  <Typography>{values.ratings.length} Rating(s)</Typography>
                 </Grid>
               </Grid>
             </Grid>
