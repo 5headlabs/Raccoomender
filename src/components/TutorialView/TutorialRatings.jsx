@@ -6,6 +6,13 @@ export default function TutorialRatings(props) {
     const {values, updatedRatings, setUpdatedRatings, loggedIn} = props;
     const [ratingValue, setValue] = React.useState(0);
 
+    const calculatePercentage = (starRating) =>{
+      if (values.ratings.length === 0 || values.ratings.length === undefined || values.ratings.length === null) {
+        return 0;
+      }
+      return (values.ratingStats.starRating[starRating]/values.ratings.length)*100
+    };
+
   return (
     <Card>
       <Grid container spacing={1} sx={{ p: 2 }}>
@@ -39,10 +46,10 @@ export default function TutorialRatings(props) {
             5
           </Grid>
           <Grid item xs={10}>
-            {<LinearProgress variant="determinate" value={(values.ratingStats.starRating[4]/values.ratings.length)*100} />}
+            {<LinearProgress variant="determinate" value={calculatePercentage(4)} />}
           </Grid>
           <Grid item xs={1}>
-          {(values.ratingStats.starRating[4]/values.ratings.length)*100}%
+          {calculatePercentage(4)}%
           </Grid>
         </Grid>
 
@@ -51,10 +58,10 @@ export default function TutorialRatings(props) {
             4
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={(values.ratingStats.starRating[3]/values.ratings.length)*100} />
+            <LinearProgress variant="determinate" value={calculatePercentage(3)} />
           </Grid>
           <Grid item xs={1}>
-          {(values.ratingStats.starRating[3]/values.ratings.length)*100}%
+          {calculatePercentage(3)}%
           </Grid>
         </Grid>
 
@@ -63,10 +70,10 @@ export default function TutorialRatings(props) {
             3
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={(values.ratingStats.starRating[2]/values.ratings.length)*100} />
+            <LinearProgress variant="determinate" value={calculatePercentage(2)} />
           </Grid>
           <Grid item xs={1}>
-          {(values.ratingStats.starRating[2]/values.ratings.length)*100}%
+          {calculatePercentage(2)}%
           </Grid>
         </Grid>
 
@@ -75,10 +82,10 @@ export default function TutorialRatings(props) {
             2
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={(values.ratingStats.starRating[1]/values.ratings.length)*100} />
+            <LinearProgress variant="determinate" value={calculatePercentage(1)} />
           </Grid>
           <Grid item xs={1}>
-          {(values.ratingStats.starRating[1]/values.ratings.length)*100}%
+          {calculatePercentage(1)}%
           </Grid>
         </Grid>
 
@@ -87,10 +94,10 @@ export default function TutorialRatings(props) {
             1
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={(values.ratingStats.starRating[0]/values.ratings.length)*100} />
+            <LinearProgress variant="determinate" value={calculatePercentage(0)} />
           </Grid>
           <Grid item xs={1}>
-          {(values.ratingStats.starRating[0]/values.ratings.length)*100}%
+          {calculatePercentage(0)}%
           </Grid>
         </Grid>
 
