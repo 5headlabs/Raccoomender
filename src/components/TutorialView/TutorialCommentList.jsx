@@ -15,7 +15,7 @@ export default function TutorialCommentList(props) {
               </Typography>
               <Typography align="left">{comment.content}</Typography>
               <Typography align="right" fontSize="9pt">Comment by:</Typography>
-              <Typography align="right" fontSize="9pt">{comment.author}</Typography>
+              <Typography align="right" fontSize="9pt">{comment.author.username}</Typography>
               <Divider />
             </Grid>
           ))}
