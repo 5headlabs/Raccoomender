@@ -31,10 +31,10 @@ export default function TutorialRatings(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider variant="middle" />
+          <Divider variant="fullWidth"/>
         </Grid>
-
-        <Grid container>
+        <Grid item xs={12}/>
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item xs={1}>
             5
           </Grid>
@@ -46,7 +46,7 @@ export default function TutorialRatings(props) {
           </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item xs={1}>
             4
           </Grid>
@@ -58,7 +58,7 @@ export default function TutorialRatings(props) {
           </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item xs={1}>
             3
           </Grid>
@@ -70,7 +70,7 @@ export default function TutorialRatings(props) {
           </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item xs={1}>
             2
           </Grid>
@@ -82,7 +82,7 @@ export default function TutorialRatings(props) {
           </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item xs={1}>
             1
           </Grid>
