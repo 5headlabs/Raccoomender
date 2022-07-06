@@ -13,7 +13,7 @@ export default function TutorialContent(props) {
         <Grid
           container
           spacing={2}
-          sx={{ p: 2 }}
+          sx={{ p: 4 }}
         >
           <Grid item container xs={12}>
             <Grid

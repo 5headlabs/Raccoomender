@@ -21,67 +21,71 @@ export default function TutorialOverview(props) {
 
   return (
     <>
-      <Grid item>
-        <Card
-          onClick={handleClickTutorialOverview}
-          sx={{
-            cursor: "pointer",
-          }}
-        >
-          <Grid container direction="row">
-            <Grid container width="50%">
-              <Grid container direction="row" alignItems="center">
-                <Rating name="read-only" value={ratingStats.avgRating} precision={0.5} readOnly />
-                <Grid item>
-                  <Typography>{numberOfRatings} Ratings</Typography>
-                </Grid>
-              </Grid>
-              <Grid container direction="row" alignItems="center">
-                <Grid item>
-                  <Typography>{title}</Typography>
-                </Grid>
-              </Grid>
-              <Grid container direction="row" alignItems="center">
-                <Grid item>
-                  <Typography>{date}</Typography>
-                </Grid>
-              </Grid>
-              <Grid container direction="row" alignItems="center" spacing={1}>
-                {tags.map((tag) => (
-                  <Grid item key={tag}>
-                    <Typography
-                      sx={{
-                        backgroundColor: "#95bdc8",
-                        borderRadius: "4px",
-                        color: "#ffffff",
-                      }}
-                    >
-                      {tag}
-                    </Typography>
-                  </Grid>
-                ))}
+      <Card
+        onClick={handleClickTutorialOverview}
+        sx={{
+          cursor: "pointer",
+          p : 1
+        }}
+      >
+        <Grid container direction="row">
+          <Grid container width="50%">
+            <Grid container direction="row" alignItems="center">
+              <Rating
+                name="read-only"
+                value={ratingStats.avgRating}
+                precision={0.5}
+                readOnly
+              />
+              <Grid item>
+                <Typography>{numberOfRatings} Ratings</Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-              width="50%"
-            >
+            <Grid container direction="row" alignItems="center">
               <Grid item>
-                <Typography>Posted by:</Typography>
+                <Typography>{title}</Typography>
               </Grid>
+            </Grid>
+            <Grid container direction="row" alignItems="center">
               <Grid item>
-                <Avatar></Avatar>
+                <Typography>{date}</Typography>
               </Grid>
-              <Grid item>
-                <Typography>{author.username}</Typography>
-              </Grid>
+            </Grid>
+            <Grid container direction="row" alignItems="center" spacing={1}>
+              {tags.map((tag) => (
+                <Grid item key={tag}>
+                  <Typography
+                    sx={{
+                      backgroundColor: "#95bdc8",
+                      borderRadius: "4px",
+                      color: "#ffffff",
+                    }}
+                  >
+                    {tag}
+                  </Typography>
+                </Grid>
+              ))}
             </Grid>
           </Grid>
-        </Card>
-      </Grid>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            width="50%"
+          >
+            <Grid item>
+              <Typography>Posted by:</Typography>
+            </Grid>
+            <Grid item>
+              <Avatar></Avatar>
+            </Grid>
+            <Grid item>
+              <Typography>{author.username}</Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Card>
     </>
   );
 }

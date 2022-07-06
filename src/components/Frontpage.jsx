@@ -9,103 +9,44 @@ import formatDate from "../functions";
 export default function Frontpage(props) {
   const { loggedIn, setLoggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
-  const [tutorialsInitial, setTutorialsInitial] = useState({init_array: []});
+  const [tutorialsInitial, setTutorialsInitial] = useState({ init_array: [] });
 
   const handleClick = (e) => {
+    console.log("com", tutorialsInitial.init_array);
+    console.log("original", tutorials);
 
-    console.log("com",tutorialsInitial.init_array)
-    console.log("original",tutorials)
-
-    let filteredSearch = tutorialsInitial.init_array.filter(
-      (item) => {
-        return (
-          item
-          .title
-          .toLowerCase()
-          .includes(e.toLowerCase()) || 
-          item
-          .content
-          .toLowerCase()
-          .includes(e.toLowerCase())
-          || 
-          item
-          .owner.username
-          .toLowerCase()
-          .includes(e.toLowerCase())
-        
-        );
-      }
-    );
-    let i = 0;
-
-    let con=[];
-    while (i < filteredSearch.length) {
-      con.push(
-        <Grid item key={filteredSearch[i]._id}>
-          <TutorialOverview
-            id={filteredSearch._id}
-            ratingStats={0} // should be "response.data.tutorialList[i].ratingStats.avgRating"
-            numberOfRatings={filteredSearch.length}
-            title={filteredSearch.title}
-            date={formatDate(filteredSearch[i].createdAt)}
-            tags={filteredSearch[i].tags}
-            author={filteredSearch[i].owner || ""}
-          ></TutorialOverview>
-        </Grid>
+    let filteredSearch = tutorialsInitial.init_array.filter((item) => {
+      return (
+        item.title.toLowerCase().includes(e.toLowerCase()) ||
+        item.content.toLowerCase().includes(e.toLowerCase()) || 
+        item.owner.username.toLowerCase().includes(e.toLowerCase())
       );
-      i += 1;
-    }
- 
-    setTutorials(con);
+    });
+    setTutorials(filteredSearch);
   };
 
- 
- useEffect(() => {
-
-    const handleGetTutorials = async () => {
-      let response = await axios.get(`${API_URL}/tutorial/list`);
-      let content = [];
+  useEffect(() => {
+    axios.get(`${API_URL}/tutorial/list`).then((response) => {
       if (response.status === 200) {
-        let i = 0;
-
-        while (i < response.data.tutorialList.length) {
-          content.push(
-            <Grid item key={response.data.tutorialList[i]._id} xs={12}>
-              <TutorialOverview
-                id={response.data.tutorialList[i]._id}
-                ratingStats={response.data.tutorialList[i].ratingStats}
-                numberOfRatings={response.data.tutorialList[i].ratings.length}
-                title={response.data.tutorialList[i].title}
-                date={formatDate(response.data.tutorialList[i].createdAt)}
-                tags={response.data.tutorialList[i].tags}
-                author={response.data.tutorialList[i].owner || ""}
-              ></TutorialOverview>
-            </Grid>
-          );
-          i += 1;
-        }
-      } else {
-        content.push(
-          <Typography>Error: Could not fetch tutorials!</Typography>
-        );
+        console.log(response.data.tutorialList);
+        setTutorials(response.data.tutorialList);
+        setTutorialsInitial({
+          ...tutorialsInitial,
+          init_array: response.data.tutorialList,
+        });
       }
-      setTutorials(content);
-      setTutorialsInitial({...tutorialsInitial,init_array:response.data.tutorialList})
-      
-    };
-
-    handleGetTutorials();
+    });
   }, []);
 
   return (
     <>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={12}>
-          <Header handleChange={handleClick} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+          <Header
+            handleChange={handleClick}
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+          />
         </Grid>
         <Grid
           item
@@ -115,7 +56,23 @@ export default function Frontpage(props) {
           spacing={1}
           xs={10}
         >
-          {tutorials}
+          {tutorials.length === 0 ? (
+            <Typography>Couldn't find any tutorials!</Typography>
+          ) : (
+            tutorials.map((tutorial) => (
+              <Grid item key={tutorial._id} xs={12}>
+                <TutorialOverview
+                  id={tutorial._id}
+                  ratingStats={tutorial.ratingStats}
+                  numberOfRatings={tutorial.ratings.length}
+                  title={tutorial.title}
+                  date={formatDate(tutorial.createdAt)}
+                  tags={tutorial.tags}
+                  author={tutorial.owner || ""}
+                ></TutorialOverview>
+              </Grid>
+            ))
+          )}
         </Grid>
       </Grid>
     </>
