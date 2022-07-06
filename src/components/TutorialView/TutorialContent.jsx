@@ -33,7 +33,9 @@ export default function TutorialContent(props) {
                 <Grid item>
                   <Typography>{formatDate(values.createdAt)}</Typography>
                 </Grid>
+                <Grid item>
                 <Rating name="read-only" value={values.ratingStats.avgRating} precision={0.5} readOnly />
+                </Grid>
                 <Grid item>
                   <Typography>{values.ratings.length} Ratings</Typography>
                 </Grid>
