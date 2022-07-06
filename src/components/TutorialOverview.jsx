@@ -25,14 +25,14 @@ export default function TutorialOverview(props) {
         onClick={handleClickTutorialOverview}
         sx={{
           cursor: "pointer",
-          p: 3,
+          p: 2,
           backgroundColor: "#4B6584",
           color: "#ffffff",
         }}
       >
         <Grid container direction="row">
-          <Grid item container xs={9}>
-            <Grid container direction="row" alignItems="center" spacing={1}>
+          <Grid item container xs={9} spacing={0.5}>
+            <Grid item container direction="row" alignItems="center" spacing={1}>
               <Grid item>
                 <Rating
                   name="read-only"
@@ -51,12 +51,12 @@ export default function TutorialOverview(props) {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container direction="row" alignItems="center">
+            <Grid item container direction="row" alignItems="center">
               <Grid item>
                 <Typography fontWeight="bold" fontSize="20px">{title}</Typography>
               </Grid>
             </Grid>
-            <Grid container direction="row" alignItems="center">
+            <Grid item container direction="row" alignItems="center">
               <Grid item>
                 <Typography
                   sx={{
@@ -67,7 +67,7 @@ export default function TutorialOverview(props) {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container direction="row" alignItems="center" spacing={1}>
+            <Grid item container direction="row" alignItems="center" spacing={1}>
               {tags.map((tag) => (
                 <Grid item key={tag}>
                   <Chip
