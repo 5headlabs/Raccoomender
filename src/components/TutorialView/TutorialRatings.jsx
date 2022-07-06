@@ -15,7 +15,7 @@ export default function TutorialRatings(props) {
 
   return (
     <Card>
-      <Grid container spacing={1} sx={{ p: 2 }}>
+      <Grid container spacing={1} sx={{ p: 3, minHeight: "350px"}}>
         <Grid
                 item
                 container

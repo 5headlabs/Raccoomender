@@ -74,7 +74,7 @@ export default function TutorialCommentCreation(props) {
   return (
     <>
       <Card>
-        <Grid container spacing={1} sx={{ p: 2 }}>
+        <Grid container spacing={1} sx={{ p: 2, minHeight: "350px"}}>
           <Grid
             item
             container
@@ -106,7 +106,7 @@ export default function TutorialCommentCreation(props) {
           </Typography>
           <Grid item xs={12}>
             <TextField
-              minRows="2"
+              minRows="3"
               multiline
               placeholder="Example Comment"
               required
