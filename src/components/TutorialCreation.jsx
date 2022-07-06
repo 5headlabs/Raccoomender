@@ -6,8 +6,10 @@ import {
   TextField,
   Typography,
   Alert,
+  Chip,
+  Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Header from "./Header";
 import axios from "axios";
@@ -22,7 +24,7 @@ export default function TutorialCreation(props) {
     pressedCreate: false,
     title: "",
     content: "",
-    tags: "",
+    tags: [],
     errorCreateTutorial: false,
     successCreateTutorial: false,
     errorCreateTutorialMessage: null,
@@ -75,37 +77,62 @@ export default function TutorialCreation(props) {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+  const handleTagFieldChange = (event) => {
+    if (event.code === "Space") {
+      const withoutSpaces = event.target.value.replace(/ /g, "");
+      
+      if (withoutSpaces) {
+        if (!values.tags.includes(withoutSpaces)) {
+          addTag(withoutSpaces);
+          event.target.value = "";
+        }
+      }
+    }
+  }
+
+  const addTag = (tag) => {
+    let tempTags = values.tags;
+    tempTags.push(tag);
+    setValues({ ...values, tags: tempTags});
+  }
+  const handleTagDeletion = (tag) =>  () => {
+    let tempTags = values.tags;
+    tempTags = tempTags.filter((chip) => String(chip) !== String(tag));
+    console.log(tempTags);
+    setValues({ ...values, tags: tempTags});
+  }
+
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <Grid
+      <Grid id="this" sx={{maxWidth: "50%"}}
+        margin="auto"
         container
         direction="column"
         alignItems="center"
         justifyContent="center"
       >
-        <Grid item>
+        <Grid item sx={{maxWidth: "50%"}}>
           <Card
             sx={{
               backgroundColor: "#ffffff",
-              minWidth: "50ch",
             }}
           >
             <Grid
+              sx={{maxWidth: "100%"}}
               container
               direction="column"
               alignItems="center"
               justifyContent="center"
               spacing={1}
             >
-              <Grid item />
               <Grid item>
                 <Typography variant="h4">Create a Tutorial</Typography>
               </Grid>
               <Grid item sx={{ width: "100%" }}>
                 <Divider variant="middle" />
               </Grid>
-              <Grid item>
+              <Grid item sx={{maxWidth: "100%"}}>
                 <Typography
                   marginLeft="2.5%"
                   sx={{
@@ -152,13 +179,24 @@ export default function TutorialCreation(props) {
                   Tags
                 </Typography>
                 <TextField
-                  placeholder="#Example"
+                  placeholder="JavaScript"
                   required
                   sx={{
                     width: "95%",
                   }}
-                  onChange={handleChange("tags")}
+                  onKeyUp={handleTagFieldChange}
                 ></TextField>
+                <Stack sx={{flexWrap: "wrap"}}
+                  marginLeft="2.5%"
+                  marginTop="5px"
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={1}>
+                  {values.tags.map((tag) => {
+                    return <Chip key={tag} label={tag} onDelete={handleTagDeletion(tag)} />
+                  })}
+                </Stack>
               </Grid>
 
               <Grid item>
