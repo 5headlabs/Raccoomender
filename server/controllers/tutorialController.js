@@ -101,11 +101,12 @@ function addComment(req, res) {
 }
 
 function getTutorial(req, res, next) {
-    Tutorial.findById({_id: req.params.id}).
+    Tutorial.findById({_id: req.params.id}, '-ratings').
         populate({path: 'owner', select: '_id username'}).
+        populate({path: 'comments', populate: {path: 'author', select: '_id username'}}).
         exec((err, tut) => {
             if (err) {
-                res.status(500).send({error: "An error occurred during retrieval of tutorial!"});
+                res.status(500).send({error: "An error occurred during retrieval of tutorial!", msg: err});
             } else {
                 res.status(200).send({tutorial: tut});
             }
@@ -113,29 +114,32 @@ function getTutorial(req, res, next) {
 }
 
 async function listTutorials(req, res, next) {
-    const tutorials = findRandom(desiredTutorialListCount);
+    const tutorials = findRandom(res, desiredTutorialListCount);
 
     tutorials.then((result)=>{
         res.status(200).send({ tutorialList: result });
     });
 }
 
-function findRandom(limit) {
+function findRandom(res, limit) {
     return new Promise((resolve, reject) => {
         Tutorial.count({}, (err, count) => {
             let size = (count < limit) ? count : limit;
             let skip = getRand(0, count - size);
-            Tutorial.find()
+            Tutorial.find({}, '-comments -ratings')
                 .populate({
                     path   : 'owner',
                     select : '_id username' ,
                     options: {
                         skip: skip,
                         limit: size
-                }})
+                }}) 
+                .populate({
+                    path: 'comments',
+                    populate: {path: 'author', select: '_id username'}})
                 .exec((err, docs) => {
                     if (err) {
-                        res.status(500).send({error: `An error occurred during retrieval of tutorial (Tutorial-ID: ${tut._id})!`});
+                        res.status(500).send({error: `An error occurred during retrieval of tutorial list`});
                         return reject(err);
                     } else {
                         resolve(docs);
