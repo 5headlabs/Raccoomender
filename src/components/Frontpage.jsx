@@ -10,17 +10,25 @@ export default function Frontpage(props) {
   const { loggedIn, setLoggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
   const [tutorialsInitial, setTutorialsInitial] = useState({ init_array: [] });
-
+ 
   const handleClick = (e) => {
-    console.log("com", tutorialsInitial.init_array);
-    console.log("original", tutorials);
+    // console.log("com", tutorialsInitial.init_array);
+    // console.log("original", tutorials);
 
     let filteredSearch = tutorialsInitial.init_array.filter((item) => {
+      if(item.owner)
+      {
       return (
         item.title.toLowerCase().includes(e.toLowerCase()) ||
         item.content.toLowerCase().includes(e.toLowerCase()) || 
         item.owner.username.toLowerCase().includes(e.toLowerCase())
-      );
+      )}
+      else
+      {
+        return (
+          item.title.toLowerCase().includes(e.toLowerCase()) ||
+          item.content.toLowerCase().includes(e.toLowerCase()) )
+      }
     });
     setTutorials(filteredSearch);
   };
@@ -75,6 +83,7 @@ export default function Frontpage(props) {
           )}
         </Grid>
       </Grid>
+    
     </>
   );
 }
