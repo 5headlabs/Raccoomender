@@ -15,6 +15,8 @@ import Header from "./Header";
 import axios from "axios";
 import { API_URL } from "../index";
 import { useNavigate } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function TutorialCreation(props) {
   const { loggedIn } = props;
@@ -77,10 +79,14 @@ export default function TutorialCreation(props) {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+  const handleContentChange = (event, editor) => {
+    setValues({ ...values, content: editor.getData()});
+  };
+
   const handleTagFieldChange = (event) => {
     if (event.code === "Space") {
       const withoutSpaces = event.target.value.replace(/ /g, "");
-      
+
       if (withoutSpaces) {
         if (!values.tags.includes(withoutSpaces)) {
           addTag(withoutSpaces);
@@ -88,159 +94,114 @@ export default function TutorialCreation(props) {
         }
       }
     }
-  }
+  };
 
   const addTag = (tag) => {
     let tempTags = values.tags;
     tempTags.push(tag);
-    setValues({ ...values, tags: tempTags});
-  }
-  const handleTagDeletion = (tag) =>  () => {
+    setValues({ ...values, tags: tempTags });
+  };
+  const handleTagDeletion = (tag) => () => {
     let tempTags = values.tags;
     tempTags = tempTags.filter((chip) => String(chip) !== String(tag));
     console.log(tempTags);
-    setValues({ ...values, tags: tempTags});
-  }
+    setValues({ ...values, tags: tempTags });
+  };
 
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <Grid id="this" sx={{maxWidth: "50%"}}
-        margin="auto"
-        container
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
+      <Card
+        sx={{ maxWidth: "50%", margin: "auto", backgroundColor: "#ffffff" }}
       >
-        <Grid item sx={{maxWidth: "50%"}}>
-          <Card
-            sx={{
-              backgroundColor: "#ffffff",
-            }}
-          >
-            <Grid
-              sx={{maxWidth: "100%"}}
-              container
-              direction="column"
-              alignItems="center"
+        <div style={{maxWidth: "95%", margin: "auto"}}>
+          <Stack spacing={0.5}>
+            <Typography mt="5px" variant="h4">Create a Tutorial</Typography>
+            <Divider variant="middle" />
+            <Typography textAlign="left" variant="h6" >
+              Title
+            </Typography>
+            <TextField
+              size="small"
+              placeholder="My Example Title"
+              required
+              onChange={handleChange("title")}
+            ></TextField>
+            <Typography textAlign="left" variant="h6">Tutorial Content</Typography>
+            <div>
+              <CKEditor 
+                editor={ClassicEditor} 
+                onBlur={handleContentChange}
+              />
+            </div>
+            <Typography textAlign="left" variant="h6">Tags</Typography>
+            <TextField
+              size="small"
+              placeholder="JavaScript"
+              required
+              onKeyUp={handleTagFieldChange}
+            ></TextField>
+            <Stack
+              sx={{ flexWrap: "wrap" }}
+              direction="row"
               justifyContent="center"
+              alignItems="center"
               spacing={1}
             >
-              <Grid item>
-                <Typography variant="h4">Create a Tutorial</Typography>
-              </Grid>
-              <Grid item sx={{ width: "100%" }}>
-                <Divider variant="middle" />
-              </Grid>
-              <Grid item sx={{maxWidth: "100%"}}>
-                <Typography
-                  marginLeft="2.5%"
-                  sx={{
-                    float: "left",
-                  }}
-                  variant="h6"
-                >
-                  Title
-                </Typography>
-                <TextField
-                  placeholder="My Example Title"
-                  required
-                  sx={{
-                    width: "95%",
-                  }}
-                  onChange={handleChange("title")}
-                ></TextField>
-                <Typography
-                  marginLeft="2.5%"
-                  sx={{
-                    float: "left",
-                  }}
-                  variant="h6"
-                >
-                  Tutorial Content
-                </Typography>
-                <TextField
-                  minRows="4"
-                  multiline
-                  placeholder="Example Content"
-                  required
-                  sx={{
-                    width: "95%",
-                  }}
-                  onChange={handleChange("content")}
-                ></TextField>
-                <Typography
-                  marginLeft="2.5%"
-                  sx={{
-                    float: "left",
-                  }}
-                  variant="h6"
-                >
-                  Tags
-                </Typography>
-                <TextField
-                  placeholder="JavaScript"
-                  required
-                  sx={{
-                    width: "95%",
-                  }}
-                  onKeyUp={handleTagFieldChange}
-                ></TextField>
-                <Stack sx={{flexWrap: "wrap"}}
-                  marginLeft="2.5%"
-                  marginTop="5px"
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={1}>
-                  {values.tags.map((tag) => {
-                    return <Chip key={tag} label={tag} onDelete={handleTagDeletion(tag)} />
-                  })}
-                </Stack>
-              </Grid>
-
-              <Grid item>
-                {values.pressedCreate ? (
-                  <LoadingButton
-                    loading
-                    sx={{
-                      backgroundColor: "#4b6584",
-                      height: "36px",
-                      width: 300,
-                    }}
-                    variant="contained"
-                  ></LoadingButton>
-                ) : (
-                  <Button
-                    onClick={handleCreate}
-                    variant="filled"
-                    sx={{
-                      backgroundColor: "#4b6584",
-                      color: "#ffffff",
-                      height: "36px",
-                      width: 300,
-                    }}
-                  >
-                    Create
-                  </Button>
-                )}
-              </Grid>
-              <Grid item>
-                {values.successCreateTutorial ? (
-                  <Alert severity="success">
-                    {values.successCreateTutorialMessage}
-                  </Alert>
-                ) : null}
-                {values.errorCreateTutorial ? (
-                  <Alert severity="error">
-                    {values.errorCreateTutorialMessage}
-                  </Alert>
-                ) : null}
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-      </Grid>
+              {values.tags.map((tag) => {
+                return (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    onDelete={handleTagDeletion(tag)}
+                  />
+                );
+              })}
+            </Stack>
+          </Stack>
+        </div>
+        <div style={{margin: "20px 0 10px"}}>
+           {values.pressedCreate ? (
+              <LoadingButton
+                loading
+                sx={{
+                  backgroundColor: "#4b6584",
+                  height: "36px",
+                  width: 300,
+                }}
+                variant="contained"
+              ></LoadingButton>
+            ) : (
+              <Button
+                onClick={handleCreate}
+                variant="filled"
+                sx={{
+                  backgroundColor: "#4b6584",
+                  color: "#ffffff",
+                  height: "36px",
+                  width: 300,
+                }}
+              >
+                Create
+              </Button>
+            )}
+        </div>
+        <div>
+          {values.successCreateTutorial ? (
+            <Alert severity="success">
+              {values.successCreateTutorialMessage}
+            </Alert>
+            ) : null}
+          {values.errorCreateTutorial ? (
+            <Alert severity="error">
+              {values.errorCreateTutorialMessage}
+            </Alert>
+          ) : null}
+        </div>
+        <div>
+          <p>{values.content}</p>
+        </div>
+      </Card>
     </>
   );
 }
