@@ -5,17 +5,37 @@ import { API_URL } from "../index";
 import { Grid, Typography } from "@mui/material";
 import TutorialOverview from "./TutorialOverview";
 import formatDate from "../functions";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default function Frontpage(props) {
   const { loggedIn, setLoggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
-  const [tutorialsInitial, setTutorialsInitial] = useState({ init_array: [] });
- 
+  const [tutorialsInitial, setTutorialsInitial] = useState( [] );
+  const [rating, setRating] = React.useState('');
+
+  const handleChangess = (event) => {
+    setRating(event.target.value);
+    let filteredSearch = tutorialsInitial.filter((item) => {
+     
+
+      if(item.ratingStats)
+      {
+      return (
+        item.ratingStats.avgRating===event.target.value
+      )}
+    });
+    setTutorials(filteredSearch);
+
+  };
   const handleClick = (e) => {
     // console.log("com", tutorialsInitial.init_array);
     // console.log("original", tutorials);
 
-    let filteredSearch = tutorialsInitial.init_array.filter((item) => {
+    let filteredSearch = tutorialsInitial.filter((item) => {
       if(item.owner)
       {
       return (
@@ -36,12 +56,8 @@ export default function Frontpage(props) {
   useEffect(() => {
     axios.get(`${API_URL}/tutorial/list`).then((response) => {
       if (response.status === 200) {
-        console.log(response.data.tutorialList);
         setTutorials(response.data.tutorialList);
-        setTutorialsInitial({
-          ...tutorialsInitial,
-          init_array: response.data.tutorialList,
-        });
+        setTutorialsInitial( response.data.tutorialList);
       }
     });
   }, []);
@@ -64,6 +80,25 @@ export default function Frontpage(props) {
           spacing={1}
           xs={10}
         >
+           <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Rating</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={rating}
+          label="Rating"
+          onChange={handleChangess}
+        >
+          <MenuItem value={0}>No Rating</MenuItem>
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
           {tutorials.length === 0 ? (
             <Typography>Couldn't find any tutorials!</Typography>
           ) : (
