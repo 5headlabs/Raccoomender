@@ -25,10 +25,10 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Frontpage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
-              <Route path="/tutorial/:id" element={<TutorialView loggedIn={loggedIn}/>}/>
+              <Route path="/tutorial/:id" element={<TutorialView loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
               {!loggedIn ? (<Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>) : null} 
               {!loggedIn ? (<Route path="/register" element={<Register setLoggedIn={setLoggedIn}/>}/>) : null }
-              {loggedIn ? (<Route path="/create" element={<TutorialCreation loggedIn={loggedIn}/>}/>) : null }
+              {loggedIn ? (<Route path="/create" element={<TutorialCreation loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>) : null }
               <Route path="/*" element={<Navigate to="/" replace={true} />}/>
             </Routes> 
           </BrowserRouter>

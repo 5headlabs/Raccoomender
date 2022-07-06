@@ -10,7 +10,7 @@ import TutorialCommentCreation from "./TutorialView/TutorialCommentCreation";
 import TutorialCommentList from "./TutorialView/TutorialCommentList";
 
 export default function TutorialView(props) {
-  const { loggedIn } = props;
+  const { loggedIn , setLoggedIn } = props;
   const { id } = useParams();
 
   const [values, setValues] = useState({
@@ -64,7 +64,7 @@ export default function TutorialView(props) {
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Grid
         container
         direction="row"

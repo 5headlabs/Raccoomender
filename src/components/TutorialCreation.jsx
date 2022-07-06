@@ -19,7 +19,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function TutorialCreation(props) {
-  const { loggedIn } = props;
+  const { loggedIn, setLoggedIn } = props;
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
@@ -110,7 +110,7 @@ export default function TutorialCreation(props) {
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <Card
         sx={{ maxWidth: "50%", margin: "auto", backgroundColor: "#ffffff" }}
       >
