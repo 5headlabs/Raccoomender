@@ -1,4 +1,4 @@
-import { Card, Divider, Grid, Typography, Avatar, Rating } from "@mui/material";
+import { Card, Divider, Grid, Typography, Avatar, Rating, Chip } from "@mui/material";
 import React from "react";
 import { formatDate } from "../../functions";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -81,15 +81,14 @@ export default function TutorialContent(props) {
           >
             {values.tags.map((tag) => (
               <Grid item key={tag}>
-                <Typography
-                  sx={{
-                    backgroundColor: "#95bdc8",
-                    borderRadius: "4px",
-                    color: "#ffffff",
-                  }}
-                >
-                  {tag}
-                </Typography>
+                <Chip
+                    key={tag}
+                    label={tag}
+                    sx={{
+                      backgroundColor: "#95bdc8",
+                      color: "#ffffff",
+                    }}
+                  />
               </Grid>
             ))}
           </Grid>
