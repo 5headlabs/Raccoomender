@@ -95,7 +95,7 @@ function addComment(req, res) {
             if (err) {
                 res.status(500).send({error: "An error occurred during saving of comment!"});
             } else {
-                res.status(201).send({success: true, tutorial: tut });
+                res.status(201).send({success: true, tutorial: tut});
             }
     });
 }
@@ -104,6 +104,7 @@ function getTutorial(req, res, next) {
     Tutorial.findById({_id: req.params.id}).
         populate({path: 'owner', select: '_id username'}).
         populate({path: 'comments', populate: {path: 'author', select: '_id username'}}).
+        populate({path: 'ratings', populate: {path: 'owner', select: 'username'}}).
         exec((err, tut) => {
             if (err) {
                 res.status(500).send({error: "An error occurred during retrieval of tutorial!", msg: err});
