@@ -198,9 +198,6 @@ export default function TutorialCreation(props) {
             </Alert>
           ) : null}
         </div>
-        <div>
-          <p>{values.content}</p>
-        </div>
       </Card>
     </>
   );

@@ -22,7 +22,6 @@ export default function TutorialView(props) {
     ratingStats: {avgRating: 0, starRating: [0,0,0,0,0]},
     tags: [],
     title: "",
-    id: "",
   });
 
   const [updatedComments, setUpdatedComments] = useState(false);
@@ -44,7 +43,6 @@ export default function TutorialView(props) {
             ratingStats: response.data.tutorial.ratingStats,
             tags: response.data.tutorial.tags,
             title: response.data.tutorial.title,
-            id: response.data.tutorial._id,
           });
         }
       })

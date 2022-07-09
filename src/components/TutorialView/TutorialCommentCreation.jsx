@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { API_URL } from "../../index";
+import { useParams } from "react-router-dom";
 
 export default function TutorialCommentCreation(props) {
   const { values, setUpdatedComments, loggedIn } = props;
+  const { id } = useParams();
 
   const [commentValues, setCommentValues] = useState({
     pressedPost: false,
@@ -33,7 +35,7 @@ export default function TutorialCommentCreation(props) {
 
     axios
       .post(
-        `${API_URL}/tutorial/${values.id}/add/comment`,
+        `${API_URL}/tutorial/${id}/add/comment`,
         {
           title: commentValues.headline,
           content: commentValues.comment,
