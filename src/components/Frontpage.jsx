@@ -28,14 +28,17 @@ export default function Frontpage(props) {
   };
   const handleClick = (e) => {
     // console.log("com", tutorialsInitial.init_array);
-    // console.log("original", tutorials);
+     console.log("original", tutorialsInitial);
 
     let filteredSearch = tutorialsInitial.filter((item) => {
       if (item.owner) {
+        console.log("original", e.toLowerCase());
+
         return (
           item.title.toLowerCase().includes(e.toLowerCase()) ||
           item.content.toLowerCase().includes(e.toLowerCase()) ||
-          item.owner.username.toLowerCase().includes(e.toLowerCase())
+          item.owner.username.toLowerCase().includes(e.toLowerCase()) ||
+          item.tags.includes(e.toLowerCase())
         );
       } else {
         return (
