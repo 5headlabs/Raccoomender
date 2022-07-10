@@ -21,7 +21,7 @@ export default function Frontpage(props) {
     setRating(event.target.value);
     let filteredSearch = tutorialsInitial.filter((item) => {
       if (item.ratingStats) {
-        return item.ratingStats.avgRating === event.target.value;
+        return item.ratingStats.avgRating >= event.target.value;
       }
     });
     setTutorials(filteredSearch);
@@ -75,22 +75,22 @@ export default function Frontpage(props) {
           xs={10}
         >
           <Grid item xs={0.5}>
-            <Box sx={{ minWidth: 120 }}>
+            <Box sx={{ minWidth: 80 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Rating</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={rating}
+                  value={rating || 0}
                   label="Rating"
                   onChange={handleChanges}
                 >
-                  <MenuItem value={0}>No Rating</MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={0}>All</MenuItem>
+                  <MenuItem value={1}>≥1</MenuItem>
+                  <MenuItem value={2}>≥2</MenuItem>
+                  <MenuItem value={3}>≥3</MenuItem>
+                  <MenuItem value={4}>≥4</MenuItem>
+                  <MenuItem value={5}>≥5</MenuItem>
                 </Select>
               </FormControl>
             </Box>
