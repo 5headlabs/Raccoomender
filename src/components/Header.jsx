@@ -116,7 +116,7 @@ export default function Header(props) {
                                     paddingLeft: "6ch",
                                     width: "40ch"
                                 }}
-                                onChange={(e) => {handleChange(e.target.value)}}
+                                onChange={(e) => {handleChange ? (handleChange(e.target.value)): navigate("/") }}
                                 placeholder="Search Raccoomender..."/>
                             
                         </Grid>
