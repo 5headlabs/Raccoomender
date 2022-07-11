@@ -124,7 +124,7 @@ export default function TutorialRatings(props) {
             {<LinearProgress variant="determinate" value={calculatePercentage(4)} />}
           </Grid>
           <Grid item xs={1}>
-            {calculatePercentage(4)}%
+          {Math.round(calculatePercentage(4))}%
           </Grid>
         </Grid>
 
@@ -136,7 +136,7 @@ export default function TutorialRatings(props) {
             <LinearProgress variant="determinate" value={calculatePercentage(3)} />
           </Grid>
           <Grid item xs={1}>
-            {calculatePercentage(3)}%
+          {Math.round(calculatePercentage(3))}%
           </Grid>
         </Grid>
 
@@ -148,7 +148,7 @@ export default function TutorialRatings(props) {
             <LinearProgress variant="determinate" value={calculatePercentage(2)} />
           </Grid>
           <Grid item xs={1}>
-            {calculatePercentage(2)}%
+          {Math.round(calculatePercentage(2))}%
           </Grid>
         </Grid>
 
@@ -160,7 +160,7 @@ export default function TutorialRatings(props) {
             <LinearProgress variant="determinate" value={calculatePercentage(1)} />
           </Grid>
           <Grid item xs={1}>
-            {calculatePercentage(1)}%
+          {Math.round(calculatePercentage(1))}%
           </Grid>
         </Grid>
 
@@ -172,13 +172,13 @@ export default function TutorialRatings(props) {
             <LinearProgress variant="determinate" value={calculatePercentage(0)} />
           </Grid>
           <Grid item xs={1}>
-            {calculatePercentage(0)}%
+          {Math.round(calculatePercentage(0))}%
           </Grid>
         </Grid>
 
         <Grid item xs={12}>
           <Typography variant="h7" color="#555555">
-            {values.ratingStats.avgRating} out of 5
+            {(values.ratingStats.avgRating).toFixed(2)} out of 5
           </Typography>
         </Grid>
 
