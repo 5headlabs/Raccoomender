@@ -65,39 +65,35 @@ export default function TutorialView(props) {
       <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Grid
         container
+        margin="auto"
+        maxWidth="67%"
         direction="row"
         justifyContent="center"
         alignItems="flex-start"
         spacing={2}
       >
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TutorialContent values={values} />
         </Grid>
-        <Grid item xs={2} />
-        <Grid item xs={2} />
-        <Grid item xs={4}>
-          <TutorialRatings
-            values={values}
-            updatedRatings={updatedRatings}
-            setUpdatedRatings={setUpdatedRatings}
-            loggedIn={loggedIn}
-          />
+          <Grid item xs={6}>
+            <TutorialRatings
+              values={values}
+              updatedRatings={updatedRatings}
+              setUpdatedRatings={setUpdatedRatings}
+              loggedIn={loggedIn}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TutorialCommentCreation
+              values={values}
+              updatedComments={updatedComments}
+              setUpdatedComments={setUpdatedComments}
+              loggedIn={loggedIn}
+            />
         </Grid>
-        <Grid item xs={4}>
-          <TutorialCommentCreation
-            values={values}
-            updatedComments={updatedComments}
-            setUpdatedComments={setUpdatedComments}
-            loggedIn={loggedIn}
-          />
-        </Grid>
-        <Grid item xs={2} />
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TutorialCommentList values={values} />
         </Grid>
-        <Grid item xs={2} />
       </Grid>
     </>
   );
