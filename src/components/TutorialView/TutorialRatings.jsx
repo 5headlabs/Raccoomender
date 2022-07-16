@@ -78,40 +78,43 @@ export default function TutorialRatings(props) {
   return (
     <Card>
       <Grid container spacing={1} sx={{ p: 3, minHeight: "350px" }}>
-        <Grid
-          item
-          container
-          alignItems="center"
-          justifyContent="center"
-          xs={12}
-        >
-          <Typography variant="h5" fontWeight="bold" color="#4B6584">
-            Was this post helpful?
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          {loggedIn ? (
-            <Rating
-              name="simple-controlled"
-              value={ratingValue.rating}
-              onChange={(event, newValue) => {
-                handleRating(newValue);
-              }}
-            />
-          ) : (
-            <Tooltip title="Log in to rate!" placement="left" arrow>
-              <div>
-                <Rating
-                  name="simple-controlled"
-                  value={0}
-                  disabled
-                />
-              </div>
-            </Tooltip>
-          )}
-
-        </Grid>
+        {loggedIn ? (
+          <>
+            <Grid
+              item
+              container
+              alignItems="center"
+              justifyContent="center"
+              xs={12}
+            >
+              <Typography variant="h5" fontWeight="bold" color="#4B6584">
+                Was this post helpful?
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Rating
+                name="simple-controlled"
+                value={ratingValue.rating}
+                onChange={(event, newValue) => {
+                  handleRating(newValue);
+                }}
+              />
+            </Grid>
+          </>) : (
+          <>
+            <Grid
+              item
+              alignItems="center"
+              jusitfyContent="center"
+              xs={12}
+            >
+              <Typography variant="h5" color="#4B6584">
+              Log in to rate this tutorial!
+              </Typography>
+            </Grid>
+          </>
+        )}
+        
         <Grid item xs={12}>
           <Divider variant="fullWidth" />
         </Grid>
@@ -190,4 +193,4 @@ export default function TutorialRatings(props) {
       </Grid>
     </Card>
   );
-}
+};
