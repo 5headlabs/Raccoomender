@@ -1,6 +1,4 @@
-import { AppBar, Avatar, Button, Grid, IconButton, InputBase, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { AppBar, Avatar, Button, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import logo from "../raccoomender.png";
@@ -8,7 +6,7 @@ import { AccountBox, Logout, Settings } from "@mui/icons-material";
 
 
 export default function Header(props) {
-    const {loggedIn, setLoggedIn, handleChange} = props;
+    const {loggedIn, setLoggedIn} = props;
     const navigate = useNavigate();
     const [anchorMenu, setAnchorMenu] = useState(null);
 
@@ -33,10 +31,6 @@ export default function Header(props) {
         setLoggedIn(false);
     }
 
-    const handleClickCreate = () => {
-        navigate("/create");
-    }
- 
     return (
         <>
         <AppBar 
@@ -79,60 +73,6 @@ export default function Header(props) {
                             </Grid>
                         </Grid>
                         
-                    </Grid>
-                    <Grid 
-                        item
-                        sx={{
-                            justifyContent: "center",
-                            display: "inline-block"
-                        }}>
-                        <Grid
-                            item
-                            sx={{
-                                backgroundColor: "#ffffff",
-                                borderRadius: "4px",
-                                float: "left",
-                                marginRight: "20px",
-                                position: "relative"
-                            }}>
-                            <Grid
-                                sx={{
-                                    alignItems: 'center',
-                                    height: "100%",
-                                    justifyContent: 'center',
-                                    position: 'absolute'
-                                }}>
-                                <SearchIcon 
-                                    sx={{ 
-                                        color: "#000000",
-                                        height: "100%",
-                                        left: "1ch",
-                                        position: "absolute" 
-                                    }}/>
-                            </Grid>
-                            <InputBase
-                                sx={{
-                                    color: "#000000",
-                                    paddingLeft: "6ch",
-                                    width: "40ch"
-                                }}
-                                onChange={(e) => {handleChange ? (handleChange(e.target.value)): navigate("/") }}
-                                placeholder="Search Raccoomender..."/>
-                            
-                        </Grid>
-                        <Grid
-                            sx={{
-                                float: "right"
-                            }}>
-                            { loggedIn ? (
-                                <AddCircleIcon
-                                sx={{
-                                    cursor: "pointer"
-                                }}
-                                onClick={handleClickCreate}>
-                                </AddCircleIcon>
-                            ) : null}
-                        </Grid>
                     </Grid>
                     <Grid
                         item>

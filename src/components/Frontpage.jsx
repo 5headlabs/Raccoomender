@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { API_URL } from "../index";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, InputBase, Typography, Stack, Paper } from "@mui/material";
 import TutorialOverview from "./TutorialOverview";
 import formatDate from "../functions";
 import Box from "@mui/material/Box";
@@ -10,12 +11,16 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import SearchIcon from '@mui/icons-material/Search';
+import { Navigate } from "react-router-dom";
 
 export default function Frontpage(props) {
   const { loggedIn, setLoggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
   const [tutorialsInitial, setTutorialsInitial] = useState([]);
   const [rating, setRating] = React.useState("");
+
+  const navigate = useNavigate();
 
   const handleChanges = (event) => {
     setRating(event.target.value);
@@ -50,6 +55,10 @@ export default function Frontpage(props) {
     setTutorials(filteredSearch);
   };
 
+  const handleClickCreateTutorial = () => {
+    navigate("/create");
+  }
+
   useEffect(() => {
     axios.get(`${API_URL}/tutorial/list`).then((response) => {
       if (response.status === 200) {
@@ -64,7 +73,6 @@ export default function Frontpage(props) {
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <Header
-            handleChange={handleClick}
             loggedIn={loggedIn}
             setLoggedIn={setLoggedIn}
           />
@@ -72,13 +80,12 @@ export default function Frontpage(props) {
         <Grid
           item
           container
-          justifyContent="center"
           alignItems="center"
           spacing={1}
           xs={10}
         >
-          <Grid item xs={0.5}>
-            <Box sx={{ minWidth: 80 }}>
+          <Grid item xs={2}>
+            <Box sx={{ width: 80 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Rating</InputLabel>
                 <Select
@@ -97,6 +104,31 @@ export default function Frontpage(props) {
                 </Select>
               </FormControl>
             </Box>
+          </Grid>
+          <Grid item xs={8} sx={{height: "100%"}}>
+            <Paper sx={{
+              display: "flex",
+              alignItems: "center",
+              height: 50,
+              margin: "auto"
+            }}>
+              <SearchIcon sx={{ color: "#000000", margin: "0px 5px 0px 10px" }} />
+              <InputBase sx={{ flex: 1, margin: "0px 10px 0px 0px" }}
+                placeholder="Search Raccoomender..."
+                onChange={(e) => handleClick(e.target.value)}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={2}>
+            {loggedIn ? (
+              <Button 
+                sx={{ backgroundColor: "#4B6584", height: 50 }}
+                variant="contained"
+                onClick={handleClickCreateTutorial}
+              >
+                New Tutorial
+              </Button>
+            ) : (null)}
           </Grid>
           <Grid item xs={11.5}/>
           {tutorials.length === 0 ? (
