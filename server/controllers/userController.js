@@ -1,4 +1,4 @@
-function getUserInfo(request) {
+function setUserInfo(request) {
     const getUserInfo = {
       _id:      request._id,
       username: request.username,
@@ -14,4 +14,4 @@ function getRole(roleToCheck) {
     return 1;
 }
 
-module.exports = { getUserInfo, getRole };
+module.exports = { setUserInfo, getRole };
