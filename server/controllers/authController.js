@@ -1,6 +1,6 @@
 const jwt         = require('jsonwebtoken');
 const User        = require('../models/user');
-const setUserInfo = require('../helpers').setUserInfo;
+const setUserInfo = require('./userController').setUserInfo;
 const config      = require('../config/main');
 
 function verifyUser(req) {
