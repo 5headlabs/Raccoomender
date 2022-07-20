@@ -16,18 +16,11 @@ const tutorialRouter = require('./routes/tutorialRouter');
 mongoose.connect(config.database);
 
 app.use(cors());
-
-let server;
-if (process.env.NODE_ENV != config.test_env) {
-  server = app.listen(config.port);
-  console.log(`Your server is running on port ${config.port}.`);
-} else{
-  server = app.listen(config.test_port);
-}
-
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+
+app.listen(config.port);
+console.log(`Your server is running on port ${config.port}.`);
 
 // CORS
 app.use((req, res, next) => {
@@ -40,5 +33,3 @@ app.use((req, res, next) => {
 
 app.use("/api/auth",     authRouter);
 app.use("/api/tutorial", tutorialRouter);
-
-module.exports = server;
