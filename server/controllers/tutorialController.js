@@ -5,15 +5,14 @@ const authController    = require('./authController');
 
 const desiredTutorialListCount = 10;
 
-// Handle Tutorial Creation and Display
 function createTutorial(req, res, next) {
     const user = authController.verifyUser(req);
 
     const tutorial = new Tutorial({
-        title      : req.body.title,
-        owner      : user._id,
-        content    : req.body.content,
-        tags       : req.body.tags,
+        title:       req.body.title,
+        owner:       user._id,
+        content:     req.body.content,
+        tags:        req.body.tags,
         ratingStats: {
             avgRating : 0,
             starRating: [0,0,0,0,0]
@@ -22,9 +21,9 @@ function createTutorial(req, res, next) {
 
     tutorial.save((err) => {
         if (err) {
-            res.status(500).send({error: "Could not save tutorial!"});
+            res.status(500).send({ error: "Could not save tutorial!" });
         } else {
-            res.status(201).send({success: true});
+            res.status(201).send({ success: true });
         }
     });
 }
@@ -41,12 +40,15 @@ function addRating(req, res) {
             {new: true},
             (err, tut) => {
                 if (err) {
-                    res.status(500).send({error: "An error occurred during saving of Rating!", msg: err.message});
+                    res.status(500).send({ error: "An error occurred during saving of Rating!", msg: err.message });
                 } else {
-                    // Calculate avgRating and starRatings to tutorial.
+                    // Calculate avgRating and starRatings for tutorial.
                     Tutorial.findById(req.params.id)
                     .populate('ratings')
-                    .exec((err, tutorial) => {
+                    .exec((err2, tutorial) => {
+                        if (err2) {
+                            res.status(500).send({ error: "An error occured during Rating retrieval!", msg: err2.message });
+                        }
                         const ratings     = tutorial.ratings;
                         const starRatings = [0,0,0,0,0];
                         let avgRating     = 0;
@@ -61,13 +63,13 @@ function addRating(req, res) {
                         // Add avgRating and starRatings to tutorial.
                         Tutorial.findByIdAndUpdate(
                             req.params.id, 
-                            {ratingStats: {avgRating: avgRating, starRating: starRatings}}, 
+                            {ratingStats: { avgRating: avgRating, starRating: starRatings }}, 
                             {new: true},
                             (err, tut) => {
                                 if (err) {
-                                    res.status(500).send({error: "An error occurred whilst saving new rating!"});
+                                    res.status(500).send({ error: "An error occurred whilst saving new rating!" });
                                 } else {
-                                    res.status(201).send({success: true, tutorial: tut});
+                                    res.status(201).send({ success: true, tutorial: tut });
                                 }
                         });
                     });
@@ -86,30 +88,30 @@ function addComment(req, res) {
         {_id: tutorialId},
         {$push: {
             comments: {
-                $each    : [comment],
+                $each:     [comment],
                 $position: 0
             }
         }}, 
         {new: true},
         (err, tut) => {
             if (err) {
-                res.status(500).send({error: "An error occurred during saving of comment!"});
+                res.status(500).send({ error: "An error occurred during saving of comment!" });
             } else {
-                res.status(201).send({success: true, tutorial: tut});
+                res.status(201).send({ success: true, tutorial: tut });
             }
     });
 }
 
 function getTutorial(req, res, next) {
     Tutorial.findById({_id: req.params.id}).
-        populate({path: 'owner', select: '_id username'}).
-        populate({path: 'comments', populate: {path: 'author', select: '_id username'}}).
-        populate({path: 'ratings', populate: {path: 'owner', select: 'username'}}).
+        populate({ path: 'owner', select: '_id username' }).
+        populate({ path: 'comments', populate: { path: 'author', select: '_id username' }}).
+        populate({ path: 'ratings',  populate: { path: 'owner',  select: 'username' }}).
         exec((err, tut) => {
             if (err) {
-                res.status(500).send({error: "An error occurred during retrieval of tutorial!", msg: err});
+                res.status(500).send({ error: "An error occurred during retrieval of tutorial!", msg: err });
             } else {
-                res.status(200).send({tutorial: tut});
+                res.status(200).send({ tutorial: tut });
             }
     });
 }
@@ -129,18 +131,18 @@ function findRandom(res, limit) {
             let skip = getRand(0, count - size);
             Tutorial.find({}, '-comments')
                 .populate({
-                    path   : 'owner',
-                    select : '_id username' ,
+                    path:    'owner',
+                    select:  '_id username' ,
                     options: {
-                        skip: skip,
+                        skip:  skip,
                         limit: size
                 }}) 
                 .populate({
-                    path: 'comments',
-                    populate: {path: 'author', select: '_id username'}})
+                    path:     'comments',
+                    populate: { path: 'author', select: '_id username' }})
                 .exec((err, docs) => {
                     if (err) {
-                        res.status(500).send({error: `An error occurred during retrieval of tutorial list`});
+                        res.status(500).send({ error: `An error occurred during retrieval of tutorial list` });
                         return reject(err);
                     } else {
                         resolve(docs);

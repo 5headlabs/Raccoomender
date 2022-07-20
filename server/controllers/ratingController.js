@@ -9,7 +9,7 @@ function createRating (user, req, res) {
             {new: true, upsert: true})
         .exec((err, rating) => {
             if (err) {
-                res.status(500).send({error: "An error occurred during update of rating!"});
+                res.status(500).send({ error: "An error occurred during update of rating!" });
                 return reject(err);
             } else {
                 resolve(rating);

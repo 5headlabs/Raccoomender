@@ -1,30 +1,17 @@
-const User        = require('../models/user');
-const setUserInfo = require('../helpers').setUserInfo;
-
-//= =======================================
-// User Routes
-//= =======================================
-viewProfile = function (req, res, next) {
-  const userId = req.params.userId;
-
-  if (req.user._id.toString() !== userId) { return res.status(401).json({ error: 'You are not authorized to view this user profile.' }); }
-  User.findById(userId, (err, user) => {
-    if (err) {
-      res.status(400).json({ error: 'No user could be found for this ID.' });
-      return next(err);
-    } else {
-      const userToReturn = setUserInfo(user);
-      return res.status(200).json({ user: userToReturn });
-    }
-  });
-};
-
-createUser = function (req, res, next) {
-
+function getUserInfo(request) {
+    const getUserInfo = {
+      _id:      request._id,
+      username: request.username,
+      email:    request.email,
+      password: request.password,
+      role:     request.role
+    };
+  
+    return getUserInfo;
 }
 
-updateUser = function (req, res, next) {
-
+function getRole(roleToCheck) {
+    return 1;
 }
 
-module.exports = { viewProfile, createUser, updateUser };
+module.exports = { getUserInfo, getRole };

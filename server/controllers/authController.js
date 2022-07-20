@@ -1,8 +1,6 @@
 const jwt         = require('jsonwebtoken');
-const crypto      = require('crypto');
 const User        = require('../models/user');
 const setUserInfo = require('../helpers').setUserInfo;
-const getRole     = require('../helpers').getRole;
 const config      = require('../config/main');
 
 function verifyUser(req) {
@@ -12,13 +10,14 @@ function verifyUser(req) {
 function isLoggedIn(req, res) {
   try {
     const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
+
     if(user) {
-      res.status(200).send({isLoggedIn: true});
+      res.status(200).send({ isLoggedIn: true });
     } else {
-      res.status(200).send({isLoggedIn: false});
+      res.status(200).send({ isLoggedIn: false });
     }
   } catch {
-    res.status(200).send({isLoggedIn: false});
+    res.status(200).send({ isLoggedIn: false });
   }
 }
 
@@ -28,7 +27,7 @@ function checkLoginStatus (req, res, next) {
   if (user) {
     next();
   } else {
-    res.status(401).send({error: "Login required to perform this action!"});
+    res.status(401).send({ error: "Login required to perform this action!" });
   }
 }
 
@@ -52,17 +51,15 @@ function register(req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
 
-  User.findOne({ username }, (err, existingUser) => {
+  User.findOne({username}, (err, existingUser) => {
     if (err) {
-      return res.status(500).send({ error: "Could not find user!"});
+      return res.status(500).send({ error: "Could not find user!" });
     }
 
-    // If user is not unique, return error
     if (existingUser) {
       return res.status(422).send({ error: 'That username is already in use.' });
     }
 
-    // If email is unique and password was provided, create account
     const user = new User({
       email,
       password,
@@ -71,14 +68,13 @@ function register(req, res, next) {
 
     user.save((err, user) => {
       if (err) {
-        res.status(500).send({ error: "Could not save user after registration!", message: err});
+        res.status(500).send({ error: "Could not save user after registration!", message: err });
       } else {
-        // Respond with JWT and user info if user was created
         const userInfo = setUserInfo(user);
   
         res.status(201).json({
           token: `JWT ${generateToken(userInfo)}`,
-          user: userInfo
+          user:  userInfo
         });
       }
     });

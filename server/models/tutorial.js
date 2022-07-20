@@ -1,23 +1,23 @@
-// Importing Node packages required for schema
+// Importing No de packages required for schema
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Schema   = mongoose.Schema;
 
 //= ===============================
 // Tutorial Schema
 //= ===============================
 const TutorialSchema = new Schema({
   title: {
-    type    : String,
-    unique  : true,
+    type:     String,
+    unique:   true,
     required: true
   },
   owner: {
-    type    : mongoose.ObjectId,
+    type:     mongoose.ObjectId,
     required: true,
-    ref     : 'User'
+    ref:      'User'
   },
   content: {
-    type    : String,
+    type:     String,
     required: true
   },
   tags: [{
@@ -25,20 +25,20 @@ const TutorialSchema = new Schema({
   }],
   comments: [{
     author: {
-      type: mongoose.ObjectId,
+      type:     mongoose.ObjectId,
       required: true,
-      ref : 'User'
+      ref :     'User'
     },
     title: {
-      type: String,
+      type:     String,
       required: true
     },
     content: {
-      type: String,
+      type:     String,
       required: true
     },
     published: {
-      type: Date,
+      type:     Date,
       required: true
     }
   }],

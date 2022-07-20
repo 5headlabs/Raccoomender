@@ -2,6 +2,7 @@
 const mongoose    = require('mongoose');
 const bcrypt      = require('bcrypt');
 const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
+
 const Schema = mongoose.Schema;
 
 //= ===============================
@@ -9,26 +10,26 @@ const Schema = mongoose.Schema;
 //= ===============================
 const UserSchema = new Schema({
   email: {
-    type     : String,
+    type:      String,
     lowercase: true,
-    unique   : true,
-    required : true
+    unique:    true,
+    required:  true
   },
   password: {
-    type    : String,
+    type:     String,
     required: true
   },
   username: {
-    type    : String, 
-    unique  : true,
+    type:     String, 
+    unique:   true,
     required: true
   },
   role: {
-    type   : String,
-    enum   : [ROLE_MEMBER],
+    type:    String,
+    enum:    [ROLE_MEMBER],
     default: ROLE_MEMBER
   },
-  resetPasswordToken  : { type: String },
+  resetPasswordToken:   { type: String },
   resetPasswordExpires: { type: Date }
 },
   {
@@ -39,7 +40,6 @@ const UserSchema = new Schema({
 // User ORM Methods
 //= ===============================
 
-// Pre-save of user to database, hash password if password is modified or new
 UserSchema.pre('save', function (next) {
   const user = this;
   const SALT_ROUNDS = 5;
@@ -56,12 +56,11 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-// Method to compare password for login
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+UserSchema.methods.comparePassword = function (candidatePassword, done) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) { return cb(err); }
+    if (err) { return done(err); }
 
-    cb(null, isMatch);
+    done(null, isMatch);
   });
 };
 

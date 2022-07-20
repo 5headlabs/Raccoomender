@@ -22,6 +22,6 @@ const localLogin = new LocalStrategy(localOptions, (username, password, done) =>
 
 passport.use(localLogin);
 
-const authLogin = passport.authenticate('local', {session: false});
+const authLogin = passport.authenticate('local', { session: false });
 
 module.exports = { authLogin };

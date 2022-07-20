@@ -1,24 +1,24 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Schema   = mongoose.Schema;
 
 //= ===============================
 // Rating Schema
 //= ===============================
 const RatingSchema = new Schema({
   owner: {
-    type    : mongoose.ObjectId,
+    type:     mongoose.ObjectId,
     required: true,
-    ref     : 'User'
+    ref:      'User'
   },
   score: {
-    type    : Number,
+    type:     Number,
     required: true
   },
   tutorial: {
-    type    : mongoose.ObjectId,
+    type:     mongoose.ObjectId,
     required: true,
-    ref     : 'Tutorial'
+    ref:      'Tutorial'
   }
 },
   {
