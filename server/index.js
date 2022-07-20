@@ -13,13 +13,10 @@ const cors       = require('cors');
 const authRouter     = require('./routes/authRouter');
 const tutorialRouter = require('./routes/tutorialRouter');
 
-// Database Setup
 mongoose.connect(config.database);
-
 
 app.use(cors());
 
-// Start the server
 let server;
 if (process.env.NODE_ENV != config.test_env) {
   server = app.listen(config.port);
@@ -28,15 +25,11 @@ if (process.env.NODE_ENV != config.test_env) {
   server = app.listen(config.test_port);
 }
 
-// Set static file location for production
-// app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger('dev'));
 
-// Setting up basic middleware for all Express requests
-app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies
-app.use(bodyParser.json()); // Send JSON responses
-app.use(logger('dev')); // Log requests to API using morgan
-
-// Enable CORS from client-side
+// CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
@@ -45,8 +38,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/auth"    , authRouter);
+app.use("/api/auth",     authRouter);
 app.use("/api/tutorial", tutorialRouter);
 
-// necessary for testing
 module.exports = server;
