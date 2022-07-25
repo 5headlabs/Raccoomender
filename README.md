@@ -49,6 +49,7 @@ Auth routes have the prefix `/api/auth`.
 | GET    | `/checkLogin` | Verifies JWT token, i.e., checks if current user is logged in.                             | JWT token     | -                          | `{isLoggedIn: <true/false>}`                                                 |
 
 #### Tutorial Routes
+Tutorial routes have the prefix `/api/tutorial`.
 | Method | Route              | Description                                                                | Header fields | Body fields          | Returns (if successful)            |
 | ------ | ------------------ | -------------------------------------------------------------------------- | ------------- | -------------------- | ---------------------------------- |
 | POST   | `/create`          | Creates a new tutorial with the given data.                                | JWT token     | title (String), content (String), tags (Array) | `{success: true}`                  |
