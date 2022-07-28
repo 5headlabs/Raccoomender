@@ -1,10 +1,6 @@
-// Importing No de packages required for schema
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-//= ===============================
-// Tutorial Schema
-//= ===============================
 const TutorialSchema = new Schema({
   title: {
     type:     String,

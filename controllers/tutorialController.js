@@ -3,6 +3,7 @@ const ratingController  = require('./ratingController');
 const commentController = require('./commentController');
 const authController    = require('./authController');
 
+// Defines the number of tutorials listed on the frontpage.
 const desiredTutorialListCount = 10;
 
 function createTutorial(req, res, next) {
@@ -124,6 +125,7 @@ async function listTutorials(req, res, next) {
     });
 }
 
+// Find and return a random number of tutorials. (number is defined by min(limit, #tutorials))
 function findRandom(res, limit) {
     return new Promise((resolve, reject) => {
         Tutorial.count({}, (err, count) => {
@@ -152,6 +154,7 @@ function findRandom(res, limit) {
     });
 }
 
+// Custom function to determine a random value between min and max.
 function getRand(min, max) {
     return Math.ceil(Math.random() * (max - min) + min);
 }

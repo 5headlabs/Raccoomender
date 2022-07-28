@@ -1,10 +1,6 @@
-// Importing Node packages required for schema
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-//= ===============================
-// Rating Schema
-//= ===============================
 const RatingSchema = new Schema({
   owner: {
     type:     mongoose.ObjectId,

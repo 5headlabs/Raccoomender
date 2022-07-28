@@ -3,10 +3,12 @@ const User        = require('../models/user');
 const setUserInfo = require('./userController').setUserInfo;
 const config      = require('../config/main');
 
+// CHeck whether a valid JWT token was provided
 function verifyUser(req) {
   return jwt.verify(req.get("token").split(' ')[1], config.secret);
 }
 
+// Check if user is logged in by verifying provided JWT token.
 function isLoggedIn(req, res) {
   try {
     const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
@@ -21,6 +23,7 @@ function isLoggedIn(req, res) {
   }
 }
 
+// Middleware is applied when accessing route where being logged in is required.
 function checkLoginStatus (req, res, next) {
   const user = jwt.verify(req.get("token").split(' ')[1], config.secret);
   
@@ -31,12 +34,14 @@ function checkLoginStatus (req, res, next) {
   }
 }
 
+// Generate JWT token.
 function generateToken(user) {
   return jwt.sign(user, config.secret, {
     expiresIn: '24h'
   });
 }
 
+// Login user after successful authontication.
 function login(req, res, next) {
   const userInfo = setUserInfo(req.user);
 
@@ -46,6 +51,7 @@ function login(req, res, next) {
   });
 };
 
+// Register new user after checking provided credentials.
 function register(req, res, next) {
   const email    = req.body.email;
   const username = req.body.username;

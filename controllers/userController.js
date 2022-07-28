@@ -10,8 +10,4 @@ function setUserInfo(request) {
     return getUserInfo;
 }
 
-function getRole(roleToCheck) {
-    return 1;
-}
-
 module.exports = { setUserInfo, getRole };

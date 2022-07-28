@@ -1,5 +1,8 @@
 const Rating = require('../models/rating');
 
+// Either
+//   - creates a new rating if user did not rate tutorial yet
+//   - overwrites old rating if user already rated the tutorial
 function createRating (user, req, res) {
     return new Promise((resolve, reject) => {
         Rating

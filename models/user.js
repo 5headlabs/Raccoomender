@@ -1,13 +1,6 @@
-// Importing Node packages required for schema
-const mongoose    = require('mongoose');
-const bcrypt      = require('bcrypt');
 const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
-
 const Schema = mongoose.Schema;
 
-//= ===============================
-// User Schema
-//= ===============================
 const UserSchema = new Schema({
   email: {
     type:      String,
@@ -36,10 +29,7 @@ const UserSchema = new Schema({
     timestamps: true
   });
 
-//= ===============================
-// User ORM Methods
-//= ===============================
-
+// Hashed password instead of clear-text password is saved to the database.
 UserSchema.pre('save', function (next) {
   const user = this;
   const SALT_ROUNDS = 5;
@@ -56,6 +46,7 @@ UserSchema.pre('save', function (next) {
   });
 });
 
+// Method to compare hash of provided password with the one we saved in the database.
 UserSchema.methods.comparePassword = function (candidatePassword, done) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) { return done(err); }
