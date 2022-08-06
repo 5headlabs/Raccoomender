@@ -10,4 +10,4 @@ function setUserInfo(request) {
     return getUserInfo;
 }
 
-module.exports = { setUserInfo, getRole };
+module.exports = { setUserInfo };
