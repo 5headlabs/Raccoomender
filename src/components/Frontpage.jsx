@@ -8,35 +8,33 @@ import {
   Grid,
   InputBase,
   Typography,
-  Stack,
   Paper,
+  Rating,
 } from "@mui/material";
 import TutorialOverview from "./TutorialOverview";
 import formatDate from "../functions";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import SearchIcon from "@mui/icons-material/Search";
-import { Navigate } from "react-router-dom";
 
 export default function Frontpage(props) {
   const { loggedIn, setLoggedIn } = props;
   const [tutorials, setTutorials] = useState([]);
   const [tutorialsInitial, setTutorialsInitial] = useState([]);
-  const [rating, setRating] = React.useState("");
+  const [rating, setRating] = useState(0);
 
   const navigate = useNavigate();
 
   const handleChanges = (event) => {
-    setRating(event.target.value);
+    let newRating = event.target.value;
+    if (rating === newRating) {
+      newRating = 0;
+    }
     let filteredSearch = tutorialsInitial.filter((item) => {
       if (item.ratingStats) {
-        return item.ratingStats.avgRating >= event.target.value;
+        return item.ratingStats.avgRating >= newRating;
       }
     });
     setTutorials(filteredSearch);
+    setRating(newRating);
   };
   const handleClick = (e) => {
     // console.log("com", tutorialsInitial.init_array);
@@ -82,28 +80,22 @@ export default function Frontpage(props) {
           <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </Grid>
         <Grid item container alignItems="center" spacing={1} xs={10}>
-          <Grid item container justifyContent="flex-end" xs={2}>
-            <Box sx={{ width: 80 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Rating</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={rating || 0}
-                  label="Rating"
-                  onChange={handleChanges}
-                >
-                  <MenuItem value={0}>All</MenuItem>
-                  <MenuItem value={1}>≥1</MenuItem>
-                  <MenuItem value={2}>≥2</MenuItem>
-                  <MenuItem value={3}>≥3</MenuItem>
-                  <MenuItem value={4}>≥4</MenuItem>
-                  <MenuItem value={5}>≥5</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+          <Grid item container justifyContent="flex-end" xs={3}>
+            <Paper
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                paddingLeft: 1,
+                paddingRight: 1
+              }}
+            >
+              <Typography fontWeight="bold" fontSize="20px" sx={{paddingRight: 1, color: "#4B6584"}}>≥</Typography>
+              <Rating name="rating" onChange={handleChanges}/>
+            </Paper>
           </Grid>
-          <Grid item xs={8} sx={{ height: "100%" }}>
+          <Grid item xs={6} sx={{ height: "100%" }}>
             <Paper
               sx={{
                 display: "flex",
@@ -122,7 +114,7 @@ export default function Frontpage(props) {
               />
             </Paper>
           </Grid>
-          <Grid item container xs={2} justifyContent="flex-start">
+          <Grid item container xs={3} justifyContent="flex-start">
             {loggedIn ? (
               <Button
                 sx={{ backgroundColor: "#4B6584", height: 50 }}
