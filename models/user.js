@@ -1,5 +1,6 @@
-const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
 const mongoose = require("mongoose");
+const bcrypt   = require("bcrypt");
+
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -17,11 +18,6 @@ const UserSchema = new Schema({
     type:     String, 
     unique:   true,
     required: true
-  },
-  role: {
-    type:    String,
-    enum:    [ROLE_MEMBER],
-    default: ROLE_MEMBER
   },
   resetPasswordToken:   { type: String },
   resetPasswordExpires: { type: Date }

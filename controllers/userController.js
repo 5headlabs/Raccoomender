@@ -4,7 +4,6 @@ function setUserInfo(request) {
       username: request.username,
       email:    request.email,
       password: request.password,
-      role:     request.role
     };
   
     return getUserInfo;
