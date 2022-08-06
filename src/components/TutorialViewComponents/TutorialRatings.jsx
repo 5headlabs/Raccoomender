@@ -1,5 +1,5 @@
-import { Card, Divider, Rating, Grid, LinearProgress, Tooltip } from "@mui/material";
-import Typography from '@mui/material/Typography';
+import { Card, Divider, Rating, Grid, LinearProgress } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../../index";
@@ -12,10 +12,16 @@ export default function TutorialRatings(props) {
   const [newRating, setNewRating] = useState(false);
 
   const calculatePercentage = (starRating) => {
-    if (values.ratings.length === 0 || values.ratings.length === undefined || values.ratings.length === null) {
+    if (
+      values.ratings.length === 0 ||
+      values.ratings.length === undefined ||
+      values.ratings.length === null
+    ) {
       return 0;
     }
-    return (values.ratingStats.starRating[starRating] / values.ratings.length) * 100
+    return (
+      (values.ratingStats.starRating[starRating] / values.ratings.length) * 100
+    );
   };
 
   const [ratingValue, setRatingValue] = useState({
@@ -23,7 +29,7 @@ export default function TutorialRatings(props) {
     errorCreateRating: false,
     successCreateRating: false,
     successCreateRatingMessage: null,
-    errorCreateRatingMessage: null
+    errorCreateRatingMessage: null,
   });
 
   useEffect(() => {
@@ -32,7 +38,7 @@ export default function TutorialRatings(props) {
         .post(
           `${API_URL}/tutorial/${id}/add/rating`,
           {
-            score: ratingValue.rating
+            score: ratingValue.rating,
           },
           {
             headers: {
@@ -71,7 +77,7 @@ export default function TutorialRatings(props) {
     setNewRating(true);
     setRatingValue({
       ...ratingValue,
-      rating: score
+      rating: score,
     });
   };
 
@@ -100,21 +106,17 @@ export default function TutorialRatings(props) {
                 }}
               />
             </Grid>
-          </>) : (
+          </>
+        ) : (
           <>
-            <Grid
-              item
-              alignItems="center"
-              jusitfyContent="center"
-              xs={12}
-            >
+            <Grid item alignItems="center" jusitfyContent="center" xs={12}>
               <Typography variant="h5" color="#4B6584">
-              Log in to rate this tutorial!
+                Log in to rate this tutorial!
               </Typography>
             </Grid>
           </>
         )}
-        
+
         <Grid item xs={12}>
           <Divider variant="fullWidth" />
         </Grid>
@@ -124,10 +126,15 @@ export default function TutorialRatings(props) {
             5
           </Grid>
           <Grid item xs={10}>
-            {<LinearProgress variant="determinate" value={calculatePercentage(4)} />}
+            {
+              <LinearProgress
+                variant="determinate"
+                value={calculatePercentage(4)}
+              />
+            }
           </Grid>
           <Grid item xs={1}>
-          {Math.round(calculatePercentage(4))}%
+            {Math.round(calculatePercentage(4))}%
           </Grid>
         </Grid>
 
@@ -136,10 +143,13 @@ export default function TutorialRatings(props) {
             4
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={calculatePercentage(3)} />
+            <LinearProgress
+              variant="determinate"
+              value={calculatePercentage(3)}
+            />
           </Grid>
           <Grid item xs={1}>
-          {Math.round(calculatePercentage(3))}%
+            {Math.round(calculatePercentage(3))}%
           </Grid>
         </Grid>
 
@@ -148,10 +158,13 @@ export default function TutorialRatings(props) {
             3
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={calculatePercentage(2)} />
+            <LinearProgress
+              variant="determinate"
+              value={calculatePercentage(2)}
+            />
           </Grid>
           <Grid item xs={1}>
-          {Math.round(calculatePercentage(2))}%
+            {Math.round(calculatePercentage(2))}%
           </Grid>
         </Grid>
 
@@ -160,10 +173,13 @@ export default function TutorialRatings(props) {
             2
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={calculatePercentage(1)} />
+            <LinearProgress
+              variant="determinate"
+              value={calculatePercentage(1)}
+            />
           </Grid>
           <Grid item xs={1}>
-          {Math.round(calculatePercentage(1))}%
+            {Math.round(calculatePercentage(1))}%
           </Grid>
         </Grid>
 
@@ -172,16 +188,19 @@ export default function TutorialRatings(props) {
             1
           </Grid>
           <Grid item xs={10}>
-            <LinearProgress variant="determinate" value={calculatePercentage(0)} />
+            <LinearProgress
+              variant="determinate"
+              value={calculatePercentage(0)}
+            />
           </Grid>
           <Grid item xs={1}>
-          {Math.round(calculatePercentage(0))}%
+            {Math.round(calculatePercentage(0))}%
           </Grid>
         </Grid>
 
         <Grid item xs={12}>
           <Typography variant="h7" color="#555555">
-            {(values.ratingStats.avgRating).toFixed(2)} out of 5
+            {values.ratingStats.avgRating.toFixed(2)} out of 5
           </Typography>
         </Grid>
 
@@ -193,4 +212,4 @@ export default function TutorialRatings(props) {
       </Grid>
     </Card>
   );
-};
+}

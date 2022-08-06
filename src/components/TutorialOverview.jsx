@@ -4,15 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function TutorialOverview(props) {
   const { id, ratingStats, numberOfRatings, title, date, tags, author } = props;
-
-  // id = atring
-  // ratingStats = int
-  // numberOfRatings = int
-  // title = string
-  // date = string
-  // tags = array of strings
-  // author = string
-
   const navigate = useNavigate();
 
   const handleClickTutorialOverview = () => {
@@ -32,7 +23,13 @@ export default function TutorialOverview(props) {
       >
         <Grid container direction="row">
           <Grid item container xs={9} spacing={0.5}>
-            <Grid item container direction="row" alignItems="center" spacing={1}>
+            <Grid
+              item
+              container
+              direction="row"
+              alignItems="center"
+              spacing={1}
+            >
               <Grid item>
                 <Rating
                   name="read-only"
@@ -53,7 +50,9 @@ export default function TutorialOverview(props) {
             </Grid>
             <Grid item container direction="row" alignItems="center">
               <Grid item>
-                <Typography fontWeight="bold" fontSize="20px">{title}</Typography>
+                <Typography fontWeight="bold" fontSize="20px">
+                  {title}
+                </Typography>
               </Grid>
             </Grid>
             <Grid item container direction="row" alignItems="center">
@@ -67,7 +66,13 @@ export default function TutorialOverview(props) {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item container direction="row" alignItems="center" spacing={1}>
+            <Grid
+              item
+              container
+              direction="row"
+              alignItems="center"
+              spacing={1}
+            >
               {tags.map((tag) => (
                 <Grid item key={tag}>
                   <Chip
@@ -82,7 +87,8 @@ export default function TutorialOverview(props) {
               ))}
             </Grid>
           </Grid>
-          <Grid item
+          <Grid
+            item
             container
             direction="column"
             alignItems="center"

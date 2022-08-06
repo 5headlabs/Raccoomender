@@ -17,19 +17,17 @@ import {
 
 import LoadingButton from "@mui/lab/LoadingButton";
 
-import validator from 'validator';
+import validator from "validator";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import logo from "../raccoomender.png";
 import axios from "axios";
-import {
-  useNavigate
-} from 'react-router-dom';
-import { API_URL } from '../index';
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../index";
 
 export default function Register(props) {
-  const {setLoggedIn} = props;
+  const { setLoggedIn } = props;
 
   const [values, setValues] = useState({
     username: "",
@@ -53,9 +51,7 @@ export default function Register(props) {
   useEffect(() => {
     const isEmailValid = validator.isEmail(values.email);
     const equalPasswords = values.password === values.confirmPassword;
-
-    // TODO: Check if values.username is not used
-    const enable = (isEmailValid && values.password !== "" && equalPasswords);
+    const enable = isEmailValid && values.password !== "" && equalPasswords;
 
     if (enable) {
       setMsg("");
@@ -95,17 +91,18 @@ export default function Register(props) {
     };
     setValues(newValues);
     console.log(newValues);
-    axios.post(`${API_URL}/auth/register`, {
-      username: newValues.username,
-      password: newValues.password,
-      email: newValues.email
-    })
+    axios
+      .post(`${API_URL}/auth/register`, {
+        username: newValues.username,
+        password: newValues.password,
+        email: newValues.email,
+      })
       .then((response) => {
         if (response.status === 201) {
           const token = response.data.token;
           localStorage.setItem("token", token);
           setLoggedIn(true);
-          navigate('/');
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -113,13 +110,15 @@ export default function Register(props) {
           setValues({
             ...values,
             errorSignUp: true,
-            errorMessageSignUp: "Username is already in use. Please choose another one.",
+            errorMessageSignUp:
+              "Username is already in use. Please choose another one.",
           });
         } else if (error.response.status === 500) {
           setValues({
             ...values,
             errorSignUp: true,
-            errorMessageSignUp: "500 - Internal Server Error. Please try again later.",
+            errorMessageSignUp:
+              "500 - Internal Server Error. Please try again later.",
           });
         }
       });
@@ -127,11 +126,11 @@ export default function Register(props) {
 
   const handleClickLogo = () => {
     navigate("/");
-  }
+  };
 
   const handleClickLogin = () => {
     navigate("/login");
-  }
+  };
 
   return (
     <>
@@ -141,7 +140,7 @@ export default function Register(props) {
         alignItems="center"
         justifyContent="center"
         spacing={2}
-        sx= {{marginTop: 5}}
+        sx={{ marginTop: 5 }}
       >
         <Grid item>
           <Card sx={{ minWidth: 400 }}>
@@ -153,8 +152,13 @@ export default function Register(props) {
                 justifyContent="center"
                 spacing={3}
               >
-                <Grid item sx={{cursor: "pointer"}}>
-                  <img src={logo} alt="logo" width={250} onClick={handleClickLogo}/>
+                <Grid item sx={{ cursor: "pointer" }}>
+                  <img
+                    src={logo}
+                    alt="logo"
+                    width={250}
+                    onClick={handleClickLogo}
+                  />
                 </Grid>
                 <Grid item>
                   {values.errorSignUp ? (
@@ -199,8 +203,8 @@ export default function Register(props) {
                             {values.showPassword ? (
                               <VisibilityOff />
                             ) : (
-                                <Visibility />
-                              )}
+                              <Visibility />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       }
@@ -210,7 +214,9 @@ export default function Register(props) {
                 </Grid>
                 <Grid item>
                   <FormControl sx={{ minWidth: 300 }} variant="filled">
-                    <InputLabel htmlFor="confirmPassword-input">Confirm Password</InputLabel>
+                    <InputLabel htmlFor="confirmPassword-input">
+                      Confirm Password
+                    </InputLabel>
                     <FilledInput
                       id="confirmPassword-input"
                       type={values.showPassword ? "text" : "password"}
@@ -227,8 +233,8 @@ export default function Register(props) {
                             {values.showPassword ? (
                               <VisibilityOff />
                             ) : (
-                                <Visibility />
-                              )}
+                              <Visibility />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       }
@@ -250,25 +256,24 @@ export default function Register(props) {
                       Enter the cave!
                     </LoadingButton>
                   ) : (
-                      <Tooltip title={errorMessage} placement="top">
-                        <div>
-                          <Button disabled={!enableSignUpButton}
-                            sx={{
-                              minWidth: 300,
-                              backgroundColor: "#4b6584",
-                              marginBottom: 2,
-                            }}
-                            variant="contained"
-                            onClick={handleSignUp}
-                          >
-                            Enter the cave!
+                    <Tooltip title={errorMessage} placement="top">
+                      <div>
+                        <Button
+                          disabled={!enableSignUpButton}
+                          sx={{
+                            minWidth: 300,
+                            backgroundColor: "#4b6584",
+                            marginBottom: 2,
+                          }}
+                          variant="contained"
+                          onClick={handleSignUp}
+                        >
+                          Enter the cave!
                         </Button>
-                        </div>
-                      </Tooltip>
-                    )}
-                  <Typography 
-                    color="text.secondary" 
-                    fontSize={14}>
+                      </div>
+                    </Tooltip>
+                  )}
+                  <Typography color="text.secondary" fontSize={14}>
                     Already have an account? Log in&nbsp;
                     <Typography
                       display="inline"
@@ -277,12 +282,13 @@ export default function Register(props) {
                       sx={{
                         color: "blue",
                         textDecoration: "underline",
-                        cursor: "pointer"
-                      }}>
+                        cursor: "pointer",
+                      }}
+                    >
                       here
                     </Typography>
                     .
-                </Typography>
+                  </Typography>
                 </Grid>
               </Grid>
             </CardActions>

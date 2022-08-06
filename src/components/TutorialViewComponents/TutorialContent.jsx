@@ -1,4 +1,12 @@
-import { Card, Divider, Grid, Typography, Avatar, Rating, Chip } from "@mui/material";
+import {
+  Card,
+  Divider,
+  Grid,
+  Typography,
+  Avatar,
+  Rating,
+  Chip,
+} from "@mui/material";
 import React from "react";
 import { formatDate } from "../../functions";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -10,11 +18,7 @@ export default function TutorialContent(props) {
   return (
     <>
       <Card>
-        <Grid
-          container
-          spacing={2}
-          sx={{ p: 4 }}
-        >
+        <Grid container spacing={2} sx={{ p: 4 }}>
           <Grid item container xs={12}>
             <Grid
               item
@@ -34,7 +38,12 @@ export default function TutorialContent(props) {
                   <Typography>{formatDate(values.createdAt)}</Typography>
                 </Grid>
                 <Grid item>
-                <Rating name="read-only" value={values.ratingStats.avgRating} precision={0.5} readOnly />
+                  <Rating
+                    name="read-only"
+                    value={values.ratingStats.avgRating}
+                    precision={0.5}
+                    readOnly
+                  />
                 </Grid>
                 <Grid item>
                   <Typography>{values.ratings.length} Rating(s)</Typography>
@@ -65,7 +74,12 @@ export default function TutorialContent(props) {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            <CKEditor editor={ClassicEditor} disabled="true" data={values.content} config={{ toolbar: ''}}/>
+            <CKEditor
+              editor={ClassicEditor}
+              disabled="true"
+              data={values.content}
+              config={{ toolbar: "" }}
+            />
           </Grid>
           <Grid item xs={12} sx={{ width: "100%" }}>
             <Divider />
@@ -82,13 +96,13 @@ export default function TutorialContent(props) {
             {values.tags.map((tag) => (
               <Grid item key={tag}>
                 <Chip
-                    key={tag}
-                    label={tag}
-                    sx={{
-                      backgroundColor: "#95bdc8",
-                      color: "#ffffff",
-                    }}
-                  />
+                  key={tag}
+                  label={tag}
+                  sx={{
+                    backgroundColor: "#95bdc8",
+                    color: "#ffffff",
+                  }}
+                />
               </Grid>
             ))}
           </Grid>

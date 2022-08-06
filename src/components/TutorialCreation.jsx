@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   Divider,
-  Grid,
   TextField,
   Typography,
   Alert,
@@ -80,7 +79,7 @@ export default function TutorialCreation(props) {
   };
 
   const handleContentChange = (event, editor) => {
-    setValues({ ...values, content: editor.getData()});
+    setValues({ ...values, content: editor.getData() });
   };
 
   const handleTagFieldChange = (event) => {
@@ -110,15 +109,17 @@ export default function TutorialCreation(props) {
 
   return (
     <>
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Card
         sx={{ maxWidth: "50%", margin: "auto", backgroundColor: "#ffffff" }}
       >
-        <div style={{maxWidth: "95%", margin: "auto"}}>
+        <div style={{ maxWidth: "95%", margin: "auto" }}>
           <Stack spacing={0.5}>
-            <Typography mt="5px" variant="h4">Create a Tutorial</Typography>
+            <Typography mt="5px" variant="h4">
+              Create a Tutorial
+            </Typography>
             <Divider variant="middle" />
-            <Typography textAlign="left" variant="h6" >
+            <Typography textAlign="left" variant="h6">
               Title
             </Typography>
             <TextField
@@ -127,14 +128,15 @@ export default function TutorialCreation(props) {
               required
               onChange={handleChange("title")}
             ></TextField>
-            <Typography textAlign="left" variant="h6">Tutorial Content</Typography>
+            <Typography textAlign="left" variant="h6">
+              Tutorial Content
+            </Typography>
             <div>
-              <CKEditor 
-                editor={ClassicEditor} 
-                onBlur={handleContentChange}
-              />
+              <CKEditor editor={ClassicEditor} onBlur={handleContentChange} />
             </div>
-            <Typography textAlign="left" variant="h6">Tags</Typography>
+            <Typography textAlign="left" variant="h6">
+              Tags
+            </Typography>
             <TextField
               size="small"
               placeholder="JavaScript"
@@ -160,42 +162,40 @@ export default function TutorialCreation(props) {
             </Stack>
           </Stack>
         </div>
-        <div style={{margin: "20px 0 10px"}}>
-           {values.pressedCreate ? (
-              <LoadingButton
-                loading
-                sx={{
-                  backgroundColor: "#4b6584",
-                  height: "36px",
-                  width: 300,
-                }}
-                variant="contained"
-              ></LoadingButton>
-            ) : (
-              <Button
-                onClick={handleCreate}
-                variant="filled"
-                sx={{
-                  backgroundColor: "#4b6584",
-                  color: "#ffffff",
-                  height: "36px",
-                  width: 300,
-                }}
-              >
-                Create
-              </Button>
-            )}
+        <div style={{ margin: "20px 0 10px" }}>
+          {values.pressedCreate ? (
+            <LoadingButton
+              loading
+              sx={{
+                backgroundColor: "#4b6584",
+                height: "36px",
+                width: 300,
+              }}
+              variant="contained"
+            ></LoadingButton>
+          ) : (
+            <Button
+              onClick={handleCreate}
+              variant="filled"
+              sx={{
+                backgroundColor: "#4b6584",
+                color: "#ffffff",
+                height: "36px",
+                width: 300,
+              }}
+            >
+              Create
+            </Button>
+          )}
         </div>
         <div>
           {values.successCreateTutorial ? (
             <Alert severity="success">
               {values.successCreateTutorialMessage}
             </Alert>
-            ) : null}
+          ) : null}
           {values.errorCreateTutorial ? (
-            <Alert severity="error">
-              {values.errorCreateTutorialMessage}
-            </Alert>
+            <Alert severity="error">{values.errorCreateTutorialMessage}</Alert>
           ) : null}
         </div>
       </Card>

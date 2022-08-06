@@ -88,11 +88,17 @@ export default function Frontpage(props) {
                 justifyContent: "center",
                 height: 50,
                 paddingLeft: 1,
-                paddingRight: 1
+                paddingRight: 1,
               }}
             >
-              <Typography fontWeight="bold" fontSize="20px" sx={{paddingRight: 1, color: "#4B6584"}}>≥</Typography>
-              <Rating name="rating" onChange={handleChanges}/>
+              <Typography
+                fontWeight="bold"
+                fontSize="20px"
+                sx={{ paddingRight: 1, color: "#4B6584" }}
+              >
+                ≥
+              </Typography>
+              <Rating name="rating" onChange={handleChanges} />
             </Paper>
           </Grid>
           <Grid item xs={6} sx={{ height: "100%" }}>

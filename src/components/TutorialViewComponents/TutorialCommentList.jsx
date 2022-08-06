@@ -10,12 +10,21 @@ export default function TutorialCommentList(props) {
         <Grid container sx={{ p: 2 }}>
           {values.comments.map((comment) => (
             <Grid item key={comment._id} xs={12}>
-              <Typography align="left" fontWeight="bold" variant="h6" gutterBottom>
+              <Typography
+                align="left"
+                fontWeight="bold"
+                variant="h6"
+                gutterBottom
+              >
                 {comment.title}
               </Typography>
               <Typography align="left">{comment.content}</Typography>
-              <Typography align="right" fontSize="9pt">Comment by:</Typography>
-              <Typography align="right" fontSize="9pt">{comment.author.username}</Typography>
+              <Typography align="right" fontSize="9pt">
+                Comment by:
+              </Typography>
+              <Typography align="right" fontSize="9pt">
+                {comment.author.username}
+              </Typography>
               <Divider />
             </Grid>
           ))}

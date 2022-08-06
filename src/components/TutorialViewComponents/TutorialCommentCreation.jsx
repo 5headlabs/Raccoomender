@@ -7,7 +7,6 @@ import {
   Typography,
   Grid,
   Alert,
-  Tooltip
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { API_URL } from "../../index";
@@ -76,66 +75,66 @@ export default function TutorialCommentCreation(props) {
   return (
     <>
       <Card>
-        <Grid container spacing={1} sx={{ p: 2, minHeight: "350px"}}>
+        <Grid container spacing={1} sx={{ p: 2, minHeight: "350px" }}>
           {loggedIn ? (
             <>
-            <Grid
-              item
-              container
-              alignItems="center"
-              justifyContent="center"
-              xs={12}
-            >
-              <Typography variant="h5" color="#4B6584" fontWeight="bold">
-                Write a comment
+              <Grid
+                item
+                container
+                alignItems="center"
+                justifyContent="center"
+                xs={12}
+              >
+                <Typography variant="h5" color="#4B6584" fontWeight="bold">
+                  Write a comment
+                </Typography>
+              </Grid>
+              <Typography marginLeft="2%" variant="h7">
+                Headline
               </Typography>
-            </Grid>
-            <Typography marginLeft="2%" variant="h7">
-              Headline
-            </Typography>
-            <Grid item xs={12}>
-              <TextField
-                placeholder="My Example Headline"
-                required
-                sx={{
-                  width: "100%",
-                }}
-                onChange={handleChange("headline")}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} />
-            <Typography marginLeft="2%" variant="h7">
-              Comment
-            </Typography>
-            <Grid item xs={12}>
-              <TextField
-                minRows="3"
-                multiline
-                placeholder="Example Comment"
-                required
-                sx={{
-                  width: "100%",
-                }}
-                onChange={handleChange("comment")}
-              ></TextField>
-            </Grid>
-            <Grid
-              item
-              container
-              alignItems="flex-end"
-              justifyContent="flex-end"
-              xs={12}
-            >
-              <Grid item>
-                {values.pressedPost ? (
-                  <LoadingButton
-                    loading
-                    sx={{
-                      backgroundColor: "#4b6584",
-                    }}
-                    variant="contained"
-                  ></LoadingButton>
-                ) : (
+              <Grid item xs={12}>
+                <TextField
+                  placeholder="My Example Headline"
+                  required
+                  sx={{
+                    width: "100%",
+                  }}
+                  onChange={handleChange("headline")}
+                ></TextField>
+              </Grid>
+              <Grid item xs={12} />
+              <Typography marginLeft="2%" variant="h7">
+                Comment
+              </Typography>
+              <Grid item xs={12}>
+                <TextField
+                  minRows="3"
+                  multiline
+                  placeholder="Example Comment"
+                  required
+                  sx={{
+                    width: "100%",
+                  }}
+                  onChange={handleChange("comment")}
+                ></TextField>
+              </Grid>
+              <Grid
+                item
+                container
+                alignItems="flex-end"
+                justifyContent="flex-end"
+                xs={12}
+              >
+                <Grid item>
+                  {values.pressedPost ? (
+                    <LoadingButton
+                      loading
+                      sx={{
+                        backgroundColor: "#4b6584",
+                      }}
+                      variant="contained"
+                    ></LoadingButton>
+                  ) : (
                     <Button
                       onClick={handlePost}
                       variant="filled"
@@ -146,23 +145,23 @@ export default function TutorialCommentCreation(props) {
                     >
                       Post
                     </Button>
-                )}
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-            {commentValues.successCreateComment ? (
-              <Grid item xs={12}>
-                <Alert severity="success">
-                  {commentValues.successCreateCommentMessage}
-                </Alert>
-              </Grid>
-            ) : null}
-            {commentValues.errorCreateComment ? (
-              <Grid item xs={12}>
-                <Alert severity="error">
-                  {commentValues.errorCreateCommentMessage}
-                </Alert>
-              </Grid>
-            ) : null}
+              {commentValues.successCreateComment ? (
+                <Grid item xs={12}>
+                  <Alert severity="success">
+                    {commentValues.successCreateCommentMessage}
+                  </Alert>
+                </Grid>
+              ) : null}
+              {commentValues.errorCreateComment ? (
+                <Grid item xs={12}>
+                  <Alert severity="error">
+                    {commentValues.errorCreateCommentMessage}
+                  </Alert>
+                </Grid>
+              ) : null}
             </>
           ) : (
             <Typography variant="h5" color="#4B6584" margin="auto">

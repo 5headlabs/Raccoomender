@@ -4,13 +4,13 @@ import Header from "./Header";
 import axios from "axios";
 import { API_URL } from "../index";
 import { useParams } from "react-router-dom";
-import TutorialContent from "./TutorialView/TutorialContent";
-import TutorialRatings from "./TutorialView/TutorialRatings";
-import TutorialCommentCreation from "./TutorialView/TutorialCommentCreation";
-import TutorialCommentList from "./TutorialView/TutorialCommentList";
+import TutorialContent from "./TutorialViewComponents/TutorialContent";
+import TutorialRatings from "./TutorialViewComponents/TutorialRatings";
+import TutorialCommentCreation from "./TutorialViewComponents/TutorialCommentCreation";
+import TutorialCommentList from "./TutorialViewComponents/TutorialCommentList";
 
 export default function TutorialView(props) {
-  const { loggedIn , setLoggedIn } = props;
+  const { loggedIn, setLoggedIn } = props;
   const { id } = useParams();
 
   const [values, setValues] = useState({
@@ -19,7 +19,7 @@ export default function TutorialView(props) {
     createdAt: "",
     owner: {},
     ratings: [],
-    ratingStats: {avgRating: 0, starRating: [0,0,0,0,0]},
+    ratingStats: { avgRating: 0, starRating: [0, 0, 0, 0, 0] },
     tags: [],
     title: "",
   });
@@ -75,21 +75,21 @@ export default function TutorialView(props) {
         <Grid item xs={12}>
           <TutorialContent values={values} />
         </Grid>
-          <Grid item xs={6}>
-            <TutorialRatings
-              values={values}
-              updatedRatings={updatedRatings}
-              setUpdatedRatings={setUpdatedRatings}
-              loggedIn={loggedIn}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TutorialCommentCreation
-              values={values}
-              updatedComments={updatedComments}
-              setUpdatedComments={setUpdatedComments}
-              loggedIn={loggedIn}
-            />
+        <Grid item xs={6}>
+          <TutorialRatings
+            values={values}
+            updatedRatings={updatedRatings}
+            setUpdatedRatings={setUpdatedRatings}
+            loggedIn={loggedIn}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TutorialCommentCreation
+            values={values}
+            updatedComments={updatedComments}
+            setUpdatedComments={setUpdatedComments}
+            loggedIn={loggedIn}
+          />
         </Grid>
         <Grid item xs={12}>
           <TutorialCommentList values={values} />

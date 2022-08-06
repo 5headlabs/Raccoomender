@@ -1,5 +1,5 @@
 import "./App.css";
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 import Frontpage from "./components/Frontpage";
@@ -11,27 +11,60 @@ import TutorialView from "./components/TutorialView";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect (() => {
-    if(localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null) {
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") !== undefined &&
+      localStorage.getItem("token") !== null
+    ) {
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
     }
-  },[]);
+  }, []);
 
   return (
     <>
       <div className="App">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Frontpage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
-              <Route path="/tutorial/:id" element={<TutorialView loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
-              {!loggedIn ? (<Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>) : null} 
-              {!loggedIn ? (<Route path="/register" element={<Register setLoggedIn={setLoggedIn}/>}/>) : null }
-              {loggedIn ? (<Route path="/create" element={<TutorialCreation loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>) : null }
-              <Route path="/*" element={<Navigate to="/" replace={true} />}/>
-            </Routes> 
-          </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Frontpage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              }
+            />
+            <Route
+              path="/tutorial/:id"
+              element={
+                <TutorialView loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              }
+            />
+            {!loggedIn ? (
+              <Route
+                path="/login"
+                element={<Login setLoggedIn={setLoggedIn} />}
+              />
+            ) : null}
+            {!loggedIn ? (
+              <Route
+                path="/register"
+                element={<Register setLoggedIn={setLoggedIn} />}
+              />
+            ) : null}
+            {loggedIn ? (
+              <Route
+                path="/create"
+                element={
+                  <TutorialCreation
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn}
+                  />
+                }
+              />
+            ) : null}
+            <Route path="/*" element={<Navigate to="/" replace={true} />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </>
   );
