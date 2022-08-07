@@ -80,7 +80,7 @@ export default function Frontpage(props) {
           <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </Grid>
         <Grid item container alignItems="center" spacing={1} xs={10}>
-          <Grid item container justifyContent="flex-end" xs={3}>
+          <Grid item container justifyContent="flex-start" xs={3}>
             <Paper
               sx={{
                 display: "flex",
@@ -120,7 +120,7 @@ export default function Frontpage(props) {
               />
             </Paper>
           </Grid>
-          <Grid item container xs={3} justifyContent="flex-start">
+          <Grid item container xs={3} justifyContent="flex-end">
             {loggedIn ? (
               <Button
                 sx={{ backgroundColor: "#4B6584", height: 50 }}
