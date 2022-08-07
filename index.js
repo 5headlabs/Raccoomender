@@ -19,6 +19,7 @@ mongoose.connect(config.database);
 
 app.use(bodyParser.json());
 app.use(logger('dev'));
+app.use(express.static('public'));
 
 app.listen(config.port);
 console.log(`Your server is running on port ${config.port}.`);
