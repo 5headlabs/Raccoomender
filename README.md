@@ -36,17 +36,20 @@ JWT_SECRET    =...
 - `JWT_SECRET` is used to sign JWT tokens
 
 ## Features
+### Feature List + Screenshots (<-- temporary)
+**// TODO**
+
 ### Available Routes
 All available routes start with `/api`.<br>
 Routes/Actions which requires the user to be logged in use the JWT token to do so.
 
 #### Auth Routes
 Auth routes have the prefix `/api/auth`.
-| Method | Route         | Description                                                                                | Header fields | Body fields                | Returns (if successful)                                          | 
-| ------ | ------------- | ------------------------------------------------------------------------------------------ | ------------- | -------------------------- | ------------------------------------------------ | 
-| POST   | `/login`      | Checks given credentials and if valid, logs in user.                                       | -             | username (String), password  (String)        | `{token: <JWT token>, user: <user information>}` |
+| Method | Route         | Description                                                                                | Header fields | Body fields                                           | Returns (if successful)                                          | 
+| ------ | ------------- | ------------------------------------------------------------------------------------------ | ------------- | ----------------------------------------------------- | ------------------------------------------------ | 
+| POST   | `/login`      | Checks given credentials and if valid, logs in user.                                       | -             | username (String), password  (String)                 | `{token: <JWT token>, user: <user information>}` |
 | POST   | `/register`   | Uses given credentials to register a new user. Logs in user after successful registration. | -             | email (String), username (String), password (String). | `{token: <JWT token>, user: <user information>}` |
-| GET    | `/checkLogin` | Verifies JWT token, i.e., checks if current user is logged in.                             | JWT token     | -                          | `{isLoggedIn: <true/false>}`                                                 |
+| GET    | `/checkLogin` | Verifies JWT token, i.e., checks if current user is logged in.                             | JWT token     | -                                                     | `{isLoggedIn: <true/false>}`                                                 |
 
 #### Tutorial Routes
 Tutorial routes have the prefix `/api/tutorial`.
@@ -57,3 +60,14 @@ Tutorial routes have the prefix `/api/tutorial`.
 | GET    | `/view/:id`        | Retrieves tutorial object with id=`:id`                                    | -             | -                    | `{tutorial: {...}}`                |
 | POST   | `/:id/add/comment` | Adds a comment to tutorial with id=`:id`                                   | JWT token     | title (String), content (String)       | `{success: true, tutorial: {...}}` |
 | POST   | `/:id/add/rating`  | Adds/Updates a rating for tutorial with id=`:id`                           | JWT token     | score (int)               | `{success: true, tutorial: {...}}`                                 |
+
+## Architecture
+
+## Technologies & Libraries
+
+## Members
+- [Roshan Asim](https://github.com/roshan95)
+- [Alexander Hochhalter](https://github.com/AlexHochhalter)
+- [Julien Lukasewycz](https://github.com/Julien-Lukasewycz)
+- [Malte Josten](https://github.com/MalteJosten)
+- [José Antonio Sánchez Suárez](https://github.com/eProw)
