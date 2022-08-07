@@ -2,6 +2,7 @@
   "name": "raccoomender_frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^34.2.0",
     "@ckeditor/ckeditor5-react": "^5.0.2",
