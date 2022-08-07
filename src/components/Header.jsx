@@ -100,13 +100,13 @@ export default function Header(props) {
                       horizontal: "center",
                     }}
                   >
-                    <MenuItem>
+                    <MenuItem disabled>
                       <ListItemIcon>
                         <AccountBox fontSize="small" />
                       </ListItemIcon>
                       <ListItemText>Profile</ListItemText>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem disabled>
                       <ListItemIcon>
                         <Settings fontSize="small" />
                       </ListItemIcon>
