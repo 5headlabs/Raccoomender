@@ -3,11 +3,13 @@ Raccoomender is a learning platform supporting users by giving them the possibil
 
 ## Features
 Search for tutorials!
-![Frontpage](https://github.com/5headlabs/Raccoomender/blob/main/images/Frontpage.PNG?raw=true)
+![Frontpage_logged_in](https://github.com/5headlabs/Raccoomender/blob/main/images/Frontpage_logged_in.PNG?raw=true)
+Watch tutorials!
+![Tutorial_View_1](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_View_1.PNG?raw=true)
+Rate and comment them!
+![Tutorial_View_2](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_View_2.PNG?raw=true)
 Create tutorials!
 ![Tutorial_Creation](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_Creation.PNG?raw=true)
-Watch, Rate and Comment tutorials!
-![Tutorial_View](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_View.PNG?raw=true)
 
 ### Available Routes
 All available routes start with `/api`.<br>
