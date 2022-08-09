@@ -2,14 +2,25 @@
 Raccoomender is a learning platform supporting users by giving them the possibility to watch, search for and create tutorials to specific topics. Users of Raccoomender can rate and comment on different tutorials. They can also filter tutorials by their average rating. This project uses the MERN architecture. The source code is part of the corresponding project by [5HeadLabs](https://github.com/5headlabs/). Raccoomender was created during SS 2022 for the course [Advanced Web Technologies](https://www.uni-due.de/soco/teaching/courses/lecture-advwebtech-ss22.php).
 
 ## Features
-Search for tutorials!
+### Search for tutorials!
+
 ![Frontpage_logged_in](https://github.com/5headlabs/Raccoomender/blob/main/images/Frontpage_logged_in.PNG?raw=true)
-Watch tutorials!
+
+### Watch tutorials!
+
 ![Tutorial_View_1](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_View_1.PNG?raw=true)
-Rate and comment them!
+
+### Rate and comment them!
+
 ![Tutorial_View_2](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_View_2.PNG?raw=true)
-Create tutorials!
+
+### Create tutorials!
+
 ![Tutorial_Creation](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_Creation.PNG?raw=true)
+
+### [Walkthrough (Youtube)](https://www.youtube.com/watch?v=YJPZoM27CRA)
+
+[![Watch the video](https://img.youtube.com/vi/YJPZoM27CRA/maxresdefault.jpg)](https://www.youtube.com/watch?v=YJPZoM27CRA)
 
 ### Available API Routes
 All available API routes start with `/api`.<br>
@@ -108,11 +119,11 @@ To build the frontend, run the following command:
 npm run build
 ```
 
-The build output is now located under /build.
+The build output is now located under `/build`.
 
 
 ### Deployment and Local Execution
-To deploy the application put the build output of the frontend-only branch into the /public folder in the backend on the main branch. 
+To deploy the application put the build output of the frontend-only branch into the `/public` folder in the backend on the main branch. 
 This branch should be used for deployment (on e.g Heroku). Don't forget to set the environment variables (e.g. Config Vars on Heroku).
 
 To execute the application locally, install necessary node modules:
