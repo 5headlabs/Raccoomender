@@ -1,5 +1,41 @@
 # Raccoomender
-This code is part of the the Raccoomender project by [5HeadLabs](https://github.com/5headlabs/). Raccoomender was created during SS 2022 for the course [Advanced Web Technologies](https://www.uni-due.de/soco/teaching/courses/lecture-advwebtech-ss22.php).
+Raccoomender is a learning platform supporting users by giving them the possibility to watch, search for and create tutorials to specific topics. Users of Raccoomender can rate and comment on different tutorials. They can also filter tutorials by their average rating. This source code is part of the corresponding project by [5HeadLabs](https://github.com/5headlabs/). Raccoomender was created during SS 2022 for the course [Advanced Web Technologies](https://www.uni-due.de/soco/teaching/courses/lecture-advwebtech-ss22.php).
+
+## Features
+Search for tutorials!
+![Frontpage](https://github.com/5headlabs/Raccoomender/blob/main/images/Frontpage.PNG?raw=true)
+Create tutorials!
+![Tutorial_Creation](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_Creation.PNG?raw=true)
+Watch, Rate and Comment tutorials!
+![Tutorial_View](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_View.PNG?raw=true)
+
+### Available Routes
+All available routes start with `/api`.<br>
+Routes/Actions which requires the user to be logged in use the JWT token to do so.
+
+#### Auth Routes
+Auth routes have the prefix `/api/auth`.
+| Method | Route         | Description                                                                                | Header fields | Body fields                                           | Returns (if successful)                                          | 
+| ------ | ------------- | ------------------------------------------------------------------------------------------ | ------------- | ----------------------------------------------------- | ------------------------------------------------ | 
+| POST   | `/login`      | Checks given credentials and if valid, logs in user.                                       | -             | username (String), password  (String)                 | `{token: <JWT token>, user: <user information>}` |
+| POST   | `/register`   | Uses given credentials to register a new user. Logs in user after successful registration. | -             | email (String), username (String), password (String). | `{token: <JWT token>, user: <user information>}` |
+| GET    | `/checkLogin` | Verifies JWT token, i.e., checks if current user is logged in.                             | JWT token     | -                                                     | `{isLoggedIn: <true/false>}`                                                 |
+
+#### Tutorial Routes
+Tutorial routes have the prefix `/api/tutorial`.
+| Method | Route              | Description                                                                | Header fields | Body fields          | Returns (if successful)            |
+| ------ | ------------------ | -------------------------------------------------------------------------- | ------------- | -------------------- | ---------------------------------- |
+| POST   | `/create`          | Creates a new tutorial with the given data.                                | JWT token     | title (String), content (String), tags (Array) | `{success: true}`                  |
+| GET    | `/list`            | Retrieves a random list of tutorials with size `desiredTutorialListCount`. | -             | -                    | `{tutorialList: [...]}`            |
+| GET    | `/view/:id`        | Retrieves tutorial object with id=`:id`                                    | -             | -                    | `{tutorial: {...}}`                |
+| POST   | `/:id/add/comment` | Adds a comment to tutorial with id=`:id`                                   | JWT token     | title (String), content (String)       | `{success: true, tutorial: {...}}` |
+| POST   | `/:id/add/rating`  | Adds/Updates a rating for tutorial with id=`:id`                           | JWT token     | score (int)               | `{success: true, tutorial: {...}}`                                 |
+
+## Architecture
+![architecture](https://github.com/5headlabs/Raccoomender/blob/main/images/Architecture.PNG?raw=true)
+
+## Technologies & Libraries
+![technologies](https://github.com/5headlabs/Raccoomender/blob/main/images/Technologies.PNG?raw=true)
 
 ## Install and Execute
 To clone this repository use the following command:
@@ -35,36 +71,6 @@ JWT_SECRET    =...
 - `MONGO_DBNAME` contains the name of the Mongo DB Atlas database
 - `JWT_SECRET` is used to sign JWT tokens
 
-## Features
-### Feature List + Screenshots (<-- temporary)
-**// TODO**
-
-### Available Routes
-All available routes start with `/api`.<br>
-Routes/Actions which requires the user to be logged in use the JWT token to do so.
-
-#### Auth Routes
-Auth routes have the prefix `/api/auth`.
-| Method | Route         | Description                                                                                | Header fields | Body fields                                           | Returns (if successful)                                          | 
-| ------ | ------------- | ------------------------------------------------------------------------------------------ | ------------- | ----------------------------------------------------- | ------------------------------------------------ | 
-| POST   | `/login`      | Checks given credentials and if valid, logs in user.                                       | -             | username (String), password  (String)                 | `{token: <JWT token>, user: <user information>}` |
-| POST   | `/register`   | Uses given credentials to register a new user. Logs in user after successful registration. | -             | email (String), username (String), password (String). | `{token: <JWT token>, user: <user information>}` |
-| GET    | `/checkLogin` | Verifies JWT token, i.e., checks if current user is logged in.                             | JWT token     | -                                                     | `{isLoggedIn: <true/false>}`                                                 |
-
-#### Tutorial Routes
-Tutorial routes have the prefix `/api/tutorial`.
-| Method | Route              | Description                                                                | Header fields | Body fields          | Returns (if successful)            |
-| ------ | ------------------ | -------------------------------------------------------------------------- | ------------- | -------------------- | ---------------------------------- |
-| POST   | `/create`          | Creates a new tutorial with the given data.                                | JWT token     | title (String), content (String), tags (Array) | `{success: true}`                  |
-| GET    | `/list`            | Retrieves a random list of tutorials with size `desiredTutorialListCount`. | -             | -                    | `{tutorialList: [...]}`            |
-| GET    | `/view/:id`        | Retrieves tutorial object with id=`:id`                                    | -             | -                    | `{tutorial: {...}}`                |
-| POST   | `/:id/add/comment` | Adds a comment to tutorial with id=`:id`                                   | JWT token     | title (String), content (String)       | `{success: true, tutorial: {...}}` |
-| POST   | `/:id/add/rating`  | Adds/Updates a rating for tutorial with id=`:id`                           | JWT token     | score (int)               | `{success: true, tutorial: {...}}`                                 |
-
-## Architecture
-![alt text](https://github.com/5headlabs/Raccoomender/blob/main/Architecture.PNG?raw=true)
-## Technologies & Libraries
-![alt text](https://github.com/5headlabs/Raccoomender/blob/main/Technologies.PNG?raw=true)
 ## Members
 - [Roshan Asim](https://github.com/roshan95)
 - [Alexander Hochhalter](https://github.com/AlexHochhalter)
