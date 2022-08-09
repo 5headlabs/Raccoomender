@@ -45,36 +45,7 @@ To clone this repository use the following command:
 git clone git@github.com:5headlabs/Raccoomender.git
 ```
 
-### FRONTEND Set-Up and Building
-To switch to the frontend branch use the following command:
-```
-git switch frontend
-```
-
-Before launching the application, make sure to install [Node.js](https://nodejs.org/en/download/) and the required modules by running the following command (inside the project folder):
-```
-npm install
-```
-
-It might be necessary to follow it up with
-```
-npm audit fix
-```
-as, depending on future changes, some modules' compatibility might not be given anymore.
-
-To start the development server, run the following command:
-```
-yarn start
-```
-
-To build the frontend, run the following command:
-```
-npm run build
-```
-
-The build output is now located under /build.
-
-### BACKEND Set-Up
+### BACKEND Set-up
 To switch to the backend-only branch use the following command:
 ```
 git switch backend
@@ -96,27 +67,8 @@ To start the server, run the following command:
 npm run start
 ```
 
-### DEPLOYMENT AND LOCAL EXECUTION
-To deploy the application put the build output of the frontend into the /public folder in the backend on the main branch. 
-This branch should be used for deployment (on e.g Heroku). Don't forget to set the enviroment variables (e.g. Config Vars on Heroku).
-
-To execute the application locally, install necessary node modules and start the backend on the main branch with:
-```
-npm install
-```
-
-if necessary:
-```
-npm audit fix
-```
-
-and then start with:
-```
-npm run start
-```
-
 ### Environment Variables
-You need to add the file `.env` to the project (for local execution) or specifiy them in your deployment (e.g as Config Vars in Heroku), containing at least the following fields:
+You need to add the file `.env` to the backend project folder (for local execution) or specifiy them in your deployment (e.g as Config Vars in Heroku), containing at least the following fields:
 ```
 MONGO_USER    =...
 MONGO_PASSWORD=...
@@ -127,6 +79,56 @@ JWT_SECRET    =...
 - `MONGO_PASSWORD` contains the Mongo DB Atlas account password
 - `MONGO_DBNAME` contains the name of the Mongo DB Atlas database
 - `JWT_SECRET` is used to sign JWT tokens
+
+### FRONTEND Set-up and Building
+To switch to the frontend-only branch use the following command:
+```
+git switch frontend
+```
+
+Before launching the application, make sure to install [Node.js](https://nodejs.org/en/download/) and the required modules by running the following command (inside the project folder):
+```
+npm install
+```
+
+It might be necessary to follow it up with
+```
+npm audit fix
+```
+as, depending on future changes, some modules' compatibility might not be given anymore.
+
+To start the development server, run the following command:
+```
+yarn start
+```
+When both starting frontend and backend for development then check that the backend is started before the frontend.
+
+To build the frontend, run the following command:
+```
+npm run build
+```
+
+The build output is now located under /build.
+
+
+### Deployment and Local Execution
+To deploy the application put the build output of the frontend-only branch into the /public folder in the backend on the main branch. 
+This branch should be used for deployment (on e.g Heroku). Don't forget to set the environment variables (e.g. Config Vars on Heroku).
+
+To execute the application locally, install necessary node modules:
+```
+npm install
+```
+
+if necessary do:
+```
+npm audit fix
+```
+
+and then start the backend server on the main branch with:
+```
+npm run start
+```
 
 ## Members
 - [Roshan Asim](https://github.com/roshan95)
