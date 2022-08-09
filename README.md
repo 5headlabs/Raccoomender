@@ -62,9 +62,9 @@ Tutorial routes have the prefix `/api/tutorial`.
 | POST   | `/:id/add/rating`  | Adds/Updates a rating for tutorial with id=`:id`                           | JWT token     | score (int)               | `{success: true, tutorial: {...}}`                                 |
 
 ## Architecture
-
+![alt text](https://github.com/5headlabs/Raccoomender/blob/main/Architecture.PNG?raw=true)
 ## Technologies & Libraries
-
+![alt text](https://github.com/5headlabs/Raccoomender/blob/main/Technologies.PNG?raw=true)
 ## Members
 - [Roshan Asim](https://github.com/roshan95)
 - [Alexander Hochhalter](https://github.com/AlexHochhalter)
