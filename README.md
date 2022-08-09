@@ -1,5 +1,5 @@
 # Raccoomender
-Raccoomender is a learning platform supporting users by giving them the possibility to watch, search for and create tutorials to specific topics. Users of Raccoomender can rate and comment on different tutorials. They can also filter tutorials by their average rating. This source code is part of the corresponding project by [5HeadLabs](https://github.com/5headlabs/). Raccoomender was created during SS 2022 for the course [Advanced Web Technologies](https://www.uni-due.de/soco/teaching/courses/lecture-advwebtech-ss22.php).
+Raccoomender is a learning platform supporting users by giving them the possibility to watch, search for and create tutorials to specific topics. Users of Raccoomender can rate and comment on different tutorials. They can also filter tutorials by their average rating. This project uses the MERN architecture. The source code is part of the corresponding project by [5HeadLabs](https://github.com/5headlabs/). Raccoomender was created during SS 2022 for the course [Advanced Web Technologies](https://www.uni-due.de/soco/teaching/courses/lecture-advwebtech-ss22.php).
 
 ## Features
 Search for tutorials!
@@ -11,8 +11,8 @@ Rate and comment them!
 Create tutorials!
 ![Tutorial_Creation](https://github.com/5headlabs/Raccoomender/blob/main/images/Tutorial_Creation.PNG?raw=true)
 
-### Available Routes
-All available routes start with `/api`.<br>
+### Available API Routes
+All available API routes start with `/api`.<br>
 Routes/Actions which requires the user to be logged in use the JWT token to do so.
 
 #### Auth Routes
@@ -45,6 +45,41 @@ To clone this repository use the following command:
 git clone git@github.com:5headlabs/Raccoomender.git
 ```
 
+### FRONTEND Set-Up and Building
+To switch to the frontend branch use the following command:
+```
+git switch frontend
+```
+
+Before launching the application, make sure to install [Node.js](https://nodejs.org/en/download/) and the required modules by running the following command (inside the project folder):
+```
+npm install
+```
+
+It might be necessary to follow it up with
+```
+npm audit fix
+```
+as, depending on future changes, some modules' compatibility might not be given anymore.
+
+To start the development server, run the following command:
+```
+yarn start
+```
+
+To build the frontend, run the following command:
+```
+npm run build
+```
+
+The build output is now located under /build.
+
+### BACKEND Set-Up
+To switch to the backend-only branch use the following command:
+```
+git switch backend
+```
+
 Before launching the application, make sure to install [Node.js](https://nodejs.org/en/download/) and the required modules by running the following command (inside the project folder):
 ```
 npm install
@@ -60,8 +95,28 @@ To start the server, run the following command:
 ```
 npm run start
 ```
+
+### DEPLOYMENT AND LOCAL EXECUTION
+To deploy the application put the build output of the frontend into the /public folder in the backend on the main branch. 
+This branch should be used for deployment (on e.g Heroku). Don't forget to set the enviroment variables (e.g. Config Vars on Heroku).
+
+To execute the application locally, install necessary node modules and start the backend on the main branch with:
+```
+npm install
+```
+
+if necessary:
+```
+npm audit fix
+```
+
+and then start with:
+```
+npm run start
+```
+
 ### Environment Variables
-You need to add the file `.env` to the project, containing at least the following fields:
+You need to add the file `.env` to the project (for local execution) or specifiy them in your deployment (e.g as Config Vars in Heroku), containing at least the following fields:
 ```
 MONGO_USER    =...
 MONGO_PASSWORD=...
